@@ -13,6 +13,6 @@ public class TitlePageController extends PageController {
 	
 	public boolean Start()
 	{
-		return GoToPage(PageName.AphabetPage);
+		return GoToPage(PageName.AlphabetPage);
 	}
 }

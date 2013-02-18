@@ -1,4 +1,9 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.Observable;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 
 public class LetterPageView extends PageView {
@@ -9,6 +14,14 @@ public class LetterPageView extends PageView {
 	public LetterPageView(String sPageName) {
 		super(sPageName);
 
+		JPanel panel = new JPanel(new BorderLayout());
+		JPanel buttons = new JPanel(new FlowLayout());
+		panel.add(buttons, BorderLayout.PAGE_END);
+		
+		buttons.add(new JButton("< Previous Letter"));
+		buttons.add(new JButton("Next Letter >"));
+		buttons.add(new JButton("Title Page"));
+		buttons.add(new JButton("Alphabet Page"));
 		
 	}
 	

@@ -1,20 +1,34 @@
-import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Container;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 public class MainWindow implements IPageObserver {
 
-	JFrame m_frame;
+	private JFrame m_frame;
+	private JPanel m_curView;
+	private CardLayout m_cl;
 	
 	public MainWindow() {
 		m_frame = new JFrame("Awesome Alphabet");
 		m_frame.setSize(800, 600);
+		
+		Container content = m_frame.getContentPane();
+	    content.setBackground(Color.white);
+	    content.setLayout(new BorderLayout()); 
+
+	    m_cl = new CardLayout();
+	    m_curView = new JPanel(m_cl);
+	    content.add(m_curView, BorderLayout.CENTER);
 	}
 	
-	public void SetPages(List<PageView> pages)
+	public void registerPage(PageView page)
 	{
-		
+		m_curView.add(page.getPageName(), page.getPagePanel());
 	}
 	
 	public void Show()
@@ -23,8 +37,9 @@ public class MainWindow implements IPageObserver {
 	}
 
 	@Override
-	public boolean GoToPage(String sPageName) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean GoToPage(String sPageName)
+	{
+		m_cl.show(m_curView, sPageName);
+		return true;
 	}
 }

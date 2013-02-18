@@ -67,7 +67,7 @@ public class LetterPageController extends PageController {
 	
 	public void GoToAlphabetPage()
 	{
-		if(GoToPage(PageName.AphabetPage))
+		if(GoToPage(PageName.AlphabetPage))
 			m_alphabet.GetCurrentLetter().deleteObserver(m_view);
 	}
 	

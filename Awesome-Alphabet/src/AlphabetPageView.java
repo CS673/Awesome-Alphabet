@@ -1,17 +1,38 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 public class AlphabetPageView extends PageView {
 
 	private AlphabetPageController m_controller;
 	
+	class BackButtonHandler implements ActionListener {
+		private AlphabetPageView apv;
+		public BackButtonHandler(AlphabetPageView apv) {
+			this.apv = apv;
+		}
+		public void actionPerformed(ActionEvent ae) {
+			apv.OnTitlePageButtonClick();
+		}
+	}
 	
 	public AlphabetPageView(String sPageName) {
 		super(sPageName);
 		
 		m_controller = null;
+		
+		JButton backButton = new JButton("<-- Back");
+		backButton.addActionListener(new BackButtonHandler(this));
+		
+		m_panel.setLayout(new BorderLayout());
+		m_panel.add(new JLabel("Alphabet Page", JLabel.CENTER), BorderLayout.PAGE_START);
+		m_panel.add(backButton, BorderLayout.PAGE_END);
 	}
 	
 	public void SetController(AlphabetPageController controller)

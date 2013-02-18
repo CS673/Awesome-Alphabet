@@ -15,21 +15,19 @@ public class AwesomeAlphabetApp {
 		
 		//Create Views
 		TitlePageView titlePageView = new TitlePageView(PageName.TitlePage.toString());
-		AlphabetPageView alphabetPageView = new AlphabetPageView(PageName.AphabetPage.toString());
+		AlphabetPageView alphabetPageView = new AlphabetPageView(PageName.AlphabetPage.toString());
 		LetterPageView letterPageView = new LetterPageView(PageName.LetterPage.toString());
 		
 		//Create Controllers
-		new TitlePageController(mainWindow, titlePageView);
-		new AlphabetPageController(mainWindow, alphabetPageView, alphabet);
-		new LetterPageController(mainWindow, letterPageView, alphabet);
+		titlePageView.SetController(new TitlePageController(mainWindow, titlePageView));
+		alphabetPageView.SetController(new AlphabetPageController(mainWindow, alphabetPageView, alphabet));
+		letterPageView.SetController(new LetterPageController(mainWindow, letterPageView, alphabet));
 		
-		//Setup and Show Main Window
-		LinkedList<PageView> pageViewList = new LinkedList<PageView>();
-		pageViewList.add(titlePageView);
-		pageViewList.add(alphabetPageView);
-		pageViewList.add(letterPageView);
+		// Register views with main controlling window
+		mainWindow.registerPage(titlePageView);
+		mainWindow.registerPage(alphabetPageView);
+		mainWindow.registerPage(letterPageView);
 		
-		mainWindow.SetPages(pageViewList);
 		mainWindow.GoToPage(PageName.TitlePage.toString());
 		mainWindow.Show();
 	}
