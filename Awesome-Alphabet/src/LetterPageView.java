@@ -14,15 +14,27 @@ public class LetterPageView extends PageView {
 	public LetterPageView(String sPageName) {
 		super(sPageName);
 
-		JPanel panel = new JPanel(new BorderLayout());
+		m_panel.setLayout(new BorderLayout());
 		JPanel buttons = new JPanel(new FlowLayout());
-		panel.add(buttons, BorderLayout.PAGE_END);
+		m_panel.add(buttons, BorderLayout.PAGE_END);
 		
-		buttons.add(new JButton("< Previous Letter"));
-		buttons.add(new JButton("Next Letter >"));
-		buttons.add(new JButton("Title Page"));
-		buttons.add(new JButton("Alphabet Page"));
+		JButton b;
 		
+		b = new JButton("Previous Letter");
+		b.addActionListener(new ButtonHandler(this, "OnPreviousLetterButtonClick"));
+		buttons.add(b);
+		
+		b = new JButton("Next Letter");
+		b.addActionListener(new ButtonHandler(this, "OnNextLetterButtonClick"));
+		buttons.add(b);
+		
+		b = new JButton("Title Page");
+		b.addActionListener(new ButtonHandler(this, "OnTitlePageButtonClick"));
+		buttons.add(b);
+		
+		b = new JButton("Alphabet Page");
+		b.addActionListener(new ButtonHandler(this, "OnAlphabetPageButtonClick"));
+		buttons.add(b);
 	}
 	
 	public void SetController(LetterPageController controller)

@@ -14,4 +14,9 @@ public class Letter extends Observable {
 	{
 		return m_cLetter;
 	}
+	
+	public char GetUppercaseLetter()
+	{
+		return Character.toUpperCase(m_cLetter);
+	}
 }

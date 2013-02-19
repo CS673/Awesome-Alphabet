@@ -1,43 +1,72 @@
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Observable;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 public class AlphabetPageView extends PageView {
 
 	private AlphabetPageController m_controller;
 	
-	class BackButtonHandler implements ActionListener {
-		private AlphabetPageView apv;
-		public BackButtonHandler(AlphabetPageView apv) {
-			this.apv = apv;
-		}
-		public void actionPerformed(ActionEvent ae) {
-			apv.OnTitlePageButtonClick();
-		}
-	}
-	
+	private JPanel letterPanel;
+
 	public AlphabetPageView(String sPageName) {
 		super(sPageName);
 		
 		m_controller = null;
 		
-		JButton backButton = new JButton("<-- Back");
-		backButton.addActionListener(new BackButtonHandler(this));
+		JButton titlePageButton = new JButton("Title Page");
+		titlePageButton.addActionListener(new ButtonHandler(this, "OnTitlePageButtonClick"));
+		
+		JButton alphabetSongButton = new JButton("Alphabet Song");
+		alphabetSongButton.addActionListener(new ButtonHandler(this, "OnPlayAlphabetSongButtonClick"));
 		
 		m_panel.setLayout(new BorderLayout());
 		m_panel.add(new JLabel("Alphabet Page", JLabel.CENTER), BorderLayout.PAGE_START);
-		m_panel.add(backButton, BorderLayout.PAGE_END);
+		
+		JPanel navBar = new JPanel(new FlowLayout());
+		m_panel.add(navBar, BorderLayout.PAGE_END);
+		
+		navBar.add(titlePageButton);
+		navBar.add(alphabetSongButton);
+		
+		letterPanel = new JPanel(new GridLayout(5, 6));
+		m_panel.add(letterPanel, BorderLayout.CENTER);
 	}
 	
 	public void SetController(AlphabetPageController controller)
 	{
-		m_controller = controller;
+		if (m_controller == null) {
+			m_controller = controller;
+			
+		
+			// we can now build the letters
+			Font letterFont = new Font("Sans-Serif", Font.PLAIN, 32);
+			Iterator<Letter> iter = m_controller.GetLetterIterator();
+			while (iter.hasNext()) {
+				final Letter l = iter.next();
+				JButton b = new JButton("" + l.GetUppercaseLetter() + " " + l.GetLetterAsChar());
+				b.setFont(letterFont);
+				b.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ae) {
+						OnLetterButtonClick(l);
+					}
+				});
+				letterPanel.add(b);
+			}
+		}
 	}
 
 	@Override
@@ -46,21 +75,21 @@ public class AlphabetPageView extends PageView {
 
 	}
 	
-	protected void OnLetterButtonClick(char cLetter)
+	public void OnLetterButtonClick(Letter cLetter)
 	{
-		if(m_controller != null)
+		if (m_controller != null)
 			m_controller.GoToLetterPage(cLetter);
 	}
 	
-	protected void OnTitlePageButtonClick()
+	public void OnTitlePageButtonClick()
 	{
-		if(m_controller != null)
+		if (m_controller != null)
 			m_controller.GoToTitlePage();
 	}
 	
-	protected void OnPlayAlphabetSongButtonClick()
+	public void OnPlayAlphabetSongButtonClick()
 	{
-		if(m_controller != null)
+		if (m_controller != null)
 			m_controller.PlayAlphabetSong();
 	}
 }

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Observable;
 
 
@@ -23,9 +25,14 @@ public class Alphabet extends Observable {
 			return (int)cTemp - (int)'a';		
 	}
 	
-	public Letter SetCurrentLetter(char cLetter)
+	public Iterator<Letter> GetIterator()
 	{
-		int iIndex = GetLetterIndex(cLetter);
+		return Arrays.asList(m_letters).iterator();
+	}
+	
+	public Letter SetCurrentLetter(Letter cLetter)
+	{
+		int iIndex = GetLetterIndex(cLetter.GetLetterAsChar());
 		
 		if(iIndex < 0 || iIndex > m_letters.length - 1)
 			return null;

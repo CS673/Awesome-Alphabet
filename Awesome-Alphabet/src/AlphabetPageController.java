@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
@@ -16,6 +18,11 @@ public class AlphabetPageController extends PageController {
 		m_view.SetController(this);
 	}
 	
+	public Iterator<Letter> GetLetterIterator()
+	{
+		return m_alphabet.GetIterator();
+	}
+	
 	public boolean PlayAlphabetSong()
 	{
 		//TODO: Implement this method
@@ -27,9 +34,9 @@ public class AlphabetPageController extends PageController {
 		return GoToPage(PageName.TitlePage);
 	}
 	
-	public boolean GoToLetterPage(char cLetter)
+	public boolean GoToLetterPage(Letter cLetter)
 	{
-		if(m_alphabet.SetCurrentLetter(cLetter) != null)
+		if (m_alphabet.SetCurrentLetter(cLetter) != null)
 			return GoToPage(PageName.LetterPage);
 		else
 			return false;
