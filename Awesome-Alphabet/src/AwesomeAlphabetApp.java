@@ -1,3 +1,4 @@
+
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -6,8 +7,9 @@ public class AwesomeAlphabetApp {
 
 	/**
 	 * @param args
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 
 		MainWindow mainWindow = new MainWindow();
 		

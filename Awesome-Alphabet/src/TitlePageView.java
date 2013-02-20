@@ -13,7 +13,7 @@ public class TitlePageView extends PageView implements ActionListener {
 	private TitlePageController m_controller;
 	
 	
-	public TitlePageView(String sPageName) {
+	public TitlePageView(String sPageName)  {
 		super(sPageName);
 		
 		m_controller = null;
