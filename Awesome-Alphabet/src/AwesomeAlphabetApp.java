@@ -1,4 +1,5 @@
-import java.util.LinkedList;
+import java.io.InputStream;
+import java.util.Properties;
 
 
 public class AwesomeAlphabetApp {
@@ -27,6 +28,17 @@ public class AwesomeAlphabetApp {
 		mainWindow.registerPage(titlePageView);
 		mainWindow.registerPage(alphabetPageView);
 		mainWindow.registerPage(letterPageView);
+		
+		// Process resource file
+		Properties prop = new Properties();
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();           
+		InputStream stream = loader.getResourceAsStream("letter.properties");
+		try {
+			prop.load(stream);
+			alphabet.LoadResources(prop);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		mainWindow.GoToPage(PageName.TitlePage.toString());
 		mainWindow.Show();

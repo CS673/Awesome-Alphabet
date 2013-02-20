@@ -29,8 +29,8 @@ public class LetterPageController extends PageController {
 	
 	public void PictureClicked()
 	{
-		//Play picture/word sound
-		throw new NotImplementedException();
+		Letter letter = m_alphabet.GetCurrentLetter();
+		letter.playSound();
 	}
 	
 	public void WordClicked()
@@ -79,7 +79,8 @@ public class LetterPageController extends PageController {
 	
 	public void GetNextExample()
 	{
-		throw new NotImplementedException();
+		Letter letter = m_alphabet.GetCurrentLetter();
+		letter.nextExample();
 	}
 	
 	public char GetLetterAsChar()

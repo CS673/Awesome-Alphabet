@@ -1,10 +1,6 @@
-import java.awt.Image;
-import java.io.InputStream;
-import java.util.Observable;
+import java.awt.Font;
 import java.util.Observer;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 
@@ -12,7 +8,9 @@ public abstract class PageView implements Observer {
 
 	private String m_sPageName;
 	protected JPanel m_panel;
-	static ClassLoader cl = PageView.class.getClassLoader();
+	protected Font letterFont = new Font("Sans-Serif", Font.PLAIN, 32);
+	protected Font wordFont = new Font("Sans-Serif", Font.PLAIN, 24);
+
 	
 	public PageView(String sPageName)
 	{
@@ -29,16 +27,5 @@ public abstract class PageView implements Observer {
 	{
 		return m_panel;
 	}
-	
-	public ImageIcon getIcon(String filename)
-	{
-		InputStream is = cl.getResourceAsStream("resources/" + filename);
-		
-		try {
-			Image i = ImageIO.read(is);
-			return (new ImageIcon(i));
-		} catch (Exception e) {
-			return null;
-		}
-	}
+
 }

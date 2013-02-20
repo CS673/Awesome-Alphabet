@@ -8,7 +8,7 @@ public class TitlePageController extends PageController {
 		super(pageObserver);
 
 		m_view = view;
-		view.SetController(this);
+		m_view.SetController(this);
 	}
 	
 	public boolean Start()

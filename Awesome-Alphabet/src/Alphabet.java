@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.Properties;
 
 
 public class Alphabet extends Observable {
@@ -39,7 +40,8 @@ public class Alphabet extends Observable {
 		else
 		{
 			m_iCurLetterIndex = iIndex;
-			notifyObservers();
+			setChanged();
+			notifyObservers(m_letters[m_iCurLetterIndex]);
 			return m_letters[m_iCurLetterIndex];
 		}
 	}
@@ -56,7 +58,8 @@ public class Alphabet extends Observable {
 		else
 		{
 			m_iCurLetterIndex -= 1;
-			notifyObservers();
+			setChanged();
+			notifyObservers(m_letters[m_iCurLetterIndex]);
 			return m_letters[m_iCurLetterIndex];
 		}
 	}
@@ -68,40 +71,27 @@ public class Alphabet extends Observable {
 		else
 		{
 			m_iCurLetterIndex += 1;
-			notifyObservers();
+			setChanged();
+			notifyObservers(m_letters[m_iCurLetterIndex]);
 			return m_letters[m_iCurLetterIndex];
 		}
 	}
 	
-	/*
-	public Letter GetLetterObj(char cLetter)
-	{
-		int iIndex = GetLetterIndex(cLetter);
-		
-		if(iIndex < 0 || iIndex > m_letters.length - 1)
-			return null;
-		else
-			return m_letters[iIndex];
+	public void LoadResources(Properties prop) {
+		for (char c = 'a'; c <= 'z'; c++) {
+			for (int i = 1; i <= 10; i++) {
+				String propName = "letter." + c + "." + i + ".";
+				try {
+					String imageName = prop.getProperty(propName + "image");
+					String soundName = prop.getProperty(propName + "sound");
+					String wordText = prop.getProperty(propName + "word");
+					if (imageName == null && soundName == null && wordText == null)
+						break;
+					m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText);
+				} catch (Exception e) {
+					i = 10;
+				}
+			}
+		}
 	}
-	
-	public Letter GetPreviousLetterObj(char cCurrentLetter)
-	{
-		int iIndex = GetLetterIndex(cCurrentLetter);
-		
-		if(iIndex < 0 || iIndex >= m_letters.length - 1)
-			return null;
-		else
-			return m_letters[iIndex + 1];	
-	}
-	
-	public Letter GetNextLetterObj(char cCurrentLetter)
-	{
-		int iIndex = GetLetterIndex(cCurrentLetter);
-		
-		if(iIndex <= 0 || iIndex > m_letters.length - 1)
-			return null;
-		else
-			return m_letters[iIndex - 1];	
-	}
-	*/
 }

@@ -7,13 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Observable;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 
 public class AlphabetPageView extends PageView {
@@ -53,7 +49,6 @@ public class AlphabetPageView extends PageView {
 			
 		
 			// we can now build the letters
-			Font letterFont = new Font("Sans-Serif", Font.PLAIN, 32);
 			Iterator<Letter> iter = m_controller.GetLetterIterator();
 			while (iter.hasNext()) {
 				final Letter l = iter.next();

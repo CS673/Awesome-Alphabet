@@ -1,6 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -8,7 +6,6 @@ import java.util.Observable;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 
 public class TitlePageView extends PageView implements ActionListener {
@@ -23,7 +20,7 @@ public class TitlePageView extends PageView implements ActionListener {
 		m_panel.setLayout(new BorderLayout());
 		m_panel.add(new JLabel("Welcome to the Awesome Alphabet!", JLabel.CENTER), BorderLayout.PAGE_START);
 		
-		ImageIcon icon = getIcon("APictureAlphabet.gif");
+		ImageIcon icon = new ImageIcon(GameImage.getImage("APictureAlphabet.gif"));
 		m_panel.add(new JLabel(icon), BorderLayout.CENTER);
 		
 		JButton startButton = new JButton("Start!");

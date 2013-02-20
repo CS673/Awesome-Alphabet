@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -12,19 +13,20 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 
-public class SoundClass {
+public class GameSound {
+	private static ClassLoader cl = GameSound.class.getClassLoader();
 	private String soundfilepath;
 	private final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(1);
 	
-	public SoundClass(String soundfilepath) {
+	public GameSound(String soundfilepath) {
 		// TODO: Error handling. File not being present.
-		this.soundfilepath = soundfilepath;
+		this.soundfilepath = "resources/" + soundfilepath;
 	}
 	
 	public void PlaySound() {
 		try {
-			File soundFile = new File(soundfilepath);
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+			InputStream is = cl.getResourceAsStream(soundfilepath);
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioIn);
 			clip.start();

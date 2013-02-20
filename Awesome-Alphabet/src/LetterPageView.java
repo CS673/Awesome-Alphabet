@@ -1,8 +1,11 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.Observable;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -10,6 +13,10 @@ public class LetterPageView extends PageView {
 
 	LetterPageController m_controller;
 	
+	JLabel m_uppercase = new JLabel("-", JLabel.CENTER);
+	JLabel m_lowercase = new JLabel("-", JLabel.CENTER);
+	JButton m_image = new JButton("");
+	JLabel m_word = new JLabel("-", JLabel.CENTER);
 	
 	public LetterPageView(String sPageName) {
 		super(sPageName);
@@ -35,6 +42,25 @@ public class LetterPageView extends PageView {
 		b = new JButton("Alphabet Page");
 		b.addActionListener(new ButtonHandler(this, "OnAlphabetPageButtonClick"));
 		buttons.add(b);
+		
+		b = new JButton("Next Example");
+		b.addActionListener(new ButtonHandler(this, "OnGetNextExampleButtonClick"));
+		buttons.add(b);
+		
+		JPanel mid = new JPanel(new GridLayout(2, 3, 50, 10));
+		mid.add(m_uppercase);
+		mid.add(m_lowercase);
+		mid.add(m_image);
+		mid.add(new JLabel());
+		mid.add(new JLabel());
+		mid.add(m_word);
+		m_panel.add(mid, BorderLayout.CENTER);
+		
+		m_uppercase.setFont(letterFont);
+		m_lowercase.setFont(letterFont);
+		m_word.setFont(wordFont);
+		
+		m_image.addActionListener(new ButtonHandler(this, "OnPictureClick"));
 	}
 	
 	public void SetController(LetterPageController controller)
@@ -44,8 +70,12 @@ public class LetterPageView extends PageView {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-
+		Letter letter = (Letter) arg;
+		
+		m_uppercase.setText("" + letter.GetUppercaseLetter());
+		m_lowercase.setText("" + letter.GetLetterAsChar());
+		m_image.setIcon(letter.getIcon(m_image.getWidth(), m_image.getHeight()));
+		m_word.setText(letter.getWord());
 	}
 
 	public void OnLetterClick()
