@@ -1,3 +1,4 @@
+package edu.bu.cs673.AwesomeAlphabet.model;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;

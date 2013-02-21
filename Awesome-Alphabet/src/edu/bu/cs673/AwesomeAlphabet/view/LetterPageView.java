@@ -1,3 +1,5 @@
+package edu.bu.cs673.AwesomeAlphabet.view;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -7,6 +9,10 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
+import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
+import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 
 
 public class LetterPageView extends PageView {

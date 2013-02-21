@@ -1,3 +1,4 @@
+package edu.bu.cs673.AwesomeAlphabet.view;
 import java.awt.Font;
 import java.util.Observer;
 

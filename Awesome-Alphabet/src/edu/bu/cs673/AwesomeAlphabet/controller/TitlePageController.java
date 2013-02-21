@@ -1,3 +1,8 @@
+package edu.bu.cs673.AwesomeAlphabet.controller;
+import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
+import edu.bu.cs673.AwesomeAlphabet.model.PageName;
+import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
+
 
 public class TitlePageController extends PageController {
 

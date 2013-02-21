@@ -1,3 +1,7 @@
+package edu.bu.cs673.AwesomeAlphabet.controller;
+import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
+import edu.bu.cs673.AwesomeAlphabet.model.PageName;
+
 
 public abstract class PageController {
 

@@ -1,3 +1,5 @@
+package edu.bu.cs673.AwesomeAlphabet.view;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -10,6 +12,10 @@ import java.util.Observable;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
+import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
+import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 
 
 public class AlphabetPageView extends PageView {
