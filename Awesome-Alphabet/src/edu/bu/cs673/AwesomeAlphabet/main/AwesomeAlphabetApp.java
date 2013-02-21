@@ -1,5 +1,7 @@
 
 package edu.bu.cs673.AwesomeAlphabet.main;
+import org.apache.log4j.Logger;
+import org.apache.log4j.BasicConfigurator;
 
 
 import java.io.InputStream;
@@ -18,33 +20,36 @@ import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
 
 public class AwesomeAlphabetApp {
 
+	static Logger log = Logger.getLogger(AwesomeAlphabetApp.class);
+	
 	/**
 	 * @param args
 	 * @throws Exception 
 	 */
 	public static void main(String[] args)  {
+		BasicConfigurator.configure();
 
 		MainWindow mainWindow = new MainWindow();
 		
-		//Create Models
+		log.info("Creating the Models");
 		Alphabet alphabet = new Alphabet();
 		
-		//Create Views
+		log.info("Creating the views");
 		TitlePageView titlePageView = new TitlePageView(PageName.TitlePage.toString());
 		AlphabetPageView alphabetPageView = new AlphabetPageView(PageName.AlphabetPage.toString());
 		LetterPageView letterPageView = new LetterPageView(PageName.LetterPage.toString());
 		
-		//Create Controllers
+		log.info("Creating the controllers");
 		titlePageView.SetController(new TitlePageController(mainWindow, titlePageView));
 		alphabetPageView.SetController(new AlphabetPageController(mainWindow, alphabetPageView, alphabet));
 		letterPageView.SetController(new LetterPageController(mainWindow, letterPageView, alphabet));
 		
-		// Register views with main controlling window
+		log.info("Registering views with the main controlling window"); 
 		mainWindow.registerPage(titlePageView);
 		mainWindow.registerPage(alphabetPageView);
 		mainWindow.registerPage(letterPageView);
 		
-		// Process resource file
+		log.info("Processing the resource file");
 		Properties prop = new Properties();
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();           
 		InputStream stream = loader.getResourceAsStream("letter.properties");
