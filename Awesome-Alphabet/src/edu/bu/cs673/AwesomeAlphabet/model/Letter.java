@@ -30,17 +30,24 @@ public class Letter extends Observable {
 	public void addResource(String imageName, String soundName, String wordText) {
 		m_wps.add(new WordPictureSound(wordText, imageName, soundName));
 	}
+	
+	private WordPictureSound getWPSData(int index)
+	{
+		if (m_wps.size() > index)
+			return m_wps.get(index);
+		return null;
+	}
 
 	public String getWord()
 	{
-		WordPictureSound wps = m_wps.get(index);
+		WordPictureSound wps = getWPSData(index);
 		if (wps == null)
 			return null;
 		return wps.GetWordString();
 	}
 
 	public Icon getIcon(int width, int height) {
-		WordPictureSound wps = m_wps.get(index);
+		WordPictureSound wps = getWPSData(index);
 		if (wps == null)
 			return null;
 		return wps.GetWordImage(width, height);
@@ -55,7 +62,7 @@ public class Letter extends Observable {
 	}
 
 	public void playSound() {
-		WordPictureSound wps = m_wps.get(index);
+		WordPictureSound wps = getWPSData(index);
 		if (wps == null)
 			return;
 		wps.PlaySound();
