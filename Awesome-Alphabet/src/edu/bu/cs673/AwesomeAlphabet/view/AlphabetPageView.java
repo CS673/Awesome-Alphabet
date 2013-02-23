@@ -17,12 +17,23 @@ import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 
 
+/**
+ * This class defines the Alphabet Page View.  From this view,
+ * the user can play the alphabet song, go to the Title Page,
+ * or click on a letter button to go to a specific Letter Page.
+ */
 public class AlphabetPageView extends PageView {
 
 	private AlphabetPageController m_controller;
 	
 	private JPanel letterPanel;
 
+	
+	/**
+	 * Class constructor.
+	 * 
+	 * @param sPageName   The page name associated with this view.
+	 */
 	public AlphabetPageView(String sPageName) {
 		super(sPageName);
 		
@@ -47,12 +58,19 @@ public class AlphabetPageView extends PageView {
 		m_panel.add(letterPanel, BorderLayout.CENTER);
 	}
 	
+	
+	/**
+	 * Sets the controller associated with this view
+	 * and creates the letter buttons.
+	 * 
+	 * @param controller   The controller.
+	 */
 	public void SetController(AlphabetPageController controller)
 	{
 		if (m_controller == null) {
 			m_controller = controller;
 			
-		
+
 			// we can now build the letters
 			Iterator<Letter> iter = m_controller.GetLetterIterator();
 			while (iter.hasNext()) {
@@ -68,25 +86,47 @@ public class AlphabetPageView extends PageView {
 			}
 		}
 	}
-
+	
+	
+	/**
+	 * Causes the view to be updated when the model changes.
+	 * Currently this method does nothing.  It is required
+	 * for the observer pattern.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-
+		// Do Nothing
 	}
 	
+	
+	/**
+	 * Called when a letter button is clicked and
+	 * causes the Letter Page to be shown.
+	 * 
+	 * @param cLetter   The letter to show.
+	 */
 	public void OnLetterButtonClick(Letter cLetter)
 	{
 		if (m_controller != null)
 			m_controller.GoToLetterPage(cLetter);
 	}
 	
+	
+	/**
+	 * Called when the Title Page button is clicked
+	 * and causes the Title Page to be shown.
+	 */
 	public void OnTitlePageButtonClick()
 	{
 		if (m_controller != null)
 			m_controller.GoToTitlePage();
 	}
 	
+	
+	/**
+	 * Called when the Alphabet Song button is clicked
+	 * and causes the alphabet song to be played.
+	 */
 	public void OnPlayAlphabetSongButtonClick()
 	{
 		if (m_controller != null)

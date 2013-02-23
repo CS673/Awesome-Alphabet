@@ -5,18 +5,38 @@ import java.util.Observable;
 import java.util.Properties;
 
 
+/**
+ * The class defines the Alphabet model.  It creates and
+ * maintains references to 26 Letter objects; one for each
+ * letter of the English alphabet.  It also maintains the
+ * current letter selection and has methods for getting
+ * the Letter object, changing the letter selection, and
+ * loading resources.
+ */
 public class Alphabet extends Observable {
 
 	private Letter[] m_letters = new Letter[26];
 	int m_iCurLetterIndex;
 	
 	
+	/**
+	 * Class constructor.  Responsible for creating the
+	 * Letter objects.
+	 */
 	public Alphabet()
 	{
 		for(int i=0; i<26; i++)
 			m_letters[i] = new Letter((char)((int)'a' + i));
 	}
 	
+	
+	/**
+	 * Gets the array index of the specified letter.
+	 * 
+	 * @param c   The letter, represented as a char.
+	 * @return    The index of the letter in the array or
+	 *            -1 if the letter is invalid.
+	 */
 	private int GetLetterIndex(char c)
 	{
 		char cTemp = Character.toLowerCase(c);
@@ -27,14 +47,34 @@ public class Alphabet extends Observable {
 			return (int)cTemp - (int)'a';		
 	}
 	
+	
+	/**
+	 * Gets an iterator to the list of Letter objects.
+	 * 
+	 * @return   An iterator to the list of Letter objects. 
+	 */
 	public Iterator<Letter> GetIterator()
 	{
 		return Arrays.asList(m_letters).iterator();
 	}
 	
-	public Letter SetCurrentLetter(Letter cLetter)
+	
+	
+	/**
+	 * Sets the letter selection.
+	 * 
+	 * @param letter   The letter to select.
+	 * @return         A reference to the newly selected Letter
+	 *                 object or null if the selection was invalid.
+	 */
+	public Letter SetCurrentLetter(Letter letter)
 	{
-		int iIndex = GetLetterIndex(cLetter.GetLetterAsChar());
+		int iIndex;
+		
+		if(letter == null)
+			return null;
+		
+		iIndex = GetLetterIndex(letter.GetLetterAsChar());
 		
 		if(iIndex < 0 || iIndex > m_letters.length - 1)
 			return null;
@@ -47,11 +87,24 @@ public class Alphabet extends Observable {
 		}
 	}
 	
+	
+	/**
+	 * Returns the selected letter.
+	 * 
+	 * @return   The selected letter.
+	 */
 	public Letter GetCurrentLetter()
 	{
 		return m_letters[m_iCurLetterIndex];
 	}
 	
+	
+	/**
+	 * Changes letter selection to previous letter.
+	 * 
+	 * @return   The previous letter object or null
+	 *           if there are no previous letters.
+	 */
 	public Letter GoToPreviousLetter()
 	{
 		if(m_iCurLetterIndex <= 0)
@@ -65,6 +118,13 @@ public class Alphabet extends Observable {
 		}
 	}
 	
+	
+	/**
+	 * Changes letter selection to next letter.
+	 * 
+	 * @return   The next letter object or null
+	 *           if there are no more letters.
+	 */
 	public Letter GoToNextLetter()
 	{
 		if(m_iCurLetterIndex >= m_letters.length - 1)
@@ -78,6 +138,13 @@ public class Alphabet extends Observable {
 		}
 	}
 	
+	
+	
+	/**
+	 * Loads word, picture, and sound resources into Letter objects.
+	 * 
+	 * @param prop   The property list containing resource information.
+	 */
 	public void LoadResources(Properties prop) {
 		for (char c = 'a'; c <= 'z'; c++) {
 			for (int i = 1; i <= 10; i++) {

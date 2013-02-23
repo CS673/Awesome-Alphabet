@@ -1,7 +1,10 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
-/*
+
+/**
  * This class contains the application version number and related information.
- * 
+ */
+
+/* 
  * Version numbers are in the form w.x.y.z where:
  * 
  *    w is a major change.

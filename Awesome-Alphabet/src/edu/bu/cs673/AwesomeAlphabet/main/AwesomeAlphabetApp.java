@@ -18,12 +18,20 @@ import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
 
 
+/**
+ * This class contains the application's main() method.
+ */
 public class AwesomeAlphabetApp {
 
 	static Logger log = Logger.getLogger(AwesomeAlphabetApp.class);
 	
 	/**
-	 * @param args
+	 * Main entry point into the application.  It is responsible
+	 * for creating the models, views, controllers, and main
+	 * window.  In addition, it processes the resource file and
+	 * causes the Title Page to be shown.
+	 * 
+	 * @param args 			Application arguments.
 	 * @throws Exception 
 	 */
 	public static void main(String[] args)  {
