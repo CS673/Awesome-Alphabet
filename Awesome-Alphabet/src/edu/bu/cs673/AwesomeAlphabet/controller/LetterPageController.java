@@ -11,7 +11,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
- * This class defines the Alphabet Page Controller.
+ * This class defines the Letter Page Controller.
  */
 public class LetterPageController extends PageController {
 
