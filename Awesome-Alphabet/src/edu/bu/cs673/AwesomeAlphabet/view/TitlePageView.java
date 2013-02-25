@@ -87,4 +87,8 @@ public class TitlePageView extends PageView implements ActionListener {
 		if (m_controller != null)
 			m_controller.Start();
 	}
+	
+	public void activated() {
+		// Do nothing
+	}
 }

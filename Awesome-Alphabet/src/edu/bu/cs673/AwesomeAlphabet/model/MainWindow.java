@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.util.Hashtable;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ public class MainWindow implements IPageObserver {
 	private JFrame m_frame;
 	private JPanel m_curView;
 	private CardLayout m_cl;
+	private Hashtable<String, PageView> m_pageHash;
 	
 	public MainWindow() {
 		m_frame = new JFrame("Awesome Alphabet");
@@ -28,11 +30,14 @@ public class MainWindow implements IPageObserver {
 	    m_cl = new CardLayout();
 	    m_curView = new JPanel(m_cl);
 	    content.add(m_curView, BorderLayout.CENTER);
+	    
+	    m_pageHash = new Hashtable();
 	}
 	
 	public void registerPage(PageView page)
 	{
 		m_curView.add(page.getPageName(), page.getPagePanel());
+		m_pageHash.put(page.getPageName(),  page);
 	}
 	
 	public void Show()
@@ -43,6 +48,8 @@ public class MainWindow implements IPageObserver {
 	@Override
 	public boolean GoToPage(String sPageName)
 	{
+		PageView pv = m_pageHash.get(sPageName);
+		pv.activated();
 		m_cl.show(m_curView, sPageName);
 		return true;
 	}

@@ -80,7 +80,7 @@ public class AlphabetPageController extends PageController {
 	 */
 	public boolean GoToLetterPage(Letter cLetter)
 	{
-		if (m_alphabet.SetCurrentLetter(cLetter) != null)
+		if (m_alphabet.SetCurrentLetter(cLetter) != null) 
 			return GoToPage(PageName.LetterPage);
 		else
 			return false;

@@ -181,4 +181,9 @@ public class LetterPageController extends PageController {
 	{
 		throw new NotImplementedException();	
 	}
+
+
+	public void ObserveCurrentLetter() {
+		m_alphabet.GetCurrentLetter().addObserver(m_view);
+	}
 }

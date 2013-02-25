@@ -51,4 +51,7 @@ public abstract class PageView implements Observer {
 	{
 		return m_panel;
 	}
+
+
+	abstract public void activated();
 }

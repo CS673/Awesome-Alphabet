@@ -132,4 +132,8 @@ public class AlphabetPageView extends PageView {
 		if (m_controller != null)
 			m_controller.PlayAlphabetSong();
 	}
+	
+	public void activated() {
+		// do nothing
+	}
 }

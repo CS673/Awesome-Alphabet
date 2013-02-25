@@ -196,7 +196,11 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnGetNextExampleButtonClick()
 	{
-		if(m_controller != null)
+		if (m_controller != null)
 			m_controller.GetNextExample();
+	}
+	
+	public void activated() {
+		m_controller.ObserveCurrentLetter();
 	}
 }
