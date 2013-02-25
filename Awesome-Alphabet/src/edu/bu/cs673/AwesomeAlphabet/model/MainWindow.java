@@ -22,6 +22,7 @@ public class MainWindow implements IPageObserver {
 	public MainWindow() {
 		m_frame = new JFrame("Awesome Alphabet");
 		m_frame.setSize(800, 600);
+		m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Container content = m_frame.getContentPane();
 	    content.setBackground(Color.white);
