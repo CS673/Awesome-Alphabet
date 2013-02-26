@@ -6,6 +6,7 @@
     <property name="build.dir"   value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
+	<property name="test.dir"  value="${src.dir}/edu/bu/cs673/AwesomeAlphabet/test"/>
 
     <property name="main-class"  value="edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp"/>
 	<property name="lib.dir"  value="lib"/>
@@ -14,7 +15,6 @@
 	 <path id="classpath">
 	        <fileset dir="${lib.dir}" includes="**/*.jar"/>
 	 </path>
-
 
 
     <target name="clean">
@@ -38,15 +38,30 @@
         </jar>
     </target>
 
+	<path id="application" location="${jar.dir}/${ant.project.name}.jar"/>
+	
     <target name="run" depends="jar">
     	<java fork="true" classname="${main-class}">
     	     <classpath>
     	                <path refid="classpath"/>
-    	                <path location="${jar.dir}/${ant.project.name}.jar"/>
+    	     			<path refid="application"/>
     	            </classpath>
     	 </java>
     </target>
 
+	<target name="junit" depends="jar">
+	        <junit printsummary="yes">
+	            <classpath>
+	                <path refid="classpath"/>
+	                <path refid="application"/>
+	            </classpath>
+	            
+	            <batchtest fork="yes">
+	                <fileset dir="${test.dir}" includes="*Test.java"/>
+	            </batchtest>
+	        </junit>
+	    </target>
+	
     <target name="clean-build" depends="clean,jar"/>
 
     <target name="main" depends="clean,run"/>
