@@ -17,6 +17,7 @@ public class Alphabet extends Observable {
 
 	private Letter[] m_letters = new Letter[26];
 	public int m_iCurLetterIndex;
+	private GameSound m_alphabetsong;
 	
 	
 	/**
@@ -161,5 +162,18 @@ public class Alphabet extends Observable {
 				}
 			}
 		}
+		// Load alphabet song
+		try {
+			String soundName = prop.getProperty("alphabetsong");
+			if (soundName != null) {
+				m_alphabetsong = new GameSound(soundName);
+			}
+		} catch (Exception e) {
+			
+		}
+		
+	}
+	public void PlayAlphabetSong() {
+		m_alphabetsong.PlaySound();
 	}
 }
