@@ -170,6 +170,15 @@ public class Alphabet extends Observable {
 			} catch (Exception e) {
 				
 			}
+			// Add Phonic Sound
+			try {
+				String propName = "letter." + c + ".phonicsound";
+				String phonicSoundName = prop.getProperty(propName);
+				if (phonicSoundName != null)
+					m_letters[GetLetterIndex(c)].addPhonicSoundResource(phonicSoundName);
+			} catch (Exception e) {
+				
+			}
 		}
 		// Load alphabet song
 		try {

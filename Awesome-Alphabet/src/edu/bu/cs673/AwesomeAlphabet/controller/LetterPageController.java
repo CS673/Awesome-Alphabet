@@ -48,8 +48,9 @@ public class LetterPageController extends PageController {
 	 */
 	public void LetterClicked()
 	{
-		//Play letter sound
-		throw new NotImplementedException();
+		//Play phonic sound
+		Letter letter = m_alphabet.GetCurrentLetter();
+		letter.playSoundPhonic();
 	}
 	
 	
