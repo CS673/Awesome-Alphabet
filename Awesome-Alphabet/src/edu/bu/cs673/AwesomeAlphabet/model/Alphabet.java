@@ -16,7 +16,7 @@ import java.util.Properties;
 public class Alphabet extends Observable {
 
 	private Letter[] m_letters = new Letter[26];
-	int m_iCurLetterIndex;
+	public int m_iCurLetterIndex;
 	
 	
 	/**
