@@ -1,15 +1,18 @@
 package edu.bu.cs673.AwesomeAlphabet.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Iterator;
-import java.util.Observable;
+import java.util.Properties;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
-import java.util.Observer;
-import java.util.Properties;
-import org.junit.*;
-import static org.junit.Assert.*;
 
 /**
  * The class <code>AlphabetTest</code> contains tests for the class <code>{@link Alphabet}</code>.

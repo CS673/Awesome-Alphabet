@@ -32,7 +32,7 @@ public class MainWindow implements IPageObserver {
 	    m_curView = new JPanel(m_cl);
 	    content.add(m_curView, BorderLayout.CENTER);
 	    
-	    m_pageHash = new Hashtable();
+	    m_pageHash = new Hashtable<String, PageView>();
 	}
 	
 	public void registerPage(PageView page)
