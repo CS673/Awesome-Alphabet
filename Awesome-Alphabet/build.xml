@@ -4,9 +4,11 @@
     <property name="src.dir"     value="src"/>
 
     <property name="build.dir"   value="build"/>
+	<property name="bin.dir"   value="bin"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
-
+	<property name="test.dir"  value="${src.dir}/edu/bu/cs673/AwesomeAlphabet/test"/>
+	<property name="report.dir"  value="${build.dir}/junitreport"/>
     <property name="main-class"  value="edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp"/>
 	<property name="lib.dir"  value="lib"/>
 	
@@ -16,9 +18,9 @@
 	 </path>
 
 
-
     <target name="clean">
         <delete dir="${build.dir}"/>
+    	<delete dir="${bin.dir}"/>
     </target>
 
     <target name="compile">
@@ -38,15 +40,40 @@
         </jar>
     </target>
 
+	<path id="application" location="${jar.dir}/${ant.project.name}.jar"/>
+	
     <target name="run" depends="jar">
     	<java fork="true" classname="${main-class}">
     	     <classpath>
     	                <path refid="classpath"/>
-    	                <path location="${jar.dir}/${ant.project.name}.jar"/>
+    	     			<path refid="application"/>
     	            </classpath>
     	 </java>
     </target>
 
+	<target name="junit" depends="jar">
+		<mkdir dir="${report.dir}"/>
+	        <junit printsummary="yes">
+	            <classpath>
+	                <path refid="classpath"/>
+	                <path refid="application"/>
+	            </classpath>
+	            
+	        	<formatter type="xml"/>
+	        	
+	            <batchtest fork="yes" todir="${report.dir}">
+	                <fileset dir="${test.dir}" includes="*Test.java"/>
+	            </batchtest>
+	        </junit>
+	 </target>
+	
+	<target name="junitreport">
+	        <junitreport todir="${report.dir}">
+	            <fileset dir="${report.dir}" includes="TEST-*.xml"/>
+	            <report todir="${report.dir}"/>
+	        </junitreport>
+	 </target>
+	
     <target name="clean-build" depends="clean,jar"/>
 
     <target name="main" depends="clean,run"/>
