@@ -9,7 +9,6 @@ import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import org.junit.*;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import static org.junit.Assert.*;
 
 /**
