@@ -18,6 +18,7 @@ public class Letter extends Observable {
 
 	private char m_cLetter;
 	private List<WordPictureSound> m_wps = new LinkedList<WordPictureSound>();
+	private GameSound m_LetterSound;
 	private int index = 0;
 	
 	
@@ -65,6 +66,9 @@ public class Letter extends Observable {
 		m_wps.add(new WordPictureSound(wordText, imageName, soundName));
 	}
 	
+	public void addLetterSoundResource(String soundName) {
+		m_LetterSound = new GameSound(soundName);
+	}
 	
 	/**
 	 * Gets the WordPictureSound object stored at the provided
@@ -130,5 +134,11 @@ public class Letter extends Observable {
 		if (wps == null)
 			return;
 		wps.PlaySound();
+	}
+	
+	public void playSoundLetter() {
+		if (m_LetterSound == null)
+			return;
+		m_LetterSound.PlaySound();
 	}
 }

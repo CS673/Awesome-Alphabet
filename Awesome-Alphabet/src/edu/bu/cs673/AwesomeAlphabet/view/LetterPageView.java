@@ -106,6 +106,7 @@ public class LetterPageView extends PageView {
 		m_lowercase.setText("" + letter.GetLetterAsChar());
 		m_image.setIcon(letter.getIcon(m_image.getWidth(), m_image.getHeight()));
 		m_word.setText(letter.getWord());
+		letter.playSoundLetter();
 	}
 
 	
