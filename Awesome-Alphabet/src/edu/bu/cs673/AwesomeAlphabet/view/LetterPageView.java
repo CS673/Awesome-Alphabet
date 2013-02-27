@@ -31,6 +31,7 @@ public class LetterPageView extends PageView {
 	JButton m_image = new JButton("");
 	JLabel m_word = new JLabel("-", JLabel.CENTER);
 	
+	Letter m_currentLetter;
 	
 	/**
 	 * Class constructor.
@@ -39,33 +40,37 @@ public class LetterPageView extends PageView {
 	 */
 	public LetterPageView(String sPageName) {
 		super(sPageName);
+		
+		m_image.setBorder(border);
 
 		m_panel.setLayout(new BorderLayout());
+		JPanel buttonBar = new JPanel(new BorderLayout());
+		m_panel.add(buttonBar, BorderLayout.SOUTH);
+				
 		JPanel buttons = new JPanel(new FlowLayout());
-		m_panel.add(buttons, BorderLayout.PAGE_END);
-		
+		buttonBar.add(buttons, BorderLayout.CENTER);
 		JButton b;
-		
-		b = new JButton("Previous Letter");
-		b.addActionListener(new ButtonHandler(this, "OnPreviousLetterButtonClick"));
-		buttons.add(b);
-		
-		b = new JButton("Next Letter");
-		b.addActionListener(new ButtonHandler(this, "OnNextLetterButtonClick"));
-		buttons.add(b);
-		
-		b = new JButton("Title Page");
+				
+		b = getButtonImage(NAV_BUTTON_TITLE_PAGE, "Title Page");
 		b.addActionListener(new ButtonHandler(this, "OnTitlePageButtonClick"));
 		buttons.add(b);
 		
-		b = new JButton("Alphabet Page");
+		b = getButtonImage(NAV_BUTTON_ALPHABET_PAGE, "Alphabet Page");
 		b.addActionListener(new ButtonHandler(this, "OnAlphabetPageButtonClick"));
 		buttons.add(b);
-		
-		b = new JButton("Next Example");
+
+		b = getButtonImage(NAV_BUTTON_NEXT_EXAMPLE, "Next Example");
 		b.addActionListener(new ButtonHandler(this, "OnGetNextExampleButtonClick"));
 		buttons.add(b);
+
+		b = getButtonImage(NAV_BUTTON_PREV_LETTER, "Previous Letter");
+		b.addActionListener(new ButtonHandler(this, "OnPreviousLetterButtonClick"));
+		buttonBar.add(b, BorderLayout.WEST);
 		
+		b = getButtonImage(NAV_BUTTON_NEXT_LETTER, "Next Letter");
+		b.addActionListener(new ButtonHandler(this, "OnNextLetterButtonClick"));
+		buttonBar.add(b, BorderLayout.EAST);
+
 		JPanel mid = new JPanel(new GridLayout(2, 3, 50, 10));
 		mid.add(m_uppercase);
 		mid.add(m_lowercase);
@@ -102,11 +107,15 @@ public class LetterPageView extends PageView {
 	public void update(Observable o, Object arg) {
 		Letter letter = (Letter) arg;
 		
+		if (letter != m_currentLetter) {
+			m_currentLetter = letter;
+			letter.playSoundLetter();
+		}
+		
 		m_uppercase.setText("" + letter.GetUppercaseLetter());
 		m_lowercase.setText("" + letter.GetLetterAsChar());
 		m_image.setIcon(letter.getIcon(m_image.getWidth(), m_image.getHeight()));
 		m_word.setText(letter.getWord());
-		letter.playSoundLetter();
 	}
 
 	
@@ -201,7 +210,11 @@ public class LetterPageView extends PageView {
 			m_controller.GetNextExample();
 	}
 	
+	/**
+	 * Lets the controller know that this view has become active.
+	 */
 	public void activated() {
 		m_controller.ObserveCurrentLetter();
 	}
+
 }

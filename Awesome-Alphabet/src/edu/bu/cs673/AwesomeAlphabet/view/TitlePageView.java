@@ -3,20 +3,17 @@ package edu.bu.cs673.AwesomeAlphabet.view;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
-import edu.bu.cs673.AwesomeAlphabet.model.GameImage;
 import edu.bu.cs673.AwesomeAlphabet.model.Version;
 
 
@@ -39,8 +36,6 @@ public class TitlePageView extends PageView implements ActionListener {
 		super(sPageName);
 		
 		JButton button;
-		Image image;
-		
 		m_controller = null;
 
 		//Set Background Image and Main Panel Layout
@@ -53,15 +48,7 @@ public class TitlePageView extends PageView implements ActionListener {
 		Box box = Box.createVerticalBox(); 
 
 		box.add(Box.createVerticalStrut(300));
-		
-		image = GameImage.getImage("Graphics/StartButton.png");
-		if(image == null)
-			button = new JButton("Start");
-		else
-		{
-			button = new JButton(new ImageIcon(image));
-			button.setBorder(BorderFactory.createEmptyBorder());
-		}
+		button = getButtonImage(NAV_BUTTON_START, "Start");
 		button.addActionListener(this);
 		box.add(button);
 
