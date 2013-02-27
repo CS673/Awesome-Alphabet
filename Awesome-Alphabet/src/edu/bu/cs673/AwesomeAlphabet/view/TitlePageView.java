@@ -2,16 +2,22 @@
 package edu.bu.cs673.AwesomeAlphabet.view;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
 import edu.bu.cs673.AwesomeAlphabet.model.GameImage;
+import edu.bu.cs673.AwesomeAlphabet.model.Version;
 
 
 /**
@@ -32,17 +38,44 @@ public class TitlePageView extends PageView implements ActionListener {
 	public TitlePageView(String sPageName)  {
 		super(sPageName);
 		
+		JButton button;
+		Image image;
+		
 		m_controller = null;
+
+		//Set Background Image and Main Panel Layout
+		m_panel.SetBackgroundImage("Graphics/TitlePage.png");
 		m_panel.setLayout(new BorderLayout());
-		m_panel.add(new JLabel("Welcome to the Awesome Alphabet!", JLabel.CENTER), BorderLayout.PAGE_START);
 		
-		ImageIcon icon = new ImageIcon(GameImage.getImage("APictureAlphabet.gif"));
-		m_panel.add(new JLabel(icon), BorderLayout.CENTER);
 		
-		JButton startButton = new JButton("Start!");
-		m_panel.add(startButton, BorderLayout.PAGE_END);
+		//Create Center Panel and Buttons
+		JPanel centerPanel = new JPanel();
+		Box box = Box.createVerticalBox(); 
+
+		box.add(Box.createVerticalStrut(300));
 		
-		startButton.addActionListener(this);
+		image = GameImage.getImage("Graphics/StartButton.png");
+		if(image == null)
+			button = new JButton("Start");
+		else
+		{
+			button = new JButton(new ImageIcon(image));
+			button.setBorder(BorderFactory.createEmptyBorder());
+		}
+		button.addActionListener(this);
+		box.add(button);
+
+		centerPanel.setOpaque(false);
+		centerPanel.add(box);
+	
+		m_panel.add(centerPanel, BorderLayout.CENTER);
+		
+		
+		//Add Version Label
+		JLabel versionLabel = new JLabel("Version " + Version.sVersionNum);
+		versionLabel.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+		versionLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		m_panel.add(versionLabel, BorderLayout.SOUTH);
 	}
 	
 	
