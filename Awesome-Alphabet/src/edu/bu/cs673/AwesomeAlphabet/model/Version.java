@@ -23,5 +23,5 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 public class Version {
 
 	public static final String sAppName = "Awesome Alphabet";
-	public static final String sVersionNum = "0.0.0.0";
+	public static final String sVersionNum = "0.1.0.0";
 }
