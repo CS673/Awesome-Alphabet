@@ -67,7 +67,7 @@ public class LetterPageView extends PageView {
 		b.addActionListener(new ButtonHandler(this, "OnGetNextExampleButtonClick"));
 		buttons.add(b);
 		
-		JPanel mid = new JPanel(new GridLayout(2, 3, 50, 10));
+		JPanel mid = new JPanel(new GridLayout(2, 3, 0, 30));
 		mid.add(m_uppercase);
 		mid.add(m_lowercase);
 		mid.add(m_image);
@@ -79,6 +79,8 @@ public class LetterPageView extends PageView {
 		m_uppercase.setFont(letterFont);
 		m_lowercase.setFont(letterFont);
 		m_word.setFont(wordFont);
+		
+		m_word.setVerticalAlignment(JLabel.TOP);
 		
 		m_image.addActionListener(new ButtonHandler(this, "OnPictureClick"));
 		m_uppercase.addActionListener(new ButtonHandler(this, "OnLetterClick"));
