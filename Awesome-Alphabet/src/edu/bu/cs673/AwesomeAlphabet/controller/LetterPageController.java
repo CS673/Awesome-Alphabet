@@ -94,6 +94,7 @@ public class LetterPageController extends PageController {
 		
 		letter.deleteObserver(m_view);
 		nextLetter.addObserver(m_view);
+		nextLetter.playSoundLetter();
 		return true;
 	}
 	
@@ -114,6 +115,7 @@ public class LetterPageController extends PageController {
 		
 		letter.deleteObserver(m_view);
 		prevLetter.addObserver(m_view);
+		prevLetter.playSoundLetter();
 		return true;	
 	}
 	

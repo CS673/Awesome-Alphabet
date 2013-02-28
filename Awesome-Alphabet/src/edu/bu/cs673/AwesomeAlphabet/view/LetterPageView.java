@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
+import edu.bu.cs673.AwesomeAlphabet.controller.LabelClickHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 
@@ -26,8 +27,8 @@ public class LetterPageView extends PageView {
 
 	LetterPageController m_controller;
 	
-	JLabel m_uppercase = new JLabel("-", JLabel.CENTER);
-	JLabel m_lowercase = new JLabel("-", JLabel.CENTER);
+	JButton m_uppercase = new JButton("");
+	JButton m_lowercase = new JButton("");
 	JButton m_image = new JButton("");
 	JLabel m_word = new JLabel("-", JLabel.CENTER);
 	
@@ -67,11 +68,12 @@ public class LetterPageView extends PageView {
 		b.addActionListener(new ButtonHandler(this, "OnPreviousLetterButtonClick"));
 		buttonBar.add(b, BorderLayout.WEST);
 		
+
 		b = getButtonImage(NAV_BUTTON_NEXT_LETTER, "Next Letter");
 		b.addActionListener(new ButtonHandler(this, "OnNextLetterButtonClick"));
 		buttonBar.add(b, BorderLayout.EAST);
 
-		JPanel mid = new JPanel(new GridLayout(2, 3, 50, 10));
+		JPanel mid = new JPanel(new GridLayout(2, 3, 0, 30));
 		mid.add(m_uppercase);
 		mid.add(m_lowercase);
 		mid.add(m_image);
@@ -84,7 +86,12 @@ public class LetterPageView extends PageView {
 		m_lowercase.setFont(letterFont);
 		m_word.setFont(wordFont);
 		
+		m_word.setVerticalAlignment(JLabel.TOP);
+		
 		m_image.addActionListener(new ButtonHandler(this, "OnPictureClick"));
+		m_uppercase.addActionListener(new ButtonHandler(this, "OnLetterClick"));
+		m_lowercase.addActionListener(new ButtonHandler(this, "OnLetterClick"));
+		m_word.addMouseListener(new LabelClickHandler(this, "OnPictureClick"));
 	}
 	
 	

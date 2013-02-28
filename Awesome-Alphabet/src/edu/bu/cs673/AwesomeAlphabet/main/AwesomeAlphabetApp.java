@@ -65,7 +65,9 @@ public class AwesomeAlphabetApp {
 			prop.load(stream);
 			alphabet.LoadResources(prop);
 		} catch (Exception e) {
-			// TODO: handle exception
+			log.error("An exception occurred while loading the letter properties file");
+			log.error(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		mainWindow.GoToPage(PageName.TitlePage.toString());
