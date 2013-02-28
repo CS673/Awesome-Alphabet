@@ -7,8 +7,6 @@ import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 
 /**
  * This class defines the Alphabet Page Controller.
