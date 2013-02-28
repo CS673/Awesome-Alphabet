@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
+import edu.bu.cs673.AwesomeAlphabet.controller.LabelClickHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 
@@ -80,6 +81,9 @@ public class LetterPageView extends PageView {
 		m_word.setFont(wordFont);
 		
 		m_image.addActionListener(new ButtonHandler(this, "OnPictureClick"));
+		m_uppercase.addMouseListener(new LabelClickHandler(this, "OnLetterClick"));
+		m_lowercase.addMouseListener(new LabelClickHandler(this, "OnLetterClick"));
+		m_word.addMouseListener(new LabelClickHandler(this, "OnPictureClick"));
 	}
 	
 	
