@@ -114,11 +114,6 @@ public class LetterPageView extends PageView {
 	public void update(Observable o, Object arg) {
 		Letter letter = (Letter) arg;
 		
-		if (letter != m_currentLetter) {
-			m_currentLetter = letter;
-			letter.playSoundLetter();
-		}
-		
 		m_uppercase.setText("" + letter.GetUppercaseLetter());
 		m_lowercase.setText("" + letter.GetLetterAsChar());
 		m_image.setIcon(letter.getIcon(m_image.getWidth(), m_image.getHeight()));
