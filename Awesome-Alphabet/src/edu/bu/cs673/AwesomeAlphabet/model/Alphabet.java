@@ -4,6 +4,10 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
+import edu.bu.cs673.AwesomeAlphabet.controller.LabelClickHandler;
+
 
 /**
  * The class defines the Alphabet model.  It creates and
@@ -18,6 +22,7 @@ public class Alphabet extends Observable {
 	private Letter[] m_letters = new Letter[26];
 	public int m_iCurLetterIndex;
 	private GameSound m_alphabetsong;
+	static Logger log = Logger.getLogger(Alphabet.class);
 	
 	
 	/**
@@ -159,35 +164,46 @@ public class Alphabet extends Observable {
 					m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText);
 				} catch (Exception e) {
 					i = 10;
+					log.error("An exception occurred while loading properties for leter "+c);
+					log.error(e.getMessage());
+					e.printStackTrace();
 				}
 			}
-			// Add Letter Sound
+			log.info("Add Letter Sound");
 			try {
 				String propName = "letter." + c + ".lettersound";
 				String letterSoundName = prop.getProperty(propName);
 				if (letterSoundName != null)
 					m_letters[GetLetterIndex(c)].addLetterSoundResource(letterSoundName);
 			} catch (Exception e) {
-				
+				log.error("An exception occurred while getting the letter sound for letter "+c);
+				log.error(e.getMessage());
+				e.printStackTrace();
 			}
-			// Add Phonic Sound
+			// 
+			log.info("Add Phonic Sound");
 			try {
 				String propName = "letter." + c + ".phonicsound";
 				String phonicSoundName = prop.getProperty(propName);
 				if (phonicSoundName != null)
 					m_letters[GetLetterIndex(c)].addPhonicSoundResource(phonicSoundName);
 			} catch (Exception e) {
-				
+				log.error("An exception occurred while getting the phonice sound for letter "+c);
+				log.error(e.getMessage());
+				e.printStackTrace();
 			}
 		}
-		// Load alphabet song
+		
+		log.info("Load alphabet song");
 		try {
 			String soundName = prop.getProperty("alphabetsong");
 			if (soundName != null) {
 				m_alphabetsong = new GameSound(soundName);
 			}
 		} catch (Exception e) {
-			
+			log.error("An exception occurred while loading the alphabet song ");
+			log.error(e.getMessage());
+			e.printStackTrace();
 		}
 		
 	}
