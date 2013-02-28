@@ -27,8 +27,8 @@ public class LetterPageView extends PageView {
 
 	LetterPageController m_controller;
 	
-	JLabel m_uppercase = new JLabel("-", JLabel.CENTER);
-	JLabel m_lowercase = new JLabel("-", JLabel.CENTER);
+	JButton m_uppercase = new JButton("");
+	JButton m_lowercase = new JButton("");
 	JButton m_image = new JButton("");
 	JLabel m_word = new JLabel("-", JLabel.CENTER);
 	
@@ -81,8 +81,8 @@ public class LetterPageView extends PageView {
 		m_word.setFont(wordFont);
 		
 		m_image.addActionListener(new ButtonHandler(this, "OnPictureClick"));
-		m_uppercase.addMouseListener(new LabelClickHandler(this, "OnLetterClick"));
-		m_lowercase.addMouseListener(new LabelClickHandler(this, "OnLetterClick"));
+		m_uppercase.addActionListener(new ButtonHandler(this, "OnLetterClick"));
+		m_lowercase.addActionListener(new ButtonHandler(this, "OnLetterClick"));
 		m_word.addMouseListener(new LabelClickHandler(this, "OnPictureClick"));
 	}
 	
