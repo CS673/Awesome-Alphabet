@@ -7,7 +7,7 @@
 	<property name="bin.dir"   value="bin"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
-	<property name="test.dir"  value="${src.dir}/edu/bu/cs673/AwesomeAlphabet/test"/>
+	<property name="test.dir"  value="test"/>
 	<property name="report.dir"  value="${build.dir}/junitreport"/>
     <property name="main-class"  value="edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp"/>
 	<property name="lib.dir"  value="lib"/>
@@ -47,7 +47,7 @@
     	     <classpath>
     	                <path refid="classpath"/>
     	     			<path refid="application"/>
-    	            </classpath>
+    	     </classpath>
     	 </java>
     </target>
 
@@ -77,6 +77,23 @@
     <target name="clean-build" depends="clean,jar"/>
 
     <target name="main" depends="clean,run"/>
+	
+	<target name="javadocPDF" depends="jar">
+		<javadoc doclet="com.tarsec.javadoc.pdfdoclet.PDFDoclet"
+	        docletpath="${lib.dir}/pdfdoclet-1.0.2-all.jar"
+	        packagenames="edu.bu.*"
+			additionalparam = "-pdf ./Documents/Javadoc/javadoc.pdf -config /${src.dir}/pdfdoclet.properties"
+	        private="yes">
+			
+			<classpath>
+				   <path refid="classpath"/>
+			</classpath>
+			
+	        <sourcepath>
+	            <pathelement location="./src"/>
+	        </sourcepath>
+	    </javadoc>
+		</target>
 
 
 </project>
