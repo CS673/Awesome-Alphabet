@@ -81,8 +81,12 @@ public class AlphabetPageController extends PageController {
 	 */
 	public boolean GoToLetterPage(Letter cLetter)
 	{
-		if (m_alphabet.SetCurrentLetter(cLetter) != null) 
-			return GoToPage(PageName.LetterPage);
+		Letter letter = m_alphabet.SetCurrentLetter(cLetter);
+		if (letter != null && GoToPage(PageName.LetterPage))
+		{
+			letter.playSoundLetter();
+			return true;
+		}	
 		else
 			return false;
 	}
