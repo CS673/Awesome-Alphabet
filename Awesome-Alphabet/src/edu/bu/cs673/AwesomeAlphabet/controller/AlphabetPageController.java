@@ -58,7 +58,7 @@ public class AlphabetPageController extends PageController {
 	{
 		//TODO: Implement this method
 		m_alphabet.PlayAlphabetSong();
-		throw new NotImplementedException();
+		return true;
 	}
 	
 	
