@@ -24,4 +24,12 @@ public class Version {
 
 	public static final String sAppName = "Awesome Alphabet";
 	public static final String sVersionNum = "0.1.0.0";
+	public String getVersion()
+	{
+		return sVersionNum;
+	}
+	public String getAppName()
+	{
+		return sAppName;
+	}
 }

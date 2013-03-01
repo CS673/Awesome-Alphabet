@@ -24,6 +24,16 @@ public class VersionTest {
 		Version result = new Version();
 		assertNotNull(result);
 		// add additional test code here
+		assertEquals("0.1.0.0", result.getVersion());
+	}
+
+	@Test
+	public void testVersion_2()
+		throws Exception {
+		Version result = new Version();
+		assertNotNull(result);
+		// add additional test code here
+		assertEquals("Awesome Alphabet", result.getAppName());
 	}
 
 	/**
