@@ -13,7 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
+import edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp;
 import edu.bu.cs673.AwesomeAlphabet.model.Version;
 
 
@@ -26,6 +29,7 @@ public class TitlePageView extends PageView implements ActionListener {
 
 	private TitlePageController m_controller;
 	
+	static Logger log = Logger.getLogger(TitlePageView.class);
 	
 	/**
 	 * Class constructor.
@@ -48,7 +52,7 @@ public class TitlePageView extends PageView implements ActionListener {
 		Box box = Box.createVerticalBox(); 
 
 		box.add(Box.createVerticalStrut(300));
-		button = getButtonImage(NAV_BUTTON_START, "Start");
+		button = getButtonImage(AA_NAV_BUTTON_START, "Start");
 		button.addActionListener(this);
 		box.add(button);
 
@@ -63,6 +67,8 @@ public class TitlePageView extends PageView implements ActionListener {
 		versionLabel.setFont(new Font("Sans-Serif", Font.BOLD, 14));
 		versionLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		m_panel.add(versionLabel, BorderLayout.SOUTH);
+		
+		log.info("Initialized the TitlePageView " + sPageName);
 	}
 	
 	
@@ -94,7 +100,7 @@ public class TitlePageView extends PageView implements ActionListener {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-
+		log.info("update called for " + o.getClass());
 	}
 	
 	
@@ -110,5 +116,6 @@ public class TitlePageView extends PageView implements ActionListener {
 	
 	public void activated() {
 		// Do nothing
+		log.info("Activated " + super.getPageName());
 	}
 }

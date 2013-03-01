@@ -27,14 +27,14 @@ public abstract class PageView implements Observer {
 	protected static Font wordFont = new Font("Sans-Serif", Font.PLAIN, 24);
 	protected static Border border = BorderFactory.createEmptyBorder();
 
-	protected static final String NAV_BUTTON_TITLE_PAGE		= "Graphics/Home.png";
-	protected static final String NAV_BUTTON_ALPHABET_SONG	= "Graphics/Music.png";
-	protected static final String NAV_BUTTON_HOME			= "Graphics/Home.png";
-	protected static final String NAV_BUTTON_NEXT_LETTER	= "Graphics/NextArrow.png";
-	protected static final String NAV_BUTTON_PREV_LETTER	= "Graphics/PreviousArrow.png";
-	protected static final String NAV_BUTTON_NEXT_EXAMPLE	= "Graphics/NextExample.png";
-	protected static final String NAV_BUTTON_ALPHABET_PAGE	= "Graphics/AlphabetPage.png";
-	protected static final String NAV_BUTTON_START			= "Graphics/StartButton.png";
+	protected static final String AA_NAV_BUTTON_TITLE_PAGE		= "Graphics/Home.png";
+	protected static final String AA_NAV_BUTTON_ALPHABET_SONG	= "Graphics/Music.png";
+	protected static final String AA_NAV_BUTTON_HOME			= "Graphics/Home.png";
+	protected static final String AA_NAV_BUTTON_NEXT_LETTER	    = "Graphics/NextArrow.png";
+	protected static final String AA_NAV_BUTTON_PREV_LETTER	    = "Graphics/PreviousArrow.png";
+	protected static final String AA_NAV_BUTTON_NEXT_EXAMPLE	= "Graphics/NextExample.png";
+	protected static final String AA_NAV_BUTTON_ALPHABET_PAGE	= "Graphics/AlphabetPage.png";
+	protected static final String AA_NAV_BUTTON_START			= "Graphics/StartButton.png";
 
 
 	/**
@@ -73,9 +73,9 @@ public abstract class PageView implements Observer {
 	/**
 	 * Gets a button image from the graphics code. If the image could not be loaded,
 	 * then it creates text button using the default text.
-	 * 
 	 * @param filename		the graphics file to read
-	 * @param defaultName	the name of the text button used as a fallback
+	 * 
+	 * @param defaultName	the name of the text button used as a fall-back
 	 * @return				a button ready for displaying
 	 */
 	public JButton getButtonImage(String filename, String defaultName) {

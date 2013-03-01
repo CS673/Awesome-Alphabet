@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.LabelClickHandler;
+import edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp;
 
 
 /**
@@ -19,7 +20,9 @@ import edu.bu.cs673.AwesomeAlphabet.controller.LabelClickHandler;
  */
 public class Alphabet extends Observable {
 
-	private Letter[] m_letters = new Letter[26];
+	protected static final int AA_ALPHABET_SIZE	= 26;
+	
+	private Letter[] m_letters = new Letter[AA_ALPHABET_SIZE];
 	public int m_iCurLetterIndex;
 	private GameSound m_alphabetsong;
 	static Logger log = Logger.getLogger(Alphabet.class);
@@ -31,7 +34,7 @@ public class Alphabet extends Observable {
 	 */
 	public Alphabet()
 	{
-		for(int i=0; i<26; i++)
+		for(int i=0; i<AA_ALPHABET_SIZE; i++)
 			m_letters[i] = new Letter((char)((int)'a' + i));
 	}
 	
@@ -101,6 +104,7 @@ public class Alphabet extends Observable {
 	 */
 	public Letter GetCurrentLetter()
 	{
+		//log.info("Current Letter set to " + m_letters[m_iCurLetterIndex]);
 		return m_letters[m_iCurLetterIndex];
 	}
 	
@@ -176,7 +180,7 @@ public class Alphabet extends Observable {
 				if (letterSoundName != null)
 					m_letters[GetLetterIndex(c)].addLetterSoundResource(letterSoundName);
 			} catch (Exception e) {
-				log.error("An exception occurred while getting the letter sound for letter "+c);
+				log.error("An exception occurred while getting the letter sound for letter " + c);
 				log.error(e.getMessage());
 				e.printStackTrace();
 			}
@@ -188,7 +192,7 @@ public class Alphabet extends Observable {
 				if (phonicSoundName != null)
 					m_letters[GetLetterIndex(c)].addPhonicSoundResource(phonicSoundName);
 			} catch (Exception e) {
-				log.error("An exception occurred while getting the phonice sound for letter "+c);
+				log.error("An exception occurred while getting the phonice sound for letter " + c);
 				log.error(e.getMessage());
 				e.printStackTrace();
 			}

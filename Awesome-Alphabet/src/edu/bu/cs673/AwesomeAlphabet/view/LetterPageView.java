@@ -52,24 +52,24 @@ public class LetterPageView extends PageView {
 		buttonBar.add(buttons, BorderLayout.CENTER);
 		JButton b;
 				
-		b = getButtonImage(NAV_BUTTON_TITLE_PAGE, "Title Page");
+		b = getButtonImage(AA_NAV_BUTTON_TITLE_PAGE, "Title Page");
 		b.addActionListener(new ButtonHandler(this, "OnTitlePageButtonClick"));
 		buttons.add(b);
 		
-		b = getButtonImage(NAV_BUTTON_ALPHABET_PAGE, "Alphabet Page");
+		b = getButtonImage(AA_NAV_BUTTON_ALPHABET_PAGE, "Alphabet Page");
 		b.addActionListener(new ButtonHandler(this, "OnAlphabetPageButtonClick"));
 		buttons.add(b);
 
-		b = getButtonImage(NAV_BUTTON_NEXT_EXAMPLE, "Next Example");
+		b = getButtonImage(AA_NAV_BUTTON_NEXT_EXAMPLE, "Next Example");
 		b.addActionListener(new ButtonHandler(this, "OnGetNextExampleButtonClick"));
 		buttons.add(b);
 
-		b = getButtonImage(NAV_BUTTON_PREV_LETTER, "Previous Letter");
+		b = getButtonImage(AA_NAV_BUTTON_PREV_LETTER, "Previous Letter");
 		b.addActionListener(new ButtonHandler(this, "OnPreviousLetterButtonClick"));
 		buttonBar.add(b, BorderLayout.WEST);
 		
 
-		b = getButtonImage(NAV_BUTTON_NEXT_LETTER, "Next Letter");
+		b = getButtonImage(AA_NAV_BUTTON_NEXT_LETTER, "Next Letter");
 		b.addActionListener(new ButtonHandler(this, "OnNextLetterButtonClick"));
 		buttonBar.add(b, BorderLayout.EAST);
 

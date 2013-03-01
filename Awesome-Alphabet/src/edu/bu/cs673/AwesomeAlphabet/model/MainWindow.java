@@ -9,11 +9,18 @@ import java.util.Hashtable;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
+import edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp;
 import edu.bu.cs673.AwesomeAlphabet.view.PageView;
 
 
 public class MainWindow implements IPageObserver {
 
+	protected static final int AA_JFRAME_SIZE_HEIGHT	= 800;
+	protected static final int AA_JFRAME_SIZE_WIDTH	= 600;
+	static Logger log = Logger.getLogger(MainWindow.class);
+	
 	private JFrame m_frame;
 	private JPanel m_curView;
 	private CardLayout m_cl;
@@ -21,7 +28,7 @@ public class MainWindow implements IPageObserver {
 	
 	public MainWindow() {
 		m_frame = new JFrame("Awesome Alphabet");
-		m_frame.setSize(800, 600);
+		m_frame.setSize(AA_JFRAME_SIZE_HEIGHT, AA_JFRAME_SIZE_WIDTH);
 		m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Container content = m_frame.getContentPane();
@@ -37,6 +44,7 @@ public class MainWindow implements IPageObserver {
 	
 	public void registerPage(PageView page)
 	{
+		log.info("Registerd views " + page.getPageName());
 		m_curView.add(page.getPageName(), page.getPagePanel());
 		m_pageHash.put(page.getPageName(),  page);
 	}
@@ -49,9 +57,17 @@ public class MainWindow implements IPageObserver {
 	@Override
 	public boolean GoToPage(String sPageName)
 	{
+		log.info("Go to Page " + m_pageHash.get(sPageName));
+		
 		PageView pv = m_pageHash.get(sPageName);
 		pv.activated();
 		m_cl.show(m_curView, sPageName);
 		return true;
 	}
+	
+	public JFrame getJFrame()
+	{
+		return m_frame;
+	}
+	
 }

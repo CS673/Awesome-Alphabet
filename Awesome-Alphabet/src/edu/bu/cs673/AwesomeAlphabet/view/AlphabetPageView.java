@@ -38,10 +38,10 @@ public class AlphabetPageView extends PageView {
 		
 		m_controller = null;
 		
-		JButton titlePageButton = getButtonImage(NAV_BUTTON_TITLE_PAGE, "Title Page");
+		JButton titlePageButton = getButtonImage(AA_NAV_BUTTON_TITLE_PAGE, "Title Page");
 		titlePageButton.addActionListener(new ButtonHandler(this, "OnTitlePageButtonClick"));
 		
-		JButton alphabetSongButton = getButtonImage(NAV_BUTTON_ALPHABET_SONG, "Alphabet Song");
+		JButton alphabetSongButton = getButtonImage(AA_NAV_BUTTON_ALPHABET_SONG, "Alphabet Song");
 		alphabetSongButton.addActionListener(new ButtonHandler(this, "OnPlayAlphabetSongButtonClick"));
 		
 		m_panel.setLayout(new BorderLayout());
