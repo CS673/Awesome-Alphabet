@@ -160,11 +160,11 @@ public class Alphabet extends Observable {
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
-					String imageName = prop.getProperty(propName + "image");
-					String soundName = prop.getProperty(propName + "sound");
 					String wordText = prop.getProperty(propName + "word");
-					if (imageName == null && soundName == null && wordText == null)
+					if (wordText == null)
 						break;
+					String imageName = wordText + ".jpg";
+					String soundName = wordText + ".wav";
 					m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText);
 				} catch (Exception e) {
 					i = 10;
@@ -175,8 +175,9 @@ public class Alphabet extends Observable {
 			}
 			log.info("Add Letter Sound");
 			try {
-				String propName = "letter." + c + ".lettersound";
-				String letterSoundName = prop.getProperty(propName);
+				//String propName = "letter." + c + ".lettersound";
+				//String letterSoundName = prop.getProperty(propName);
+				String letterSoundName = c + ".wav";
 				if (letterSoundName != null)
 					m_letters[GetLetterIndex(c)].addLetterSoundResource(letterSoundName);
 			} catch (Exception e) {
@@ -187,8 +188,7 @@ public class Alphabet extends Observable {
 			// 
 			log.info("Add Phonic Sound");
 			try {
-				String propName = "letter." + c + ".phonicsound";
-				String phonicSoundName = prop.getProperty(propName);
+				String phonicSoundName = c + "phonics.wav";
 				if (phonicSoundName != null)
 					m_letters[GetLetterIndex(c)].addPhonicSoundResource(phonicSoundName);
 			} catch (Exception e) {
