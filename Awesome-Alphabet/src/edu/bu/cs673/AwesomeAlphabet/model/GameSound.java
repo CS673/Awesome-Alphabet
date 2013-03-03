@@ -35,6 +35,7 @@ public class GameSound {
 	public GameSound(String soundfilepath) {
 		// TODO: Error handling. File not being present.
 		this.soundfilepath = "edu/bu/cs673/AwesomeAlphabet/resources/" + soundfilepath;
+		log.info("Adding sound file" + this.soundfilepath);	
 	}
 	
 	/**
