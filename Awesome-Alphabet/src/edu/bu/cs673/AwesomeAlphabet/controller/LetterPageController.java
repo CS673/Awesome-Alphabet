@@ -40,6 +40,12 @@ public class LetterPageController extends PageController {
 		alphabet.GetCurrentLetter().addObserver(m_view);
 	}
 
+	private void StopSound(Letter letter)
+	{
+		m_alphabet.StopAlphabetSound();
+		letter.stopSound();
+		
+	}
 	
 	/**
 	 * This method is used to notify the controller that the image
@@ -50,6 +56,7 @@ public class LetterPageController extends PageController {
 	{
 		//Play phonic sound
 		Letter letter = m_alphabet.GetCurrentLetter();
+		StopSound(letter);
 		letter.playSoundPhonic();
 	}
 	
@@ -62,6 +69,7 @@ public class LetterPageController extends PageController {
 	public void PictureClicked()
 	{
 		Letter letter = m_alphabet.GetCurrentLetter();
+		StopSound(letter);
 		letter.playSound();
 	}
 	
@@ -94,6 +102,7 @@ public class LetterPageController extends PageController {
 		
 		letter.deleteObserver(m_view);
 		nextLetter.addObserver(m_view);
+		StopSound(letter);
 		nextLetter.playSoundLetter();
 		return true;
 	}
@@ -115,6 +124,7 @@ public class LetterPageController extends PageController {
 		
 		letter.deleteObserver(m_view);
 		prevLetter.addObserver(m_view);
+		StopSound(letter);
 		prevLetter.playSoundLetter();
 		return true;	
 	}
@@ -125,8 +135,11 @@ public class LetterPageController extends PageController {
 	 */
 	public void GoToAlphabetPage()
 	{
-		if(GoToPage(PageName.AlphabetPage))
-			m_alphabet.GetCurrentLetter().deleteObserver(m_view);
+		if(GoToPage(PageName.AlphabetPage)) {
+			Letter letter= m_alphabet.GetCurrentLetter();
+			letter.deleteObserver(m_view);
+			StopSound(letter);			
+		}
 	}
 	
 	
@@ -135,8 +148,11 @@ public class LetterPageController extends PageController {
 	 */
 	public void GoToTitlePage()
 	{
-		if(GoToPage(PageName.TitlePage))
-			m_alphabet.GetCurrentLetter().deleteObserver(m_view);
+		if(GoToPage(PageName.TitlePage)) {
+			Letter letter= m_alphabet.GetCurrentLetter();
+			letter.deleteObserver(m_view);
+			StopSound(letter);			
+		}
 	}
 	
 	
@@ -147,6 +163,7 @@ public class LetterPageController extends PageController {
 	public void GetNextExample()
 	{
 		Letter letter = m_alphabet.GetCurrentLetter();
+		StopSound(letter);
 		letter.nextExample();
 	}
 	

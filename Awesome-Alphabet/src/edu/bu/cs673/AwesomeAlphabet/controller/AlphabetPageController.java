@@ -67,6 +67,7 @@ public class AlphabetPageController extends PageController {
 	 */
 	public boolean GoToTitlePage()
 	{
+		m_alphabet.StopAlphabetSound();
 		return GoToPage(PageName.TitlePage);
 	}
 	
@@ -82,6 +83,7 @@ public class AlphabetPageController extends PageController {
 		Letter letter = m_alphabet.SetCurrentLetter(cLetter);
 		if (letter != null && GoToPage(PageName.LetterPage))
 		{
+			m_alphabet.StopAlphabetSound();
 			letter.playSoundLetter();
 			return true;
 		}	

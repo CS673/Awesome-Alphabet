@@ -26,7 +26,7 @@ public class GameSound {
 
 	private static ClassLoader cl = GameSound.class.getClassLoader();
 	private String soundfilepath;
-	private final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(1);
+	private Clip curr_clip = null;
 	
 	/**
 	 * Constructor. This prepends the directory to the sound's filename
@@ -46,33 +46,10 @@ public class GameSound {
 		try {
 			InputStream is = new BufferedInputStream(cl.getResourceAsStream(soundfilepath));
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
-			Clip clip = AudioSystem.getClip();
+			curr_clip = AudioSystem.getClip();
 			
-			clip.open(audioIn);
-			clip.start();
-			LineListener listener = new LineListener() {
-				public void update(LineEvent event) {
-					if (event.getType() != LineEvent.Type.STOP) {
-						return;
-					}
-
-					try {
-						queue.put("dummy");
-						return;
-					}
-					catch (InterruptedException e) {
-						//ignore this
-					}
-				}
-			};
-
-			clip.addLineListener(listener);
-			try {
-				queue.take();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			curr_clip.open(audioIn);
+			curr_clip.start();
 		} catch (UnsupportedAudioFileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,5 +59,12 @@ public class GameSound {
 		} catch (LineUnavailableException e) {
 			log.error("Sound file '" + soundfilepath + "' is too large to play.");
 		}
+	}
+	public void StopSound() {
+		if (curr_clip == null)
+			return;
+		curr_clip.stop();
+		curr_clip.close();
+		curr_clip = null;
 	}
 }

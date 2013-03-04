@@ -21,6 +21,8 @@ public class Letter extends Observable {
 	private GameSound m_LetterSound;
 	private GameSound m_PhonicSound;
 	private int index = 0;
+	private enum Sound_Type {NONE, WPS, LETTER, PHONIC};
+	private Sound_Type curr_sound = Sound_Type.NONE;
 	
 	
 	/**
@@ -138,18 +140,41 @@ public class Letter extends Observable {
 		WordPictureSound wps = getWPSData(index);
 		if (wps == null)
 			return;
+		curr_sound = Sound_Type.WPS;
 		wps.PlaySound();
 	}
 	
 	public void playSoundLetter() {
 		if (m_LetterSound == null)
 			return;
+		curr_sound = Sound_Type.LETTER;
 		m_LetterSound.PlaySound();
 	}
 	
 	public void playSoundPhonic() {
 		if (m_PhonicSound == null)
 			return;
+		curr_sound = Sound_Type.PHONIC;
 		m_PhonicSound.PlaySound();
+	}
+	
+	public void stopSound() {
+		switch(curr_sound) {
+		case NONE:
+			return;
+		case WPS:
+			WordPictureSound wps = getWPSData(index);
+			wps.StopSound();
+			curr_sound = Sound_Type.NONE;
+			return;
+		case LETTER:
+			m_LetterSound.StopSound();
+			curr_sound = Sound_Type.NONE;
+			return;
+		case PHONIC:
+			m_PhonicSound.StopSound();
+			curr_sound = Sound_Type.NONE;
+			return;
+		}
 	}
 }

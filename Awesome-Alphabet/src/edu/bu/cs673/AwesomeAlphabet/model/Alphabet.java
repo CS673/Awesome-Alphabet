@@ -214,4 +214,8 @@ public class Alphabet extends Observable {
 	public void PlayAlphabetSong() {
 		m_alphabetsong.PlaySound();
 	}
+	
+	public void StopAlphabetSound() {
+		m_alphabetsong.StopSound();
+	}
 }

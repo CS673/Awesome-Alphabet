@@ -20,6 +20,9 @@ public class WordPictureSound {
 		m_sound.PlaySound();
 	}
 	
+	public void StopSound() {
+		m_sound.StopSound();
+	}
 	public String GetWordString() {
 		return m_word;
 	}
