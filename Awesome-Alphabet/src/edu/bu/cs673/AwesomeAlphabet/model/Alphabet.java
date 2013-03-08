@@ -6,9 +6,6 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import edu.bu.cs673.AwesomeAlphabet.controller.LabelClickHandler;
-import edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp;
-
 
 /**
  * The class defines the Alphabet model.  It creates and
