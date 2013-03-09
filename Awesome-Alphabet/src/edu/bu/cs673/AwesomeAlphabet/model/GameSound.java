@@ -20,22 +20,23 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.apache.log4j.Logger;
 
+import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
+
 
 public class GameSound {
 	static Logger log = Logger.getLogger(GameSound.class);
 
-	private static ClassLoader cl = GameSound.class.getClassLoader();
-	private String soundfilepath;
+	private String soundName;
 	private Clip curr_clip = null;
 	
 	/**
 	 * Constructor. This prepends the directory to the sound's filename
-	 * @param soundfilepath sound's filename
+	 * @param soundName sound's filename
 	 */
-	public GameSound(String soundfilepath) {
+	public GameSound(String soundName) {
 		// TODO: Error handling. File not being present.
-		this.soundfilepath = "edu/bu/cs673/AwesomeAlphabet/resources/" + soundfilepath;
-		log.info("Adding sound file" + this.soundfilepath);	
+		this.soundName = soundName;
+		log.info("Adding sound file " + this.soundName);	
 	}
 	
 	/**
@@ -44,7 +45,7 @@ public class GameSound {
 	 */
 	public void PlaySound() {
 		try {
-			InputStream is = new BufferedInputStream(cl.getResourceAsStream(soundfilepath));
+			InputStream is = AAConfig.getSoundResource(soundName);
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
 			curr_clip = AudioSystem.getClip();
 			
@@ -57,7 +58,7 @@ public class GameSound {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (LineUnavailableException e) {
-			log.error("Sound file '" + soundfilepath + "' is too large to play.");
+			log.error("Sound file '" + soundName + "' is too large to play.");
 		}
 	}
 	public void StopSound() {
