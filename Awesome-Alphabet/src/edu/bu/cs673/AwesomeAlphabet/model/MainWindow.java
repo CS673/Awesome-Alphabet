@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
-import edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp;
 import edu.bu.cs673.AwesomeAlphabet.view.PageView;
 
 
