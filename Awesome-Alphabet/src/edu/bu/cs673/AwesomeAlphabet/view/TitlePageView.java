@@ -42,7 +42,7 @@ public class TitlePageView extends PageView implements ActionListener {
 		m_controller = null;
 
 		//Set Background Image and Main Panel Layout
-		m_panel.SetBackgroundImage("Graphics/TitlePage.png");
+		m_panel.SetBackgroundImage("TitlePage.png");
 		m_panel.setLayout(new BorderLayout());
 		
 		

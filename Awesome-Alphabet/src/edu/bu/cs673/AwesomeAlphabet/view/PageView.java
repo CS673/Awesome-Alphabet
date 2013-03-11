@@ -27,14 +27,14 @@ public abstract class PageView implements Observer {
 	protected static Font wordFont = new Font("Sans-Serif", Font.PLAIN, 24);
 	protected static Border border = BorderFactory.createEmptyBorder();
 
-	protected static final String AA_NAV_BUTTON_TITLE_PAGE		= "Graphics/Home.png";
-	protected static final String AA_NAV_BUTTON_ALPHABET_SONG	= "Graphics/Music.png";
-	protected static final String AA_NAV_BUTTON_HOME			= "Graphics/Home.png";
-	protected static final String AA_NAV_BUTTON_NEXT_LETTER	    = "Graphics/NextArrow.png";
-	protected static final String AA_NAV_BUTTON_PREV_LETTER	    = "Graphics/PreviousArrow.png";
-	protected static final String AA_NAV_BUTTON_NEXT_EXAMPLE	= "Graphics/NextExample.png";
-	protected static final String AA_NAV_BUTTON_ALPHABET_PAGE	= "Graphics/AlphabetPage.png";
-	protected static final String AA_NAV_BUTTON_START			= "Graphics/StartButton.png";
+	protected static final String AA_NAV_BUTTON_TITLE_PAGE		= "Home.png";
+	protected static final String AA_NAV_BUTTON_ALPHABET_SONG	= "Music.png";
+	protected static final String AA_NAV_BUTTON_HOME			= "Home.png";
+	protected static final String AA_NAV_BUTTON_NEXT_LETTER	    = "NextArrow.png";
+	protected static final String AA_NAV_BUTTON_PREV_LETTER	    = "PreviousArrow.png";
+	protected static final String AA_NAV_BUTTON_NEXT_EXAMPLE	= "NextExample.png";
+	protected static final String AA_NAV_BUTTON_ALPHABET_PAGE	= "AlphabetPage.png";
+	protected static final String AA_NAV_BUTTON_START			= "StartButton.png";
 
 
 	/**
