@@ -11,11 +11,11 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
+import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
+
 
 public class GameImage {
 	
-	private static ClassLoader cl = GameImage.class.getClassLoader();
-	protected static final String AA_RESOURCE_FILE_PATH	= "edu/bu/cs673/AwesomeAlphabet/resources/";
 	static Logger log = Logger.getLogger(GameImage.class);
 	
 	/**
@@ -25,8 +25,8 @@ public class GameImage {
 	 */
 	public static Image getImage(String filename) 
 	{
-
-		InputStream is = cl.getResourceAsStream(AA_RESOURCE_FILE_PATH + filename);
+		InputStream is = AAConfig.getGraphicsResource(filename);
+//		InputStream is = cl.getResourceAsStream(AA_RESOURCE_FILE_PATH + filename);
 		
 		if(is == null){
 			System.out.println("Input stream is null");
