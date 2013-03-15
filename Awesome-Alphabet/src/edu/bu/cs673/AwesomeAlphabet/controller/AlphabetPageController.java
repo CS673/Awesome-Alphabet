@@ -55,6 +55,7 @@ public class AlphabetPageController extends PageController {
 	public boolean PlayAlphabetSong()
 	{
 		//TODO: Implement this method
+		m_alphabet.StopAlphabetSound();
 		m_alphabet.PlayAlphabetSong();
 		return true;
 	}
