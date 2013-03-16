@@ -21,7 +21,7 @@ public class Letter extends Observable implements Observer {
 	private List<WordPictureSound> m_wps = new LinkedList<WordPictureSound>();
 	private GameSound m_LetterSound;
 	private GameSound m_PhonicSound;
-	private int m_index = 0;
+	private int m_index = -1;
 	private enum Sound_Type {NONE, WPS, LETTER, PHONIC};
 	private Sound_Type curr_sound = Sound_Type.NONE;
 	private ThemeManager m_themeMgr;
@@ -73,6 +73,8 @@ public class Letter extends Observable implements Observer {
 	 */
 	public void addResource(String imageName, String soundName, String wordText) {
 		m_wps.add(new WordPictureSound(wordText, imageName, soundName));
+		if(m_index < 0)
+			nextExample();
 	}
 	
 	
@@ -86,6 +88,8 @@ public class Letter extends Observable implements Observer {
 	 */
 	public void addResource(String imageName, String soundName, String wordText, Theme theme) {
 		m_wps.add(new WordPictureSound(wordText, imageName, soundName, theme));
+		if(m_index < 0)
+			nextExample();
 	}
 	
 	public void addLetterSoundResource(String soundName) {
