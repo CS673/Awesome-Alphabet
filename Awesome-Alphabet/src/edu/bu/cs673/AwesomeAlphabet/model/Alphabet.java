@@ -27,12 +27,20 @@ public class Alphabet extends Observable {
 	
 	
 	/**
-	 * Class constructor.  Responsible for creating the
-	 * Letter objects.
+	 * Class constructor.  
 	 */
 	public Alphabet(ThemeManager themeMgr)
 	{
 		m_themeMgr = themeMgr;
+		Initialize();
+	}
+	
+	
+	/**
+	 * Responsible for creating the Letter objects.
+	 */
+	public void Initialize()
+	{
 		for(int i=0; i<AA_ALPHABET_SIZE; i++)
 			m_letters[i] = new Letter((char)((int)'a' + i), m_themeMgr);
 	}
@@ -155,7 +163,10 @@ public class Alphabet extends Observable {
 	 * @param prop   The property list containing resource information.
 	 */
 	public void LoadResources(Properties prop) {
-				
+		
+		if(m_themeMgr == null)
+			return;
+		
 		for (char c = 'a'; c <= 'z'; c++) {
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
@@ -167,8 +178,9 @@ public class Alphabet extends Observable {
 					String soundName = wordText + ".wav";
 					String themeName = prop.getProperty(propName + "theme");
 					
-					if(themeName == null || m_themeMgr == null)
-						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText);
+					if(themeName == null)
+						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText,
+								new Theme(ThemeManager.DEFAULT_THEME_NAME));
 					else
 					{
 						if(!m_themeMgr.addTheme(themeName))

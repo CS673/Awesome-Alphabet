@@ -3,6 +3,7 @@ package edu.bu.cs673.AwesomeAlphabet.test;
 import javax.swing.Icon;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
+import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import org.junit.*;
@@ -93,7 +94,7 @@ public class LetterTest {
 		String soundName = "";
 		String wordText = "";
 
-		fixture.addResource(imageName, soundName, wordText);
+		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
 
 		// add additional test code here
 	}

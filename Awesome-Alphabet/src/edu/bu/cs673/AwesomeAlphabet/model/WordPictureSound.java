@@ -10,13 +10,7 @@ public class WordPictureSound {
 	private GameSound m_sound;
 	private Image m_image;
 	private Theme m_theme;
-	
-	public WordPictureSound(String word, String imageFile, String soundFile) {
-		this.m_word = word;
-		m_sound = new GameSound(soundFile);
-		m_image = GameImage.getImage(imageFile);
-		m_theme = null;
-	}
+
 	
 	public WordPictureSound(String word, String imageFile, String soundFile, Theme theme) {
 		this.m_word = word;

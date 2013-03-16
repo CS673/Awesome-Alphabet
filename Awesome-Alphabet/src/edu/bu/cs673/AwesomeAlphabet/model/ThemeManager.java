@@ -3,6 +3,7 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.Properties;
 
 
 /**
@@ -10,6 +11,8 @@ import java.util.Observable;
  */
 public class ThemeManager extends Observable {
 
+	public static String DEFAULT_THEME_NAME = "No Theme";
+	
 	private ArrayList<Theme> m_themes;
 	private Theme m_currentTheme;
 	

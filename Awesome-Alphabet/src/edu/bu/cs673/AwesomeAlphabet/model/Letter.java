@@ -70,20 +70,6 @@ public class Letter extends Observable implements Observer {
 	 * @param imageName    The filename of the word image.
 	 * @param soundName    The filename of the word sound.
 	 * @param wordText     The text of the word.
-	 */
-	public void addResource(String imageName, String soundName, String wordText) {
-		m_wps.add(new WordPictureSound(wordText, imageName, soundName));
-		if(m_index < 0)
-			nextExample();
-	}
-	
-	
-	/**
-	 * Adds a new WordPictureSound object to the word list.
-	 * 
-	 * @param imageName    The filename of the word image.
-	 * @param soundName    The filename of the word sound.
-	 * @param wordText     The text of the word.
 	 * @param theme        The theme.
 	 */
 	public void addResource(String imageName, String soundName, String wordText, Theme theme) {

@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import org.junit.*;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Theme;
+import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.model.WordPictureSound;
 import static org.junit.Assert.*;
 
@@ -29,7 +30,7 @@ public class WordPictureSoundTest {
 		String imageFile = "";
 		String soundFile = "";
 
-		WordPictureSound result = new WordPictureSound(word, imageFile, soundFile);
+		WordPictureSound result = new WordPictureSound(word, imageFile, soundFile, new Theme(ThemeManager.DEFAULT_THEME_NAME));
 
 		// add additional test code here
 		assertNotNull(result);
@@ -46,7 +47,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordImage_1()
 		throws Exception {
-		WordPictureSound fixture = new WordPictureSound("", "", "");
+		WordPictureSound fixture = new WordPictureSound("", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
 		int width = 1;
 		int height = 1;
 
@@ -66,7 +67,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordImage_2()
 		throws Exception {
-		WordPictureSound fixture = new WordPictureSound("", "", "");
+		WordPictureSound fixture = new WordPictureSound("", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
 		int width = 1;
 		int height = 1;
 
@@ -86,7 +87,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordString_1()
 		throws Exception {
-		WordPictureSound fixture = new WordPictureSound("", "", "");
+		WordPictureSound fixture = new WordPictureSound("", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
 
 		String result = fixture.GetWordString();
 
@@ -104,7 +105,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testPlaySound_1()
 		throws Exception {
-		WordPictureSound fixture = new WordPictureSound("", "", "");
+		WordPictureSound fixture = new WordPictureSound("", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
 
 		fixture.PlaySound();
 
