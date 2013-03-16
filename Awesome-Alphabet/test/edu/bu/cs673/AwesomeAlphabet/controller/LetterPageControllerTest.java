@@ -6,6 +6,7 @@ import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
 import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import org.junit.*;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
+import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
 import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
 import static org.junit.Assert.*;
@@ -30,7 +31,7 @@ public class LetterPageControllerTest {
 		throws Exception {
 		IPageObserver pageObserver = new MainWindow();
 		LetterPageView view = new LetterPageView("");
-		Alphabet alphabet = new Alphabet();
+		Alphabet alphabet = new Alphabet(new ThemeManager());
 
 		LetterPageController result = new LetterPageController(pageObserver, view, alphabet);
 
@@ -51,7 +52,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGetLetterAsChar_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		char result = fixture.GetLetterAsChar();
 
@@ -69,7 +71,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGetNextExample_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		fixture.GetNextExample();
 
@@ -86,7 +89,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGetNextLetter_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		boolean result = fixture.GetNextLetter();
 
@@ -104,7 +108,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGetNextLetter_2()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		boolean result = fixture.GetNextLetter();
 
@@ -122,7 +127,8 @@ public class LetterPageControllerTest {
 	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
 	public void testGetPicture_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		BufferedImage result = fixture.GetPicture();
 
@@ -140,7 +146,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGetPreviousLetter_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		boolean result = fixture.GetPreviousLetter();
 
@@ -158,7 +165,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGetPreviousLetter_2()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		boolean result = fixture.GetPreviousLetter();
 
@@ -176,7 +184,8 @@ public class LetterPageControllerTest {
 	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
 	public void testGetWord_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		String result = fixture.GetWord();
 
@@ -194,7 +203,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGoToAlphabetPage_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		fixture.GoToAlphabetPage();
 
@@ -211,7 +221,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGoToAlphabetPage_2()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		fixture.GoToAlphabetPage();
 
@@ -228,7 +239,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGoToTitlePage_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		fixture.GoToTitlePage();
 
@@ -245,7 +257,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testGoToTitlePage_2()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		fixture.GoToTitlePage();
 
@@ -262,7 +275,8 @@ public class LetterPageControllerTest {
 	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
 	public void testLetterClicked_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		fixture.LetterClicked();
 
@@ -279,7 +293,8 @@ public class LetterPageControllerTest {
 	@Test
 	public void testPictureClicked_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		fixture.PictureClicked();
 
@@ -296,7 +311,8 @@ public class LetterPageControllerTest {
 	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
 	public void testWordClicked_1()
 		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), new Alphabet());
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
 
 		fixture.WordClicked();
 

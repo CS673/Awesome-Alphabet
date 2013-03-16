@@ -18,21 +18,23 @@ import org.apache.log4j.Logger;
 public class Alphabet extends Observable {
 
 	protected static final int AA_ALPHABET_SIZE	= 26;
+	protected static Logger log = Logger.getLogger(Alphabet.class);
 	
 	private Letter[] m_letters = new Letter[AA_ALPHABET_SIZE];
 	public int m_iCurLetterIndex;
 	private GameSound m_alphabetsong;
-	static Logger log = Logger.getLogger(Alphabet.class);
+	private ThemeManager m_themeMgr;
 	
 	
 	/**
 	 * Class constructor.  Responsible for creating the
 	 * Letter objects.
 	 */
-	public Alphabet()
+	public Alphabet(ThemeManager themeMgr)
 	{
+		m_themeMgr = themeMgr;
 		for(int i=0; i<AA_ALPHABET_SIZE; i++)
-			m_letters[i] = new Letter((char)((int)'a' + i));
+			m_letters[i] = new Letter((char)((int)'a' + i), m_themeMgr);
 	}
 	
 	
@@ -152,7 +154,7 @@ public class Alphabet extends Observable {
 	 * 
 	 * @param prop   The property list containing resource information.
 	 */
-	public void LoadResources(Properties prop, ThemeManager themeMgr) {
+	public void LoadResources(Properties prop) {
 				
 		for (char c = 'a'; c <= 'z'; c++) {
 			for (int i = 1; i <= 10; i++) {
@@ -165,31 +167,16 @@ public class Alphabet extends Observable {
 					String soundName = wordText + ".wav";
 					String themeName = prop.getProperty(propName + "theme");
 					
-					if(themeName == null)
+					if(themeName == null || m_themeMgr == null)
 						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText);
 					else
 					{
-						if(!themeMgr.addTheme(themeName))
+						if(!m_themeMgr.addTheme(themeName))
 							throw new Exception("Error adding theme.");
 						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText, 
-								                                 themeMgr.getTheme(themeName));
+								m_themeMgr.getTheme(themeName));
 					}
 				} catch (Exception e) {
-					i = 10;
-					log.error("An exception occurred while loading properties for leter "+c);
-					log.error(e.getMessage());
-					e.printStackTrace();
-				}
-				
-				try {
-					String wordText = prop.getProperty(propName + "theme");
-					if (wordText == null)
-						break;
-					String imageName = wordText + ".jpg";
-					String soundName = wordText + ".wav";
-					m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText);
-				} catch (Exception e) {
-					i = 10;
 					log.error("An exception occurred while loading properties for leter "+c);
 					log.error(e.getMessage());
 					e.printStackTrace();

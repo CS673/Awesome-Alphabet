@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
 import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
+import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
@@ -31,7 +32,7 @@ public class AlphabetPageControllerTest {
 		throws Exception {
 		IPageObserver pageObserver = new MainWindow();
 		AlphabetPageView view = new AlphabetPageView("");
-		Alphabet alphabet = new Alphabet();
+		Alphabet alphabet = new Alphabet(new ThemeManager());
 
 		AlphabetPageController result = new AlphabetPageController(pageObserver, view, alphabet);
 
@@ -50,7 +51,8 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGetLetterIterator_1()
 		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), new Alphabet());
+		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), 
+				                                                    new Alphabet(new ThemeManager()));
 
 		Iterator<Letter> result = fixture.GetLetterIterator();
 
@@ -69,8 +71,10 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToLetterPage_1()
 		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), new Alphabet());
-		Letter cLetter = new Letter('');
+		ThemeManager themeMgr = new ThemeManager();
+		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), 
+				                                                    new Alphabet(themeMgr));
+		Letter cLetter = new Letter('', themeMgr);
 
 		boolean result = fixture.GoToLetterPage(cLetter);
 
@@ -88,8 +92,10 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToLetterPage_2()
 		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), new Alphabet());
-		Letter cLetter = new Letter('');
+		ThemeManager themeMgr = new ThemeManager();
+		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), 
+				                                                    new Alphabet(themeMgr));
+		Letter cLetter = new Letter('', themeMgr);
 
 		boolean result = fixture.GoToLetterPage(cLetter);
 
@@ -107,8 +113,10 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToLetterPage_3()
 		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), new Alphabet());
-		Letter cLetter = new Letter('');
+		ThemeManager themeMgr = new ThemeManager();
+		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), 
+				                                                    new Alphabet(themeMgr));
+		Letter cLetter = new Letter('', themeMgr);
 
 		boolean result = fixture.GoToLetterPage(cLetter);
 
@@ -126,7 +134,8 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToTitlePage_1()
 		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), new Alphabet());
+		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), 
+				                                                    new Alphabet(new ThemeManager()));
 
 		boolean result = fixture.GoToTitlePage();
 
@@ -144,7 +153,8 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToTitlePage_2()
 		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), new Alphabet());
+		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), 
+				                                                    new Alphabet(new ThemeManager()));
 
 		boolean result = fixture.GoToTitlePage();
 
@@ -162,7 +172,8 @@ public class AlphabetPageControllerTest {
 	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
 	public void testPlayAlphabetSong_1()
 		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), new Alphabet());
+		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), 
+				                                                    new Alphabet(new ThemeManager()));
 
 		boolean result = fixture.PlayAlphabetSong();
 

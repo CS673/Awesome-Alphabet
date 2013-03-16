@@ -3,6 +3,7 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 import javax.swing.Icon;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
+import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -27,7 +28,7 @@ public class LetterTest {
 		throws Exception {
 		char cLetter = '';
 
-		Letter result = new Letter(cLetter);
+		Letter result = new Letter(cLetter, new ThemeManager());
 
 		// add additional test code here
 		assertNotNull(result);
@@ -48,7 +49,7 @@ public class LetterTest {
 	@Test
 	public void testGetLetterAsChar_1()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		char result = fixture.GetLetterAsChar();
@@ -67,7 +68,7 @@ public class LetterTest {
 	@Test
 	public void testGetUppercaseLetter_1()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		char result = fixture.GetUppercaseLetter();
@@ -86,7 +87,7 @@ public class LetterTest {
 	@Test
 	public void testAddResource_1()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 		String imageName = "";
 		String soundName = "";
@@ -107,7 +108,7 @@ public class LetterTest {
 	@Test
 	public void testGetIcon_1()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 		int width = 1;
 		int height = 1;
@@ -128,7 +129,7 @@ public class LetterTest {
 	@Test
 	public void testGetIcon_2()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 		int width = 1;
 		int height = 1;
@@ -149,7 +150,7 @@ public class LetterTest {
 	@Test
 	public void testGetWord_1()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		String result = fixture.getWord();
@@ -168,7 +169,7 @@ public class LetterTest {
 	@Test
 	public void testGetWord_2()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		String result = fixture.getWord();
@@ -187,7 +188,7 @@ public class LetterTest {
 	@Test
 	public void testNextExample_1()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		fixture.nextExample();
@@ -205,7 +206,7 @@ public class LetterTest {
 	@Test
 	public void testNextExample_2()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		fixture.nextExample();
@@ -223,7 +224,7 @@ public class LetterTest {
 	@Test
 	public void testPlaySound_1()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		fixture.playSound();
@@ -241,7 +242,7 @@ public class LetterTest {
 	@Test
 	public void testPlaySound_2()
 		throws Exception {
-		Letter fixture = new Letter('');
+		Letter fixture = new Letter('', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		fixture.playSound();

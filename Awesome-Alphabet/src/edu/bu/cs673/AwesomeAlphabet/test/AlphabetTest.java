@@ -34,7 +34,7 @@ public class AlphabetTest {
 	public void testAlphabet_1()
 		throws Exception {
 
-		Alphabet result = new Alphabet();
+		Alphabet result = new Alphabet(new ThemeManager());
 
 		// add additional test code here
 		assertNotNull(result);
@@ -54,7 +54,7 @@ public class AlphabetTest {
 	public void testAlphabet_2()
 		throws Exception {
 
-		Alphabet result = new Alphabet();
+		Alphabet result = new Alphabet(new ThemeManager());
 
 		// add additional test code here
 		assertNotNull(result);
@@ -73,7 +73,7 @@ public class AlphabetTest {
 	@Test
 	public void testGetCurrentLetter_1()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 
@@ -98,7 +98,7 @@ public class AlphabetTest {
 	@Test
 	public void testGetIterator_1()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 
@@ -119,7 +119,7 @@ public class AlphabetTest {
 	@Test
 	public void testGoToNextLetter_1()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 
@@ -144,7 +144,7 @@ public class AlphabetTest {
 	@Test
 	public void testGoToNextLetter_2()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 
@@ -169,7 +169,7 @@ public class AlphabetTest {
 	@Test
 	public void testGoToPreviousLetter_1()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 0;
 		fixture.addObserver(new AlphabetPageView(""));
 
@@ -189,7 +189,7 @@ public class AlphabetTest {
 	@Test
 	public void testGoToPreviousLetter_2()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 
@@ -214,13 +214,12 @@ public class AlphabetTest {
 	@Test
 	public void testLoadResources_1()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
-		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop, themeMgr);
+		fixture.LoadResources(prop);
 
 		// add additional test code here
 	}
@@ -235,13 +234,12 @@ public class AlphabetTest {
 	@Test
 	public void testLoadResources_2()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
-		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop, themeMgr);
+		fixture.LoadResources(prop);
 
 		// add additional test code here
 	}
@@ -256,13 +254,12 @@ public class AlphabetTest {
 	@Test
 	public void testLoadResources_3()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
-		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop, themeMgr);
+		fixture.LoadResources(prop);
 
 		// add additional test code here
 	}
@@ -277,13 +274,12 @@ public class AlphabetTest {
 	@Test
 	public void testLoadResources_4()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
-		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop, themeMgr);
+		fixture.LoadResources(prop);
 
 		// add additional test code here
 	}
@@ -298,13 +294,12 @@ public class AlphabetTest {
 	@Test
 	public void testLoadResources_5()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
-		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop, themeMgr);
+		fixture.LoadResources(prop);
 
 		// add additional test code here
 	}
@@ -319,13 +314,12 @@ public class AlphabetTest {
 	@Test
 	public void testLoadResources_6()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
-		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(new ThemeManager());
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop, themeMgr);
+		fixture.LoadResources(prop);
 
 		// add additional test code here
 	}
@@ -340,10 +334,11 @@ public class AlphabetTest {
 	@Test
 	public void testSetCurrentLetter_1()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(themeMgr);
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
-		Letter cLetter = new Letter('');
+		Letter cLetter = new Letter('', themeMgr);
 
 		Letter result = fixture.SetCurrentLetter(cLetter);
 
@@ -361,10 +356,11 @@ public class AlphabetTest {
 	@Test
 	public void testSetCurrentLetter_2()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(themeMgr);
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
-		Letter cLetter = new Letter('');
+		Letter cLetter = new Letter('', themeMgr);
 
 		Letter result = fixture.SetCurrentLetter(cLetter);
 
@@ -382,10 +378,11 @@ public class AlphabetTest {
 	@Test
 	public void testSetCurrentLetter_3()
 		throws Exception {
-		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
+		Alphabet fixture = new Alphabet(themeMgr);
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
-		Letter cLetter = new Letter('');
+		Letter cLetter = new Letter('', themeMgr);
 
 		Letter result = fixture.SetCurrentLetter(cLetter);
 

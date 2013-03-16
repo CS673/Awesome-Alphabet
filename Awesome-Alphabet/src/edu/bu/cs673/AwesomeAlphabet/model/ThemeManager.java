@@ -143,12 +143,26 @@ public class ThemeManager extends Observable {
 	 */
 	public boolean setCurrentTheme(String themeName)
 	{
+		if(themeName == null)
+		{
+			if(m_currentTheme != null)
+				setChanged();
+			m_currentTheme = null;
+			
+			notifyObservers();
+			return true;
+		}
+			
 		Theme theme = getTheme(themeName);
 		
 		if(theme == null)
 			return false;
 		
+		if(m_currentTheme != theme)
+			setChanged();
 		m_currentTheme = theme;
+		
+		notifyObservers();
 		return true;
 	}
 	

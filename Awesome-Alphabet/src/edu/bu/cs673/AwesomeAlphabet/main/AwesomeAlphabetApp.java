@@ -41,8 +41,8 @@ public class AwesomeAlphabetApp {
 		MainWindow mainWindow = new MainWindow();
 		
 		log.info("Creating the Models");
-		Alphabet alphabet = new Alphabet();
 		ThemeManager themeMgr = new ThemeManager();
+		Alphabet alphabet = new Alphabet(themeMgr);
 		
 		log.info("Creating the views");
 		TitlePageView titlePageView = new TitlePageView(PageName.TitlePage.toString());
@@ -65,7 +65,7 @@ public class AwesomeAlphabetApp {
 		InputStream stream = loader.getResourceAsStream("letter.properties");
 		try {
 			prop.load(stream);
-			alphabet.LoadResources(prop, themeMgr);
+			alphabet.LoadResources(prop);
 		} catch (Exception e) {
 			log.error("An exception occurred while loading the letter properties file");
 			log.error(e.getMessage());

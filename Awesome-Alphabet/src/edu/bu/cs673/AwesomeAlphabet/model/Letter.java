@@ -2,6 +2,7 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.Icon;
 
@@ -14,15 +15,16 @@ import javax.swing.Icon;
  * word list to keep track of which word was most recently
  * shown.
  */
-public class Letter extends Observable {
+public class Letter extends Observable implements Observer {
 
 	private char m_cLetter;
 	private List<WordPictureSound> m_wps = new LinkedList<WordPictureSound>();
 	private GameSound m_LetterSound;
 	private GameSound m_PhonicSound;
-	private int index = 0;
+	private int m_index = 0;
 	private enum Sound_Type {NONE, WPS, LETTER, PHONIC};
 	private Sound_Type curr_sound = Sound_Type.NONE;
+	private ThemeManager m_themeMgr;
 	
 	
 	/**
@@ -30,9 +32,13 @@ public class Letter extends Observable {
 	 * 
 	 * @param cLetter   The letter that this object will represent.
 	 */
-	public Letter(char cLetter) {
+	public Letter(char cLetter, ThemeManager themeMgr) {
 	
 		m_cLetter = Character.toLowerCase(cLetter);
+		m_themeMgr = themeMgr;
+		
+		if(m_themeMgr != null)
+			m_themeMgr.addObserver(this);
 	}
 
 	
@@ -100,7 +106,7 @@ public class Letter extends Observable {
 	 */
 	private WordPictureSound getWPSData(int index)
 	{
-		if (m_wps.size() > index)
+		if (index >= 0 && index < m_wps.size())
 			return m_wps.get(index);
 		return null;
 	}
@@ -113,7 +119,7 @@ public class Letter extends Observable {
 	 */
 	public String getWord()
 	{
-		WordPictureSound wps = getWPSData(index);
+		WordPictureSound wps = getWPSData(m_index);
 		if (wps == null)
 			return null;
 		return wps.GetWordString();
@@ -126,7 +132,7 @@ public class Letter extends Observable {
 	 * @return   The image associated with the current word.
 	 */
 	public Icon getIcon(int width, int height) {
-		WordPictureSound wps = getWPSData(index);
+		WordPictureSound wps = getWPSData(m_index);
 		if (wps == null)
 			return null;
 		return wps.GetWordImage(width, height);
@@ -138,10 +144,52 @@ public class Letter extends Observable {
 	 * observers that the word example has changed.
 	 */
 	public void nextExample() {
-		index++;
-		if (index >= m_wps.size())
-			index = 0;
+		int iWpsSize = m_wps.size();
+		int iStartIndex;
+		Theme curTheme = (m_themeMgr == null) ? null : m_themeMgr.getCurrentTheme();
+		Theme theme;
+		
 		setChanged();
+		
+		//If there are no words for the current letter
+		if(iWpsSize <= 0)
+		{
+			m_index = -1;
+			notifyObservers(this);
+			return;
+		}
+		
+		//Make sure that we are iterate though valid indices.
+		//m_index may have been previously set to -1 if there were no valid
+		//words for the current theme.
+		if(m_index < 0 || m_index >= iWpsSize)
+			iStartIndex = m_index = iWpsSize-1;
+		else
+			iStartIndex = m_index;
+		
+		do
+		{
+			//Advance Index
+			m_index++;
+			if (m_index >= iWpsSize)
+				m_index = 0;
+			
+			//Break out of the loop if there is no current theme
+			if(curTheme == null)
+				break;
+			else
+				theme = getWPSData(m_index).getTheme();
+			
+			//If we have iterated through the entire collection
+			if(m_index == iStartIndex)
+			{
+				//If we have not found a word that is part of the current theme.
+				if(theme != curTheme)
+					m_index = -1;
+				break;
+			}
+		} while(theme != curTheme); //While the word is not part of the current theme
+		
 		notifyObservers(this);
 	}
 
@@ -150,7 +198,7 @@ public class Letter extends Observable {
 	 * Plays the sound associated with the current word.
 	 */
 	public void playSound() {
-		WordPictureSound wps = getWPSData(index);
+		WordPictureSound wps = getWPSData(m_index);
 		if (wps == null)
 			return;
 		curr_sound = Sound_Type.WPS;
@@ -176,8 +224,9 @@ public class Letter extends Observable {
 		case NONE:
 			return;
 		case WPS:
-			WordPictureSound wps = getWPSData(index);
-			wps.StopSound();
+			WordPictureSound wps = getWPSData(m_index);
+			if(wps != null)
+				wps.StopSound();
 			curr_sound = Sound_Type.NONE;
 			return;
 		case LETTER:
@@ -188,6 +237,21 @@ public class Letter extends Observable {
 			m_PhonicSound.StopSound();
 			curr_sound = Sound_Type.NONE;
 			return;
+		}
+	}
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+
+		if(o == null)
+			return;
+		else if(o == m_themeMgr)
+		{
+			//There was a change to the theme model.
+			//The current theme was possibly changed.
+			m_index = -1;
+			nextExample();
 		}
 	}
 }

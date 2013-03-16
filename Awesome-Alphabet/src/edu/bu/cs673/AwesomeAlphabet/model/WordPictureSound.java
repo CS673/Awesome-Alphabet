@@ -37,7 +37,7 @@ public class WordPictureSound {
 	}
 	
 	public ImageIcon GetWordImage(int width, int height) {
-		if (m_image == null)
+		if (m_image == null || width == 0 || height == 0)
 			return null;
 		return new ImageIcon(m_image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
 	}
