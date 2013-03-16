@@ -3,6 +3,7 @@ package edu.bu.cs673.AwesomeAlphabet.test;
 import javax.swing.ImageIcon;
 import org.junit.*;
 
+import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.WordPictureSound;
 import static org.junit.Assert.*;
 
@@ -109,6 +110,47 @@ public class WordPictureSoundTest {
 
 		// add additional test code here
 	}
+	
+	
+	
+	/**
+	 * Tests getTheme method in WordPictureSound class.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetTheme()
+		throws Exception
+	{
+		Theme theme = new Theme("Animals");
+		WordPictureSound wps = new WordPictureSound("", "", "", theme);
+		assertEquals(theme, wps.getTheme());
+		assertEquals(theme.getThemeName(), wps.getTheme().getThemeName());
+	}
+	
+	
+	/**
+	 * Tests changeTheme method in WordPictureSound class.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testChangeTheme()
+		throws Exception
+	{
+		Theme oldTheme = new Theme("Animals");
+		Theme newTheme = new Theme("Transportation");
+		WordPictureSound wps = new WordPictureSound("", "", "", oldTheme);
+		
+		assertEquals(oldTheme, wps.getTheme());
+		assertEquals(oldTheme.getThemeName(), wps.getTheme().getThemeName());
+		
+		wps.changeTheme(newTheme);
+		
+		assertEquals(newTheme, wps.getTheme());
+		assertEquals(newTheme.getThemeName(), wps.getTheme().getThemeName());	
+	}
+	
 
 	/**
 	 * Perform pre-test initialization.

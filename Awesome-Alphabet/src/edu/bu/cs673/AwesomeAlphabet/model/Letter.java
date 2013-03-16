@@ -69,6 +69,19 @@ public class Letter extends Observable {
 		m_wps.add(new WordPictureSound(wordText, imageName, soundName));
 	}
 	
+	
+	/**
+	 * Adds a new WordPictureSound object to the word list.
+	 * 
+	 * @param imageName    The filename of the word image.
+	 * @param soundName    The filename of the word sound.
+	 * @param wordText     The text of the word.
+	 * @param theme        The theme.
+	 */
+	public void addResource(String imageName, String soundName, String wordText, Theme theme) {
+		m_wps.add(new WordPictureSound(wordText, imageName, soundName, theme));
+	}
+	
 	public void addLetterSoundResource(String soundName) {
 		m_LetterSound = new GameSound(soundName);
 	}

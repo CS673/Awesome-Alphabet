@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
+import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 
 /**
@@ -214,11 +215,12 @@ public class AlphabetTest {
 	public void testLoadResources_1()
 		throws Exception {
 		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop);
+		fixture.LoadResources(prop, themeMgr);
 
 		// add additional test code here
 	}
@@ -234,11 +236,12 @@ public class AlphabetTest {
 	public void testLoadResources_2()
 		throws Exception {
 		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop);
+		fixture.LoadResources(prop, themeMgr);
 
 		// add additional test code here
 	}
@@ -254,11 +257,12 @@ public class AlphabetTest {
 	public void testLoadResources_3()
 		throws Exception {
 		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop);
+		fixture.LoadResources(prop, themeMgr);
 
 		// add additional test code here
 	}
@@ -274,11 +278,12 @@ public class AlphabetTest {
 	public void testLoadResources_4()
 		throws Exception {
 		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop);
+		fixture.LoadResources(prop, themeMgr);
 
 		// add additional test code here
 	}
@@ -294,11 +299,12 @@ public class AlphabetTest {
 	public void testLoadResources_5()
 		throws Exception {
 		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop);
+		fixture.LoadResources(prop, themeMgr);
 
 		// add additional test code here
 	}
@@ -314,11 +320,12 @@ public class AlphabetTest {
 	public void testLoadResources_6()
 		throws Exception {
 		Alphabet fixture = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
 		fixture.m_iCurLetterIndex = 1;
 		fixture.addObserver(new AlphabetPageView(""));
 		Properties prop = new Properties();
 
-		fixture.LoadResources(prop);
+		fixture.LoadResources(prop, themeMgr);
 
 		// add additional test code here
 	}

@@ -152,12 +152,37 @@ public class Alphabet extends Observable {
 	 * 
 	 * @param prop   The property list containing resource information.
 	 */
-	public void LoadResources(Properties prop) {
+	public void LoadResources(Properties prop, ThemeManager themeMgr) {
+				
 		for (char c = 'a'; c <= 'z'; c++) {
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
 					String wordText = prop.getProperty(propName + "word");
+					if (wordText == null)
+						break;
+					String imageName = wordText + ".jpg";
+					String soundName = wordText + ".wav";
+					String themeName = prop.getProperty(propName + "theme");
+					
+					if(themeName == null)
+						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText);
+					else
+					{
+						if(!themeMgr.addTheme(themeName))
+							throw new Exception("Error adding theme.");
+						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText, 
+								                                 themeMgr.getTheme(themeName));
+					}
+				} catch (Exception e) {
+					i = 10;
+					log.error("An exception occurred while loading properties for leter "+c);
+					log.error(e.getMessage());
+					e.printStackTrace();
+				}
+				
+				try {
+					String wordText = prop.getProperty(propName + "theme");
 					if (wordText == null)
 						break;
 					String imageName = wordText + ".jpg";

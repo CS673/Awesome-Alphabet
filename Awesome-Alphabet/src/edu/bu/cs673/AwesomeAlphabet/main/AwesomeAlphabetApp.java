@@ -14,6 +14,7 @@ import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
+import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
 
@@ -41,6 +42,7 @@ public class AwesomeAlphabetApp {
 		
 		log.info("Creating the Models");
 		Alphabet alphabet = new Alphabet();
+		ThemeManager themeMgr = new ThemeManager();
 		
 		log.info("Creating the views");
 		TitlePageView titlePageView = new TitlePageView(PageName.TitlePage.toString());
@@ -63,7 +65,7 @@ public class AwesomeAlphabetApp {
 		InputStream stream = loader.getResourceAsStream("letter.properties");
 		try {
 			prop.load(stream);
-			alphabet.LoadResources(prop);
+			alphabet.LoadResources(prop, themeMgr);
 		} catch (Exception e) {
 			log.error("An exception occurred while loading the letter properties file");
 			log.error(e.getMessage());
