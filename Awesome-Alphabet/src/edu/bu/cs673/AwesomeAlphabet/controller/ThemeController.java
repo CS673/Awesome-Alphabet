@@ -8,14 +8,15 @@ import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
+import edu.bu.cs673.AwesomeAlphabet.view.IThemeControllerView;
 
 /**
  * This class defines the Themes Page Controller.
  */
-public class ThemesPageController extends PageController {
+public class ThemeController extends PageController {
 
 	
-	//private ThemesPageView m_view;
+	private IThemeControllerView m_view;
 	private ThemeManager m_themeMgr;
 	private Alphabet m_alphabet;
 	private Properties m_letterProp;
@@ -30,18 +31,18 @@ public class ThemesPageController extends PageController {
 	 * @param themeMgr       The Theme Manager.
 	 * @param alphabet       The alphabet.
 	 */
-	public ThemesPageController(IPageObserver pageObserver, /* ThemesPageView view, */ 
-			                    ThemeManager themeMgr, Alphabet alphabet, Properties letterProp) 
+	public ThemeController(IPageObserver pageObserver, IThemeControllerView view,
+			               ThemeManager themeMgr, Alphabet alphabet, Properties letterProp) 
 	{
 		super(pageObserver);
 
-		//m_view = view;
+		m_view = view;
 		m_themeMgr = themeMgr;
 		m_alphabet = alphabet;
 		m_letterProp = letterProp;
 		
-		//m_view.SetController(this);
-		//themeMgr.addObserver(m_view);
+		m_view.SetController(this);
+		themeMgr.addObserver(m_view);
 	}
 	
 	
@@ -124,5 +125,20 @@ public class ThemesPageController extends PageController {
 	public boolean changeThemeName(String oldThemeName, String newThemeName)
 	{
 		return m_themeMgr.changeThemeName(oldThemeName, newThemeName);
+	}
+	
+	
+	
+	/**
+	 * Sets the current theme.
+	 * 
+	 * @param themeName  The theme name.
+	 * @return  True if current theme was set; false otherwise.
+	 *          This function will return false if themeName does
+	 *          not specify an existing theme and is not null.
+	 */
+	public boolean setCurrentTheme(String themeName)
+	{
+		return m_themeMgr.setCurrentTheme(themeName);
 	}
 }
