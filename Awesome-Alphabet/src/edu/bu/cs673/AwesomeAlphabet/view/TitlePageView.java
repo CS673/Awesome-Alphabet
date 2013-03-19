@@ -2,6 +2,8 @@
 package edu.bu.cs673.AwesomeAlphabet.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,11 +11,15 @@ import java.util.Observable;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
+
+import sun.awt.HorizBagLayout;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
 import edu.bu.cs673.AwesomeAlphabet.model.Version;
@@ -39,6 +45,7 @@ public class TitlePageView extends PageView implements ActionListener {
 		super(sPageName);
 		
 		JButton button;
+		Component component;
 		m_controller = null;
 
 		//Set Background Image and Main Panel Layout
@@ -48,16 +55,22 @@ public class TitlePageView extends PageView implements ActionListener {
 		
 		//Create Center Panel and Buttons
 		JPanel centerPanel = new JPanel();
-		Box box = Box.createVerticalBox(); 
-
-		box.add(Box.createVerticalStrut(300));
+		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS));
+		
+		component = Box.createRigidArea(new Dimension(10, 150));
+		component.setMinimumSize(new Dimension(10, 80));
+		centerPanel.add(component);
+		centerPanel.add(Box.createVerticalGlue());
+		centerPanel.add(Box.createVerticalStrut(10));
+		
 		button = getButtonImage(AA_NAV_BUTTON_START, "Start");
 		button.addActionListener(this);
-		box.add(button);
-
+		button.setAlignmentX(Component.CENTER_ALIGNMENT);
+		centerPanel.add(button);
+		centerPanel.add(Box.createVerticalStrut(10));
+		
+		centerPanel.add(Box.createVerticalGlue());
 		centerPanel.setOpaque(false);
-		centerPanel.add(box);
-	
 		m_panel.add(centerPanel, BorderLayout.CENTER);
 		
 		
