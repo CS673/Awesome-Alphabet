@@ -239,4 +239,28 @@ public class Alphabet extends Observable {
 	public void StopAlphabetSound() {
 		m_alphabetsong.StopSound();
 	}
+	
+	/**
+	 * Given a word, return matching WordPictureSound object, if it exists.
+	 * @param word to match
+	 * @return WordPictureSound object associated with word 
+	 */
+	 
+	public WordPictureSound getWordPictureSound(String word) {
+		// Traverse through all WordPictureSound objects to find a match
+		Iterator<Letter> iter_letter = GetIterator();
+		Iterator<WordPictureSound> iter_wps;
+		WordPictureSound wps;
+		
+		while (iter_letter.hasNext()) {
+			Letter l = iter_letter.next();
+			iter_wps = l.GetIterator();
+			while (iter_wps.hasNext()) {
+				wps = iter_wps.next();
+				if (word == wps.GetWordString())
+					return wps;
+			}
+		}
+		return null;
+	}
 }
