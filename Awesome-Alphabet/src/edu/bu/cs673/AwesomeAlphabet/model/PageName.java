@@ -8,7 +8,8 @@ public enum PageName {
 	
 	TitlePage    ("TitlePage"),
 	AlphabetPage ("AlphabetPage"),
-	LetterPage   ("LetterPage");
+	LetterPage   ("LetterPage"),
+	OptionsPage	 ("OptionsPage");
 	
 	private final String stringValue;
 	private PageName(final String s) { stringValue = s; }

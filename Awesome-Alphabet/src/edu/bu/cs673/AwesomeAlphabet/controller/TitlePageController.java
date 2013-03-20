@@ -39,4 +39,9 @@ public class TitlePageController extends PageController {
 	{
 		return GoToPage(PageName.AlphabetPage);
 	}
+
+
+	public boolean Options() {
+		return GoToPage(PageName.OptionsPage);
+	}
 }

@@ -194,7 +194,7 @@ public class Alphabet extends Observable {
 					e.printStackTrace();
 				}
 			}
-			log.info("Add Letter Sound");
+			// log.info("Add Letter Sound");
 			try {
 				//String propName = "letter." + c + ".lettersound";
 				//String letterSoundName = prop.getProperty(propName);
@@ -206,8 +206,7 @@ public class Alphabet extends Observable {
 				log.error(e.getMessage());
 				e.printStackTrace();
 			}
-			// 
-			log.info("Add Phonic Sound");
+			// log.info("Add Phonic Sound");
 			try {
 				String phonicSoundName = c + "phonics.wav";
 				if (phonicSoundName != null)
@@ -219,7 +218,7 @@ public class Alphabet extends Observable {
 			}
 		}
 		
-		log.info("Load alphabet song");
+		// log.info("Load alphabet song");
 		try {
 			String soundName = prop.getProperty("alphabetsong");
 			if (soundName != null) {

@@ -4,7 +4,6 @@
  */
 
 package edu.bu.cs673.AwesomeAlphabet.model;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -32,7 +31,7 @@ public class GameSound {
 	public GameSound(String soundName) {
 		// TODO: Error handling. File not being present.
 		this.soundName = soundName;
-		log.info("Adding sound file " + this.soundName);	
+		// log.info("Adding sound file " + this.soundName);	
 	}
 	
 	/**
