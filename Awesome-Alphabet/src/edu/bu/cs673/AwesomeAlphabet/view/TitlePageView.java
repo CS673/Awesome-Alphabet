@@ -5,8 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 
 import javax.swing.BorderFactory;
@@ -21,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import sun.awt.HorizBagLayout;
 
+import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
 import edu.bu.cs673.AwesomeAlphabet.model.Version;
 
@@ -30,7 +29,7 @@ import edu.bu.cs673.AwesomeAlphabet.model.Version;
  * the user is able to see the application's name and version
  * and go to the Alphabet Page.
  */
-public class TitlePageView extends PageView implements ActionListener {
+public class TitlePageView extends PageView {
 
 	private TitlePageController m_controller;
 	
@@ -60,17 +59,25 @@ public class TitlePageView extends PageView implements ActionListener {
 		component = Box.createRigidArea(new Dimension(10, 150));
 		component.setMinimumSize(new Dimension(10, 80));
 		centerPanel.add(component);
+		
 		centerPanel.add(Box.createVerticalGlue());
 		centerPanel.add(Box.createVerticalStrut(10));
-		
+		centerPanel.add(Box.createVerticalGlue());
+
 		button = getButtonImage(AA_NAV_BUTTON_START, "Start");
-		button.addActionListener(this);
+		button.addActionListener(new ButtonHandler(this, "OnStartButtonClick"));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.add(button);
+		
 		centerPanel.add(Box.createVerticalStrut(10));
 		
+		button = getButtonImage(AA_NAV_BUTTON_OPTIONS, "Options");
+		button.addActionListener(new ButtonHandler(this, "OnOptionsButtonClick"));
+		centerPanel.add(button);
+
 		centerPanel.add(Box.createVerticalGlue());
 		centerPanel.setOpaque(false);
+	
 		m_panel.add(centerPanel, BorderLayout.CENTER);
 		
 		
@@ -82,16 +89,6 @@ public class TitlePageView extends PageView implements ActionListener {
 		
 		log.info("Initialized the TitlePageView " + sPageName);
 	}
-	
-	
-	/**
-	 * Handles button click events.
-	 */
-	public void actionPerformed(ActionEvent ae)
-	{
-		this.OnStartButtonClick();
-	}
-	
 	
 	/**
 	 * Sets the controller associated with this view.
@@ -120,10 +117,20 @@ public class TitlePageView extends PageView implements ActionListener {
 	 * Called when the Start Button is clicked
 	 * and causes the Alphabet Page to be shown.
 	 */
-	protected void OnStartButtonClick()
+	public void OnStartButtonClick()
 	{
 		if (m_controller != null)
 			m_controller.Start();
+	}
+	
+	/**
+	 *  Called when the Options button is clicked and
+	 *  causes the options page to be shown.
+	 */
+	public void OnOptionsButtonClick()
+	{
+		if (m_controller != null)
+			m_controller.Options();
 	}
 	
 	public void activated() {

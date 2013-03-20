@@ -1,21 +1,21 @@
 
 package edu.bu.cs673.AwesomeAlphabet.main;
-import org.apache.log4j.Logger;
-import org.apache.log4j.BasicConfigurator;
-
-
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
+import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
 import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
-import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
+import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
+import edu.bu.cs673.AwesomeAlphabet.view.OptionsPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
 
 
@@ -48,16 +48,19 @@ public class AwesomeAlphabetApp {
 		TitlePageView titlePageView = new TitlePageView(PageName.TitlePage.toString());
 		AlphabetPageView alphabetPageView = new AlphabetPageView(PageName.AlphabetPage.toString());
 		LetterPageView letterPageView = new LetterPageView(PageName.LetterPage.toString());
+		OptionsPageView optionsPageView = new OptionsPageView(PageName.OptionsPage.toString());
 		
 		log.info("Creating the controllers");
 		titlePageView.SetController(new TitlePageController(mainWindow, titlePageView));
 		alphabetPageView.SetController(new AlphabetPageController(mainWindow, alphabetPageView, alphabet));
 		letterPageView.SetController(new LetterPageController(mainWindow, letterPageView, alphabet));
+		// optionsPageView.SetController(new OptionsPageController(mainWindow, optionsPageView);
 		
 		log.info("Registering views with the main controlling window"); 
 		mainWindow.registerPage(titlePageView);
 		mainWindow.registerPage(alphabetPageView);
 		mainWindow.registerPage(letterPageView);
+		mainWindow.registerPage(optionsPageView);
 		
 		log.info("Processing the resource file");
 		Properties prop = new Properties();
