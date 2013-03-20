@@ -1,6 +1,9 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -61,6 +64,16 @@ public class Letter extends Observable implements Observer {
 	public char GetUppercaseLetter()
 	{
 		return Character.toUpperCase(m_cLetter);
+	}
+	
+	/**
+	 * Gets an iterator to the list of WordPictureSound objects.
+	 * 
+	 * @return   An iterator to the list of WordPictureSound objects. 
+	 */
+	public ListIterator<WordPictureSound> GetIterator()
+	{
+		return m_wps.listIterator();
 	}
 
 	
