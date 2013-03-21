@@ -263,4 +263,15 @@ public class Alphabet extends Observable {
 		}
 		return null;
 	}
+	
+	/**
+	 * Add a new word 
+	 */
+	 
+	public int addNewWord(char letter_c, String wordText, String imageName, String soundName, Theme theme) {
+		int letter_index = GetLetterIndex(letter_c);
+		Letter letter = m_letters[letter_index];
+		letter.addResource(imageName, soundName, wordText, theme);
+		return 0;
+	}
 }
