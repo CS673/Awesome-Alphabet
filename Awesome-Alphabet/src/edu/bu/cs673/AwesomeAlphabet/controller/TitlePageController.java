@@ -24,7 +24,6 @@ public class TitlePageController extends PageController {
 		super(pageObserver);
 
 		m_view = view;
-		m_view.SetController(this);
 	}
 	
 	

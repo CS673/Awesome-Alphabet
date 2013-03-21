@@ -43,7 +43,7 @@ public class MainWindow implements IPageObserver {
 	
 	public void registerPage(PageView page)
 	{
-		log.info("Registerd views " + page.getPageName());
+		log.info("Registered view " + page.getPageName());
 		m_curView.add(page.getPageName(), page.getPagePanel());
 		m_pageHash.put(page.getPageName(),  page);
 	}

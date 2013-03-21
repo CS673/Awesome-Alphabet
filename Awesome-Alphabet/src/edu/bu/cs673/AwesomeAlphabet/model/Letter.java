@@ -230,6 +230,11 @@ public class Letter extends Observable implements Observer {
 		}
 	}
 
+	public void removeAllEntries() {
+		while (m_wps.size() > 0) {
+			m_wps.remove(0);
+		}
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {

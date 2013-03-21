@@ -31,8 +31,6 @@ public class AlphabetPageController extends PageController {
 
 		m_view = view;
 		m_alphabet = alphabet;
-		
-		m_view.SetController(this);
 	}
 	
 	

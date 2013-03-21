@@ -9,7 +9,8 @@ public enum PageName {
 	TitlePage    ("TitlePage"),
 	AlphabetPage ("AlphabetPage"),
 	LetterPage   ("LetterPage"),
-	OptionsPage	 ("OptionsPage");
+	OptionsPage	 ("OptionsPage"),
+	ThemePage	 ("ThemePage");
 	
 	private final String stringValue;
 	private PageName(final String s) { stringValue = s; }
