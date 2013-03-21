@@ -55,6 +55,10 @@ public class AlphabetPageView extends PageView {
 		
 		letterPanel = new JPanel(new GridLayout(5, 6));
 		m_panel.add(letterPanel, BorderLayout.CENTER);
+		
+		//Set Background Color
+		navBar.setBackground(backgroundColor);
+		letterPanel.setBackground(backgroundColor);
 	}
 	
 	

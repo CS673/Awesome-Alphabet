@@ -1,4 +1,5 @@
 package edu.bu.cs673.AwesomeAlphabet.view;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.util.Observer;
@@ -26,7 +27,8 @@ public abstract class PageView implements Observer {
 	protected static Font letterFont = new Font("Sans-Serif", Font.PLAIN, 32);
 	protected static Font wordFont = new Font("Sans-Serif", Font.PLAIN, 24);
 	protected static Border border = BorderFactory.createEmptyBorder();
-
+	protected static Color backgroundColor = new Color(164,193,193);
+	
 	protected static final String AA_NAV_BUTTON_TITLE_PAGE		= "Home.png";
 	protected static final String AA_NAV_BUTTON_ALPHABET_SONG	= "Music.png";
 	protected static final String AA_NAV_BUTTON_HOME			= "Home.png";
@@ -46,6 +48,8 @@ public abstract class PageView implements Observer {
 	{
 		m_sPageName = sPageName;
 		m_panel = new AAJPanel();
+		
+		m_panel.setBackground(backgroundColor);
 	}
 	
 	
