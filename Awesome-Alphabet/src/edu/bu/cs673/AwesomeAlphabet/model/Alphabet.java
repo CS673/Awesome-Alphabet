@@ -6,6 +6,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
+
 
 /**
  * The class defines the Alphabet model.  It creates and
@@ -265,12 +267,25 @@ public class Alphabet extends Observable {
 	}
 	
 	/**
-	 * Add a new word 
+	 * Add a new word
+	 * @return 0 on success. Failure otherwise. 
 	 */
 	 
 	public int addNewWord(char letter_c, String wordText, String imageName, String soundName, Theme theme) {
 		int letter_index = GetLetterIndex(letter_c);
 		Letter letter = m_letters[letter_index];
+		WordPictureSound wps;
+		
+		//Verify new word does not exist already.
+		wps = getWordPictureSound(wordText);
+		if (wps != null)
+			return 1;
+		
+		// Add sound and image files to resource dir.
+		AAConfig.addSoundResource(soundName, wordText + ".wav");
+		AAConfig.addImageResource(imageName, wordText + ".jpg");
+		AAConfig.addWordToIndex(letter_c, wordText, theme.getThemeName());
+		
 		letter.addResource(imageName, soundName, wordText, theme);
 		return 0;
 	}
