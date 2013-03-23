@@ -11,6 +11,7 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 import edu.bu.cs673.AwesomeAlphabet.main.AwesomeAlphabetApp;
+import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
 
 public class SQLiteTest {
 	static Logger log = Logger.getLogger(AwesomeAlphabetApp.class);
@@ -57,7 +58,7 @@ public class SQLiteTest {
 	}
 	
 	public void SQLiteGetDataFromWordTable(Statement stat) throws SQLException {
-		System.out.println(" ========================   SQLiteGetDataFromWordTable ==================="); 
+		//System.out.println(" ========================   SQLiteGetDataFromWordTable ==================="); 
 		  // Get Data from Word Table
 		  ResultSet res = stat.executeQuery("select * from wordTable");
 
@@ -72,7 +73,7 @@ public class SQLiteTest {
 	}
 	
 	public void SQLitedeleteDataFromWordTable(Statement stat) throws SQLException {
-		System.out.println(" ========================   SQLitedeleteDataFromWordTable ==================="); 
+		//System.out.println(" ========================   SQLitedeleteDataFromWordTable ==================="); 
 		  // delete Data from Word Table
 		PreparedStatement prep = con.prepareStatement("delete from wordTable where words = ?");
 		prep.setString(1, "Apple");
@@ -90,7 +91,7 @@ public class SQLiteTest {
 	
 	public void SQLiteInsertRecordToWordTable() throws SQLException {
 		// Todo Add this record for test.
-		System.out.println(" ========================   SQLiteInsertRecordToWordTable ==================="); 
+		//System.out.println(" ========================   SQLiteInsertRecordToWordTable ==================="); 
 		
 		// Insert Data into wordTable
 		PreparedStatement prep = con.prepareStatement("insert into wordTable values(?,?,?,?,?,?);");
@@ -133,11 +134,36 @@ public class SQLiteTest {
 		
 		return stat;
 	}
+	
 	// This is a one time operation to load all the records into our database
 	// Prepare the Theme table in the DB once.
-	public Statement SQLitePopulatePreviousData() throws SQLException {
+	public Statement SQLitePopulatePreviousData(int id, char c, String words, String imageName, String soundName) throws SQLException{
 		// My statement for Awesome-Alphabet
 		Statement stat = con.createStatement();
+		String idString = " " + id;
+		String charString = "" + c;
+		String soundNameWithPAth =  "edu/bu/cs673/AwesomeAlphabet/resources/Sounds" + soundName;
+		String imageNameWithPath =  "edu/bu/cs673/AwesomeAlphabet/resources/Sounds" + imageName;
+		
+		// edu/bu/cs673/AwesomeAlphabet/resources/Graphics - lion, monkey - picture path
+		// edu/bu/cs673/AwesomeAlphabet/resources/Sounds
+		//System.out.println(" ========================   SQLitePopulatePreviousData ==================="); 
+		
+		// Insert Data into wordTable
+		PreparedStatement prep = con.prepareStatement("insert into wordTable values(?,?,?,?,?,?);");
+		prep.setString(1, idString);                          // id
+		prep.setString(2, words);                             // words
+		prep.setString(3, idString);                          // TheameId
+		prep.setString(4, soundNameWithPAth);                 // Sound Path
+		prep.setString(5, imageNameWithPath);                 // Picture Path
+		prep.setString(6, charString);                        // Alphabet 
+		prep.execute();   
+		
+		//System.out.println(" ========================   SQLitePopulatePreviousData ===================");
+		
+		// Now retrieve a randomn record to confirm its all loaded.
+		Statement word_stat  = con.createStatement();
+		SQLiteGetDataFromWordTable(word_stat);
 		
 		
 		return stat;

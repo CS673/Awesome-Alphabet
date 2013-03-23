@@ -6,6 +6,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import edu.bu.cs673.AwesomeAlphabet.database.SQLiteTest;
+
 
 /**
  * The class defines the Alphabet model.  It creates and
@@ -156,13 +158,16 @@ public class Alphabet extends Observable {
 		for (char c = 'a'; c <= 'z'; c++) {
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
+				
 				try {
 					String wordText = prop.getProperty(propName + "word");
+					
 					if (wordText == null)
 						break;
 					String imageName = wordText + ".jpg";
 					String soundName = wordText + ".wav";
 					m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText);
+					
 				} catch (Exception e) {
 					i = 10;
 					log.error("An exception occurred while loading properties for leter "+c);
@@ -208,6 +213,35 @@ public class Alphabet extends Observable {
 		}
 		
 	}
+	// Added to create the Database, one time operation.
+	public void LoadResourcesToDatabase(Properties prop, SQLiteTest sqlLiteHandle ) {
+		int count =1;
+		for (char c = 'a'; c <= 'z'; c++) {
+			for (int i = 1; i <= 10; i++) {
+				String propName = "letter." + c + "." + i + ".";
+				
+				try {
+					String wordText = prop.getProperty(propName + "word");
+					
+					if (wordText == null)
+						break;
+					String imageName = wordText + ".jpg";
+					String soundName = wordText + ".wav";
+					// Populate the Database here. Make sure this is added to the DB. 
+					//log.info("LoadResourcesToDatabase:" + "char: " + c + " wordText:" + wordText + " imageName:" + soundName + " soundName:" + soundName);
+					sqlLiteHandle.SQLitePopulatePreviousData(count, c, wordText, imageName, soundName);
+					count++;
+					
+				} catch (Exception e) {
+					i = 10;
+					log.error("An exception occurred while loading properties for leter "+c);
+					log.error(e.getMessage());
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public void PlayAlphabetSong() {
 		m_alphabetsong.PlaySound();
 	}

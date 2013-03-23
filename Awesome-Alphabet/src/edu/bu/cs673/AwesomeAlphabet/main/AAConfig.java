@@ -4,8 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class AAConfig {
+import org.apache.log4j.Logger;
 
+import edu.bu.cs673.AwesomeAlphabet.model.GameImage;
+
+public class AAConfig {
+	static Logger log = Logger.getLogger(GameImage.class);
+	
 	private static final String CONFIG_PROPS = "config.properties";
 	private static final String BASE_DIR = "dir.location";
 	private static final String GRAPHICS_DIR = "dir.graphics";
@@ -28,6 +33,9 @@ public class AAConfig {
 			graphicsSubDir = prop.getProperty(GRAPHICS_DIR);
 			soundsSubDir = prop.getProperty(SOUNDS_DIR);
 			letterProps = prop.getProperty(DEFAULT_LETTERS);
+			
+			log.info("baseDir: " + baseDir);
+			
 			stream.close();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

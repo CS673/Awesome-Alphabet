@@ -77,9 +77,13 @@ public class AwesomeAlphabetApp {
 		Properties prop = new Properties();
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();           
 		InputStream stream = loader.getResourceAsStream("letter.properties");
+		
 		try {
 			prop.load(stream);
 			alphabet.LoadResources(prop);
+		
+			// Load the Database now
+			alphabet.LoadResourcesToDatabase(prop, sqlLiteHandle);
 		} catch (Exception e) {
 			log.error("An exception occurred while loading the letter properties file");
 			log.error(e.getMessage());
