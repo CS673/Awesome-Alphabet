@@ -1,6 +1,7 @@
 package edu.bu.cs673.AwesomeAlphabet.database;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,13 +20,10 @@ public class SQLiteTest {
 	public void InitializeDataBase() throws Exception {
 	 
 	  // SQLite Driver
-	  // Direct Java to the JAR code with the following syntax: "Class.forName("org.sqlite.JDBC");" 
-	  // at the beginning of your main function. load the driver somewhere.
 	  Class.forName("org.sqlite.JDBC");
 	  
 	  // database PATH, if it's new database, then it will be created in the project folder
 	  // Create a connection to the SQLite database : AwesomeAlphabet.db is the target
-	  //con = DriverManager.getConnection("jdbc:sqlite:mydb.db");
 	  con = DriverManager.getConnection("jdbc:sqlite:AwesomeAlphabet.db");
 	  
 	  // Drop the table if its open earlier
@@ -33,35 +31,81 @@ public class SQLiteTest {
 	 
 	  stat = SQLiteCreateTables();
 
-	  //SQLiteGetDataFromTheameTable(stat);
+	  //SQLiteGetDataFromThemeTable(stat);
 	}
 
 	public void runTest() throws Exception {
 		Statement theme_stat = con.createStatement();
 		Statement word_stat  = con.createStatement();
 		
-		SQLiteGetDataFromTheameTable(theme_stat);
+		SQLiteGetDataFromThemeTable(theme_stat);
+		
+		// wordtable operations
+		SQLiteInsertRecordToWordTable();
+		SQLiteGetDataFromWordTable(word_stat);
+		SQLitedeleteDataFromWordTable(word_stat);
+		SQLiteGetDataFromWordTable(word_stat);
 	}
 	
-	public void SQLiteGetDataFromTheameTable(Statement stat) throws SQLException {
-		  // Get Data from Theame Table
+	public void SQLiteGetDataFromThemeTable(Statement stat) throws SQLException {
+		  // Get Data from Theme Table
 		  ResultSet res = stat.executeQuery("select * from themeTable");
 		  while (res.next()) {
 		     System.out.println("id:" + res.getString("id") + " " + "Theme Name:" + res.getString("ThemeName") 
 		    		  + " " + "Theme Id:" + res.getString("ThemeId"));
 		  }
 	}
+	
+	public void SQLiteGetDataFromWordTable(Statement stat) throws SQLException {
+		System.out.println(" ========================   SQLiteGetDataFromWordTable ==================="); 
+		  // Get Data from Word Table
+		  ResultSet res = stat.executeQuery("select * from wordTable");
 
+		  while (res.next()) {
+		     System.out.println("id:" + res.getString("id") + " " 
+		    		 		+ "words:" + res.getString("words") + " " 
+		    		 		+ "Theme Id:" + res.getString("ThemeId") + " " 
+		    		 		+ "SoundPath:" + res.getString("SoundPath") + " " 
+		    		 		+ "PicturePath:" + res.getString("PicturePath") + " " 
+		    		 		+ "alphabet:" + res.getString("alphabet"));
+		  }
+	}
+	
+	public void SQLitedeleteDataFromWordTable(Statement stat) throws SQLException {
+		System.out.println(" ========================   SQLitedeleteDataFromWordTable ==================="); 
+		  // delete Data from Word Table
+		PreparedStatement prep = con.prepareStatement("delete from wordTable where words = ?");
+		prep.setString(1, "Apple");
+	}
+
+	// We need to have a default record in the Theme Table
 	public void SQLiteInsertDefaultData() throws SQLException {
 		// Insert Data into theameTable
 		PreparedStatement prep = con.prepareStatement("insert into themeTable values(?,?,?);");
-		prep.setString(1, "1");
-		prep.setString(2, "Default-Theme");
-		prep.setString(3, "0");
+		prep.setString(1, "1");             // id
+		prep.setString(2, "Default-Theme"); // ThemeName
+		prep.setString(3, "0");             // ThemeId
 		prep.execute();
+	}
+	
+	public void SQLiteInsertRecordToWordTable() throws SQLException {
+		// Todo Add this record for test.
+		System.out.println(" ========================   SQLiteInsertRecordToWordTable ==================="); 
+		
+		// Insert Data into wordTable
+		PreparedStatement prep = con.prepareStatement("insert into wordTable values(?,?,?,?,?,?);");
+		prep.setString(1, "1");                                 // id
+		prep.setString(2, "Apple");                             // words
+		prep.setString(3, "1");                                 // TheameId
+		prep.setString(4, "/Somepath/to/sound/file");           // Sound Path
+		prep.setString(5, "/Somepath/to/picture/file");         // Picture Path
+		prep.setString(6, "a");                                 // Alphabet 
+		prep.execute();   
 	}
 
 	public Statement SQLiteCreateTables() throws SQLException {
+		DatabaseMetaData md = con.getMetaData();
+		
 		// My statement for Awesome-Alphabet
 		  Statement stat = con.createStatement();
 		  
@@ -70,6 +114,12 @@ public class SQLiteTest {
 		  
 		  stat.executeUpdate("create table wordTable(id INT," + "words varchar(45)," + "ThemeId INT," + "SoundPath varchar(80),"
                   + "PicturePath carchar(80)," + "alphabet carchar(1)," + "primary key (words));");
+		  
+		  // Test if the Tables are created successfully.
+		  ResultSet rs = md.getTables(null, null, "%", null);
+		  while (rs.next()) {
+		    System.out.println(rs.getString(3));
+		  }
 		  
 		return stat;
 	}
@@ -80,6 +130,15 @@ public class SQLiteTest {
 
 		stat.executeUpdate("drop table if exists themeTable");
 		stat.executeUpdate("drop table if exists wordTable");
+		
+		return stat;
+	}
+	// This is a one time operation to load all the records into our database
+	// Prepare the Theme table in the DB once.
+	public Statement SQLitePopulatePreviousData() throws SQLException {
+		// My statement for Awesome-Alphabet
+		Statement stat = con.createStatement();
+		
 		
 		return stat;
 	}

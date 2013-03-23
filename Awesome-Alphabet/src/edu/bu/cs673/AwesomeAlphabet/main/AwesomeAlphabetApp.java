@@ -62,8 +62,15 @@ public class AwesomeAlphabetApp {
 		SQLiteTest sqlLiteHandle = new SQLiteTest();
 		sqlLiteHandle.InitializeDataBase();
 		
-		log.info("Insert a record into the table");
+		// 2 Tables are created - themetable and wordstable
+		// theme table has just 1 default record.
+		// wordstable is empty initially.
+		log.info("Insert a default record into the table");
 		sqlLiteHandle.SQLiteInsertDefaultData();
+		
+		// Test insert a record into the words table
+		// display it and delte it.
+		log.info("Test retrieve the record from the words table");
 		sqlLiteHandle.runTest();
 		
 		log.info("Processing the resource file");
