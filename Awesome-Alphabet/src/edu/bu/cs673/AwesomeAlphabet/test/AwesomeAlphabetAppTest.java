@@ -28,14 +28,13 @@ public class AwesomeAlphabetAppTest {
 
 	/**
 	 * Run the void main(String[]) method test.
-	 *
-	 * @throws Exception
+	 * @throws Throwable 
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
 	public void testMain_1()
-		throws Exception {
+		throws Throwable {
 		String[] args = new String[] {};
 
 		AwesomeAlphabetApp.main(args);
@@ -45,14 +44,13 @@ public class AwesomeAlphabetAppTest {
 
 	/**
 	 * Run the void main(String[]) method test.
-	 *
-	 * @throws Exception
+	 * @throws Throwable 
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
 	public void testMain_2()
-		throws Exception {
+		throws Throwable {
 		String[] args = new String[] {};
 
 		AwesomeAlphabetApp.main(args);

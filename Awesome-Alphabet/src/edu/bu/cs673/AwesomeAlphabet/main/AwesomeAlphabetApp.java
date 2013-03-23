@@ -11,6 +11,7 @@ import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
+import edu.bu.cs673.AwesomeAlphabet.database.SQLiteTest;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
@@ -34,7 +35,7 @@ public class AwesomeAlphabetApp {
 	 * @param args 			Application arguments.
 	 * @throws Exception 
 	 */
-	public static void main(String[] args)  {
+	public static void main(String[] args) throws Throwable  {
 		BasicConfigurator.configure();
 
 		MainWindow mainWindow = new MainWindow();
@@ -56,6 +57,14 @@ public class AwesomeAlphabetApp {
 		mainWindow.registerPage(titlePageView);
 		mainWindow.registerPage(alphabetPageView);
 		mainWindow.registerPage(letterPageView);
+		
+		log.info("Initialize the database");
+		SQLiteTest sqlLiteHandle = new SQLiteTest();
+		sqlLiteHandle.InitializeDataBase();
+		
+		log.info("Insert a record into the table");
+		sqlLiteHandle.SQLiteInsertDefaultData();
+		sqlLiteHandle.runTest();
 		
 		log.info("Processing the resource file");
 		Properties prop = new Properties();
