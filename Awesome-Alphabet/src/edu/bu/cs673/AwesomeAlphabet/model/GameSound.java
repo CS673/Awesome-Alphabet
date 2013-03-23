@@ -32,7 +32,7 @@ public class GameSound {
 	public GameSound(String soundName) {
 		// TODO: Error handling. File not being present.
 		this.soundName = soundName;
-		log.info("Adding sound file " + this.soundName);	
+		//log.info("Adding sound file " + this.soundName);	
 	}
 	
 	/**

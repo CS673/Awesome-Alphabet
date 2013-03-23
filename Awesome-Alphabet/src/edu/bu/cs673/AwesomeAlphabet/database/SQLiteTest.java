@@ -144,6 +144,7 @@ public class SQLiteTest {
 		String charString = "" + c;
 		String soundNameWithPAth =  "edu/bu/cs673/AwesomeAlphabet/resources/Sounds" + soundName;
 		String imageNameWithPath =  "edu/bu/cs673/AwesomeAlphabet/resources/Sounds" + imageName;
+		String themeName = "defaul-theme" ;
 		
 		// edu/bu/cs673/AwesomeAlphabet/resources/Graphics - lion, monkey - picture path
 		// edu/bu/cs673/AwesomeAlphabet/resources/Sounds
@@ -159,11 +160,17 @@ public class SQLiteTest {
 		prep.setString(6, charString);                        // Alphabet 
 		prep.execute();   
 		
+		//PreparedStatement theme_prep = con.prepareStatement("insert into themeTable values(?,?,?);");
+		//theme_prep.setString(1, idString);             // id
+		//theme_prep.setString(2, themeName);     // ThemeName
+		//theme_prep.setString(3, idString);      // ThemeId
+		//theme_prep.execute();
+		
 		//System.out.println(" ========================   SQLitePopulatePreviousData ===================");
 		
 		// Now retrieve a randomn record to confirm its all loaded.
-		Statement word_stat  = con.createStatement();
-		SQLiteGetDataFromWordTable(word_stat);
+		//Statement word_stat  = con.createStatement();
+		//SQLiteGetDataFromWordTable(word_stat);
 		
 		
 		return stat;
