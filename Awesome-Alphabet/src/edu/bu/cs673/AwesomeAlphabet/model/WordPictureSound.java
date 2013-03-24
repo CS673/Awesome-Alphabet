@@ -65,7 +65,7 @@ public class WordPictureSound {
 	 * @param wps  The word we want letter for
 	 * @return returns char word is associated with
 	 */
-	public char getWordLetter(WordPictureSound wps)
+	public char getWordLetter()
 	{
 		return m_cLetter;
 	}

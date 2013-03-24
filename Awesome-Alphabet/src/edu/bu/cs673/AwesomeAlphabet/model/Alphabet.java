@@ -306,7 +306,7 @@ public class Alphabet extends Observable {
 		if (wps == null)
 			return 1;
 		
-		letter_c = wps.getWordLetter(wps);
+		letter_c = wps.getWordLetter();
 		letter_index = GetLetterIndex(letter_c);
 		letter = m_letters[letter_index];
 		
@@ -316,6 +316,19 @@ public class Alphabet extends Observable {
 		AAConfig.removeWordFromIndex(letter_c, wordText);
 		
 		letter.removeResource(wps);
+		return 0;
+	}
+
+	/**
+	 * Edit properties of existing word
+	 * @return 0 on success. Failure otherwise. 
+	 */
+	 
+	public int editWord(String oldWordText, char letter_c, String wordText, String imageName, String soundName, Theme theme) {
+		
+		deleteWord(oldWordText);
+		addNewWord(letter_c, wordText, imageName, soundName, theme);
+		
 		return 0;
 	}
 }
