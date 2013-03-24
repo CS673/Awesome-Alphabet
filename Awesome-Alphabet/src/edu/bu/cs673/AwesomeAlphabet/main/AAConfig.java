@@ -147,4 +147,86 @@ public class AAConfig {
 		}
 		return 0;
 	}
+	
+	/** Remove a sound resource file.
+	 * @param srcFileName: file name to source sound file (no dir)
+	 * @return 0 on success.
+	 */
+	public static int removeSoundResource(String srcFileName) {
+		int ret = 0;
+		boolean rc;
+		
+		try {
+			File file = new File(baseDir + "/" + soundsSubDir + "/" + srcFileName);
+			rc = file.delete();
+			if (!rc)
+				ret = 1;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ret;
+	}
+	
+	/** Remove a image resource file.
+	 * @param srcFileName: file name to source sound file (no dir)
+	 * @return 0 on success.
+	 */
+	public static int removeImageResource(String srcFileName) {
+		int ret = 0;
+		boolean rc;
+		
+		try {
+			File file = new File(baseDir + "/" + graphicsSubDir + "/" + srcFileName);
+			rc = file.delete();
+			if (!rc)
+				ret = 1;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ret;
+	}
+	
+	/** Remove a word from letter.properties file
+	 * @param letter char word belongs to
+	 * @param actual word string
+	 * @return 0 on success
+	 */
+	public static int removeWordFromIndex(char letter, String wordText) {
+		int i = 1;
+	
+		try {
+			Properties props = getLetterProps();
+			File outputFile = new File(letterProps + "temp");
+			File destFile = new File(letterProps);
+			OutputStream outStream = new FileOutputStream(outputFile);
+			int tablesize = props.size();
+			boolean found = false;
+			
+			while (true) {
+				if (props.getProperty("letter." + letter + "." + i + ".word") == wordText) {
+					found = true;
+					break;
+				}
+				
+				i++;
+				if (i > tablesize)
+					break;
+			}
+			
+			if (!found)
+				return 1;
+			
+			props.remove("letter." + letter + "." + i + ".word");
+			props.remove("letter." + letter + "." + i + ".theme");
+			
+			props.store(outStream, null);
+			outStream.close();
+			outputFile.renameTo(destFile);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

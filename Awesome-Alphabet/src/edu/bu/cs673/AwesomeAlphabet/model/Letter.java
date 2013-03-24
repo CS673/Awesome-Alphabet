@@ -257,4 +257,10 @@ public class Letter extends Observable implements Observer {
 			nextExample();
 		}
 	}
+	
+	public int removeResource(WordPictureSound wps) {
+		// Do I need to do more cleanup here?
+		m_wps.remove(wps);
+		return 0;
+	}
 }

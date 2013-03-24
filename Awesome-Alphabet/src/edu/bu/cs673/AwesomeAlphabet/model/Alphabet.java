@@ -289,4 +289,33 @@ public class Alphabet extends Observable {
 		letter.addResource(imageName, soundName, wordText, theme);
 		return 0;
 	}
+	
+	/**
+	 * delete a word
+	 * @return 0 on success. Failure otherwise. 
+	 */
+	 
+	public int deleteWord(String wordText) {
+		char letter_c;
+		int letter_index;
+		Letter letter;
+		WordPictureSound wps;
+		
+		
+		wps = getWordPictureSound(wordText);
+		if (wps == null)
+			return 1;
+		
+		letter_c = wps.getWordLetter(wps);
+		letter_index = GetLetterIndex(letter_c);
+		letter = m_letters[letter_index];
+		
+		// Add sound and image files to resource dir.
+		AAConfig.removeSoundResource(wordText + ".wav");
+		AAConfig.removeImageResource(wordText + ".jpg");
+		AAConfig.removeWordFromIndex(letter_c, wordText);
+		
+		letter.removeResource(wps);
+		return 0;
+	}
 }
