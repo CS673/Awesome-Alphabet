@@ -43,10 +43,17 @@ public class AAConfig {
 	public static InputStream getGraphicsResource(String filename) {
 		return loader.getResourceAsStream(baseDir + "/" + graphicsSubDir + "/" + filename);
 	}
-
+	
+	public static String getGraphicsResourceDir() {
+		return baseDir + "/" + graphicsSubDir + "/";
+	}
 
 	public static InputStream getSoundResource(String filename) {
 		return loader.getResourceAsStream(baseDir + "/" + soundsSubDir + "/" + filename);
+	}
+	
+	public static String getSoundResourceDir() {
+		return baseDir + "/" + soundsSubDir + "/";
 	}
 	
 
@@ -68,7 +75,7 @@ public class AAConfig {
 	 * @param srcFileName: Full path to source file
 	 * @param dstFileName : Full path to dest file
 	 */
-	private static int copy_file(String srcFileName, String destFileName)
+	public static int copy_file(String srcFileName, String destFileName)
 	{
 		InputStream inStream = null;
 		OutputStream outStream = null;

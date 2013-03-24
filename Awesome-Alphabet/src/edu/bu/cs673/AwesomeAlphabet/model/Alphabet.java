@@ -326,8 +326,24 @@ public class Alphabet extends Observable {
 	 
 	public int editWord(String oldWordText, char letter_c, String wordText, String imageName, String soundName, Theme theme) {
 		
+		WordPictureSound old_wps;
+		String soundDir, imageDir;
+		
+		old_wps = getWordPictureSound(oldWordText);
+		if (old_wps == null)
+			return 1;
+		
+		/* If sound and Image file names have not changed, save these away
+		 * otherwise these will be deleted upon delete word. Save these away.
+		 */
+		soundDir = AAConfig.getSoundResourceDir();
+		imageDir = AAConfig.getGraphicsResourceDir();
+		
+		AAConfig.copy_file(soundName, soundDir + "temp.wav");
+		AAConfig.copy_file(imageName, imageDir +"temp.jpg");
+		
 		deleteWord(oldWordText);
-		addNewWord(letter_c, wordText, imageName, soundName, theme);
+		addNewWord(letter_c, wordText, imageDir + "temp.jpg", soundDir + "temp.wav", theme);
 		
 		return 0;
 	}
