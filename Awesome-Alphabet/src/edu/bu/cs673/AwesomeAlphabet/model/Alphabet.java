@@ -164,10 +164,11 @@ public class Alphabet extends Observable {
 	 */
 	public void LoadResources(Properties prop) {
 		
-		if(m_themeMgr == null)
-			return;
+		//if(m_themeMgr == null)
+		//	return;
 		
 		for (char c = 'a'; c <= 'z'; c++) {
+			/*
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
@@ -194,6 +195,7 @@ public class Alphabet extends Observable {
 					e.printStackTrace();
 				}
 			}
+			*/
 			log.info("Add Letter Sound");
 			try {
 				//String propName = "letter." + c + ".lettersound";
@@ -230,8 +232,8 @@ public class Alphabet extends Observable {
 			log.error(e.getMessage());
 			e.printStackTrace();
 		}
-		
 	}
+	
 	public void PlayAlphabetSong() {
 		m_alphabetsong.PlaySound();
 	}

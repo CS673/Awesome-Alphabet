@@ -15,6 +15,7 @@ public class ThemeManager extends Observable {
 	
 	private ArrayList<Theme> m_themes;
 	private Theme m_currentTheme;
+	private Database m_db;
 	
 	
 	
@@ -25,6 +26,25 @@ public class ThemeManager extends Observable {
 	{
 		m_themes = new ArrayList<Theme>();
 		m_currentTheme = null;
+		m_db = Database.getDatabaseInstance();
+		
+		ReloadThemesFromDatabase();
+	}
+	
+	
+	public boolean ReloadThemesFromDatabase()
+	{
+		Iterator<String> it = m_db.getThemes();
+		
+		if(it == null)
+			return false;
+		
+		m_themes.clear(); //Clear existing themes list
+		
+		//Load theme names that were read from database
+		while(it.hasNext())
+			m_themes.add(new Theme(it.next()));
+		return true;
 	}
 	
 
@@ -83,6 +103,9 @@ public class ThemeManager extends Observable {
 		if(hasTheme(themeName))
 			return true;
 		
+		if(m_db.addTheme(themeName) == false)
+			return false;
+		
 		m_themes.add(new Theme(themeName));
 		setChanged();
 		notifyObservers();
@@ -102,6 +125,9 @@ public class ThemeManager extends Observable {
 		
 		if(theme == null)
 			return true;
+		
+		if(m_db.deleteTheme(themeName) == false)
+			return false;
 		
 		m_themes.remove(theme);
 		setChanged();
