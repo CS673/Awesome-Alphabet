@@ -55,9 +55,10 @@ public class MainWindow implements IPageObserver {
 	@Override
 	public boolean GoToPage(String sPageName)
 	{
-		log.info("Go to Page " + m_pageHash.get(sPageName));
+		//log.info("Go to Page " + m_pageHash.get(sPageName));
 		
 		PageView pv = m_pageHash.get(sPageName);
+		log.info("Go to Page " + pv.getPageName());
 		pv.activated();
 		m_cl.show(m_curView, sPageName);
 		return true;

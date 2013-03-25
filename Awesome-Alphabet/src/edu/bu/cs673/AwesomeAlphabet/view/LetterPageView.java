@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.LabelClickHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
@@ -34,6 +36,7 @@ public class LetterPageView extends PageView {
 	
 	Letter m_currentLetter;
 	
+	static Logger log = Logger.getLogger(LetterPageView.class);
 	/**
 	 * Class constructor.
 	 * 
@@ -134,6 +137,8 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnLetterClick()
 	{
+		log.info("The letter text/image is clicked..");
+		
 		if(m_controller != null)
 			m_controller.LetterClicked();
 	}
@@ -145,6 +150,8 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnPictureClick()
 	{
+		log.info("The picture is clicked for sound..");
+		
 		if(m_controller != null)
 			m_controller.PictureClicked();
 	}
@@ -156,6 +163,8 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnWordClick()
 	{
+		log.info("The word is clicked for sound..");
+		
 		if(m_controller != null)
 			m_controller.WordClicked();
 	}
@@ -168,6 +177,8 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnNextLetterButtonClick()
 	{
+		log.info("Next Letter button is clicked");
+		
 		if(m_controller != null)
 			m_controller.GetNextLetter();
 	}
@@ -180,6 +191,8 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnPreviousLetterButtonClick()
 	{
+		log.info("Previous Letter button is clicked");
+		
 		if(m_controller != null)
 			m_controller.GetPreviousLetter();
 	}
@@ -191,6 +204,8 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnAlphabetPageButtonClick()
 	{
+		log.info("Alphabet Page button is clicked");
+		
 		if(m_controller != null)
 			m_controller.GoToAlphabetPage();
 	}
@@ -202,6 +217,8 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnTitlePageButtonClick()
 	{
+		log.info("Title Page button is clicked");
+		
 		if(m_controller != null)
 			m_controller.GoToTitlePage();
 	}
@@ -214,6 +231,8 @@ public class LetterPageView extends PageView {
 	 */
 	public void OnGetNextExampleButtonClick()
 	{
+		log.info("Next Example button is clicked");
+		
 		if (m_controller != null)
 			m_controller.GetNextExample();
 	}

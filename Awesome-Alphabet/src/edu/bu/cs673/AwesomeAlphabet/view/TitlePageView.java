@@ -122,6 +122,8 @@ public class TitlePageView extends PageView implements ActionListener {
 	 */
 	protected void OnStartButtonClick()
 	{
+		log.info("Start button is clicked..");
+		
 		if (m_controller != null)
 			m_controller.Start();
 	}

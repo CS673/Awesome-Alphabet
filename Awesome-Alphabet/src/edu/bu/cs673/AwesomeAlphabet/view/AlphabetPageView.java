@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
 import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
@@ -27,6 +29,8 @@ public class AlphabetPageView extends PageView {
 	private AlphabetPageController m_controller;
 	
 	private JPanel letterPanel;
+	
+	static Logger log = Logger.getLogger(AlphabetPageView.class);
 
 	/**
 	 * Class constructor.
@@ -110,6 +114,8 @@ public class AlphabetPageView extends PageView {
 	 */
 	public void OnLetterButtonClick(Letter cLetter)
 	{
+		log.info("Letter button is clicked..");
+		
 		if (m_controller != null)
 			m_controller.GoToLetterPage(cLetter);
 	}
@@ -121,6 +127,8 @@ public class AlphabetPageView extends PageView {
 	 */
 	public void OnTitlePageButtonClick()
 	{
+		log.info("Title Page button is clicked..");
+		
 		if (m_controller != null)
 			m_controller.GoToTitlePage();
 	}
@@ -132,6 +140,8 @@ public class AlphabetPageView extends PageView {
 	 */
 	public void OnPlayAlphabetSongButtonClick()
 	{
+		log.info("Alphabet Song button is clicked..");
+		
 		if (m_controller != null)
 			m_controller.PlayAlphabetSong();
 	}
