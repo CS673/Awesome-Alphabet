@@ -11,8 +11,6 @@ import java.util.Properties;
  */
 public class ThemeManager extends Observable {
 
-	public static String DEFAULT_THEME_NAME = "No Theme";
-	
 	private ArrayList<Theme> m_themes;
 	private Theme m_currentTheme;
 	private Database m_db;

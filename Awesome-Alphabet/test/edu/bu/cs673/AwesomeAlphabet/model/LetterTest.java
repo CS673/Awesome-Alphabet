@@ -93,7 +93,7 @@ public class LetterTest {
 		String soundName = "";
 		String wordText = "";
 
-		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		fixture.addResource(imageName, soundName, wordText, new Theme(Theme.DEFAULT_THEME_NAME));
 
 		// add additional test code here
 	}
