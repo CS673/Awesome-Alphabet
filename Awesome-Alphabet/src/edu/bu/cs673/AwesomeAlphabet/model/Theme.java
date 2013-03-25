@@ -6,6 +6,7 @@ public class Theme extends Observable {
 
 	
 	private String m_themeName;
+	private Database m_db;
 	
 	
 	/**
@@ -16,6 +17,7 @@ public class Theme extends Observable {
 	public Theme(String themeName)
 	{
 		m_themeName = themeName;
+		m_db = Database.getDatabaseInstance();
 	}
 	
 	
@@ -38,6 +40,9 @@ public class Theme extends Observable {
 	 */
 	public boolean changeThemeName(String newThemeName)
 	{
+		if(m_db.changeThemeName(m_themeName, newThemeName) == false)
+			return false;
+		
 		m_themeName = newThemeName;
 		setChanged();
 		notifyObservers();
