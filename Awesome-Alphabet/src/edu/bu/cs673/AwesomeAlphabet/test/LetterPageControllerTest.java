@@ -3,13 +3,13 @@ package edu.bu.cs673.AwesomeAlphabet.test;
 import java.awt.image.BufferedImage;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
-import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 
 import org.junit.*;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
+import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
-import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
+import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 import static org.junit.Assert.*;
 
 /**

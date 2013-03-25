@@ -12,10 +12,10 @@ import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
-import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
+import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
 
 

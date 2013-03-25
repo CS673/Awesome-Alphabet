@@ -1,4 +1,4 @@
-package edu.bu.cs673.AwesomeAlphabet.model;
+package edu.bu.cs673.AwesomeAlphabet.view;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
-import edu.bu.cs673.AwesomeAlphabet.view.PageView;
 
 
 public class MainWindow implements IPageObserver {

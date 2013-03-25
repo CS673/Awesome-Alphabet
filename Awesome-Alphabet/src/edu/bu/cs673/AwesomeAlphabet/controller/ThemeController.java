@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
+import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.IThemeControllerView;
 
 /**

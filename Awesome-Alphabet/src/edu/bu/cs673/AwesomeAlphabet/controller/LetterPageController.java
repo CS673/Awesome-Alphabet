@@ -2,9 +2,9 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 import java.awt.image.BufferedImage;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
+import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

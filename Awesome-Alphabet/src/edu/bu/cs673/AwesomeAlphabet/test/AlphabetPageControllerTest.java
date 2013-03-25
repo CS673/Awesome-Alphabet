@@ -3,9 +3,9 @@ package edu.bu.cs673.AwesomeAlphabet.test;
 import java.util.Iterator;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
-import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
-import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
+import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
+import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 

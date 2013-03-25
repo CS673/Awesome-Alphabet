@@ -2,10 +2,10 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 import java.util.Iterator;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
+import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 
 
 /**

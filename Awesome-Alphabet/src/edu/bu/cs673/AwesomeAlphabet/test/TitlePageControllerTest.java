@@ -3,9 +3,9 @@ package edu.bu.cs673.AwesomeAlphabet.test;
 import org.junit.*;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
-import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
+import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
+import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
-import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
 import static org.junit.Assert.*;
 
 /**

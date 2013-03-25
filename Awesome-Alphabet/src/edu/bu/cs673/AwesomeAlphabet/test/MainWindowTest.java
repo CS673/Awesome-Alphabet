@@ -2,7 +2,7 @@ package edu.bu.cs673.AwesomeAlphabet.test;
 
 import org.junit.*;
 
-import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
+import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.view.PageView;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import static org.junit.Assert.*;

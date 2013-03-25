@@ -1,4 +1,4 @@
-package edu.bu.cs673.AwesomeAlphabet.model;
+package edu.bu.cs673.AwesomeAlphabet.view;
 
 
 /**
