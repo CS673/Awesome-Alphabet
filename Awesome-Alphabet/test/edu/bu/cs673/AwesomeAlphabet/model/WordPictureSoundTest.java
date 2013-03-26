@@ -46,11 +46,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordImage_1()
 		throws Exception {
-<<<<<<< HEAD
 		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
-=======
-		WordPictureSound fixture = new WordPictureSound("", "", "", new Theme(Theme.DEFAULT_THEME_NAME));
->>>>>>> Implemented theme portion of Database class, including SQL queries, and
 		int width = 1;
 		int height = 1;
 
@@ -70,11 +66,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordImage_2()
 		throws Exception {
-<<<<<<< HEAD
 		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
-=======
-		WordPictureSound fixture = new WordPictureSound("", "", "", new Theme(Theme.DEFAULT_THEME_NAME));
->>>>>>> Implemented theme portion of Database class, including SQL queries, and
 		int width = 1;
 		int height = 1;
 
@@ -94,11 +86,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordString_1()
 		throws Exception {
-<<<<<<< HEAD
 		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
-=======
-		WordPictureSound fixture = new WordPictureSound("", "", "", new Theme(Theme.DEFAULT_THEME_NAME));
->>>>>>> Implemented theme portion of Database class, including SQL queries, and
 
 		String result = fixture.GetWordString();
 
@@ -116,11 +104,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testPlaySound_1()
 		throws Exception {
-<<<<<<< HEAD
 		WordPictureSound fixture = new WordPictureSound('c',"", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
-=======
-		WordPictureSound fixture = new WordPictureSound("", "", "", new Theme(Theme.DEFAULT_THEME_NAME));
->>>>>>> Implemented theme portion of Database class, including SQL queries, and
 
 		fixture.PlaySound();
 
