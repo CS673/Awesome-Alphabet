@@ -6,6 +6,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
+
 
 /**
  * The class defines the Alphabet model.  It creates and
@@ -238,5 +240,111 @@ public class Alphabet extends Observable {
 	
 	public void StopAlphabetSound() {
 		m_alphabetsong.StopSound();
+	}
+	
+	/**
+	 * Given a word, return matching WordPictureSound object, if it exists.
+	 * @param word to match
+	 * @return WordPictureSound object associated with word 
+	 */
+	 
+	public WordPictureSound getWordPictureSound(String word) {
+		// Traverse through all WordPictureSound objects to find a match
+		Iterator<Letter> iter_letter = GetIterator();
+		Iterator<WordPictureSound> iter_wps;
+		WordPictureSound wps;
+		
+		while (iter_letter.hasNext()) {
+			Letter l = iter_letter.next();
+			iter_wps = l.GetIterator();
+			while (iter_wps.hasNext()) {
+				wps = iter_wps.next();
+				if (word == wps.GetWordString())
+					return wps;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Add a new word
+	 * @return 0 on success. Failure otherwise. 
+	 */
+	 
+	public int addNewWord(char letter_c, String wordText, String imageName, String soundName, Theme theme) {
+		int letter_index = GetLetterIndex(letter_c);
+		Letter letter = m_letters[letter_index];
+		WordPictureSound wps;
+		
+		//Verify new word does not exist already.
+		wps = getWordPictureSound(wordText);
+		if (wps != null)
+			return 1;
+		
+		// Add sound and image files to resource dir.
+		AAConfig.addSoundResource(soundName, wordText + ".wav");
+		AAConfig.addImageResource(imageName, wordText + ".jpg");
+		AAConfig.addWordToIndex(letter_c, wordText, theme.getThemeName());
+		
+		letter.addResource(imageName, soundName, wordText, theme);
+		return 0;
+	}
+	
+	/**
+	 * delete a word
+	 * @return 0 on success. Failure otherwise. 
+	 */
+	 
+	public int deleteWord(String wordText) {
+		char letter_c;
+		int letter_index;
+		Letter letter;
+		WordPictureSound wps;
+		
+		
+		wps = getWordPictureSound(wordText);
+		if (wps == null)
+			return 1;
+		
+		letter_c = wps.getWordLetter();
+		letter_index = GetLetterIndex(letter_c);
+		letter = m_letters[letter_index];
+		
+		// Add sound and image files to resource dir.
+		AAConfig.removeSoundResource(wordText + ".wav");
+		AAConfig.removeImageResource(wordText + ".jpg");
+		AAConfig.removeWordFromIndex(letter_c, wordText);
+		
+		letter.removeResource(wps);
+		return 0;
+	}
+
+	/**
+	 * Edit properties of existing word
+	 * @return 0 on success. Failure otherwise. 
+	 */
+	 
+	public int editWord(String oldWordText, char letter_c, String wordText, String imageName, String soundName, Theme theme) {
+		
+		WordPictureSound old_wps;
+		String soundDir, imageDir;
+		
+		old_wps = getWordPictureSound(oldWordText);
+		if (old_wps == null)
+			return 1;
+		
+		/* If sound and Image file names have not changed, save these away
+		 * otherwise these will be deleted upon delete word. Save these away.
+		 */
+		soundDir = AAConfig.getSoundResourceDir();
+		imageDir = AAConfig.getGraphicsResourceDir();
+		
+		AAConfig.copy_file(soundName, soundDir + "temp.wav");
+		AAConfig.copy_file(imageName, imageDir +"temp.jpg");
+		
+		deleteWord(oldWordText);
+		addNewWord(letter_c, wordText, imageDir + "temp.jpg", soundDir + "temp.wav", theme);
+		
+		return 0;
 	}
 }

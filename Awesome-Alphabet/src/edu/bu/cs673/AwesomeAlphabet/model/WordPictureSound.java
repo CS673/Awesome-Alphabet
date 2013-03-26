@@ -10,9 +10,11 @@ public class WordPictureSound {
 	private GameSound m_sound;
 	private Image m_image;
 	private Theme m_theme;
+	private char m_cLetter;
 
 	
-	public WordPictureSound(String word, String imageFile, String soundFile, Theme theme) {
+	public WordPictureSound(char Letter, String word, String imageFile, String soundFile, Theme theme) {
+		m_cLetter = Letter;
 		this.m_word = word;
 		m_sound = new GameSound(soundFile);
 		m_image = GameImage.getImage(imageFile);
@@ -26,6 +28,7 @@ public class WordPictureSound {
 	public void StopSound() {
 		m_sound.StopSound();
 	}
+	
 	public String GetWordString() {
 		return m_word;
 	}
@@ -54,5 +57,16 @@ public class WordPictureSound {
 	public void changeTheme(Theme newTheme)
 	{
 		m_theme = newTheme;
+	}
+	
+	/**
+	 * Get the letter associated with this word.
+	 * 
+	 * @param wps  The word we want letter for
+	 * @return returns char word is associated with
+	 */
+	public char getWordLetter()
+	{
+		return m_cLetter;
 	}
 }
