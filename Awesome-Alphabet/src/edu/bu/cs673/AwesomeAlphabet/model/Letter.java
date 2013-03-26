@@ -1,6 +1,9 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -62,6 +65,16 @@ public class Letter extends Observable implements Observer {
 	{
 		return Character.toUpperCase(m_cLetter);
 	}
+	
+	/**
+	 * Gets an iterator to the list of WordPictureSound objects.
+	 * 
+	 * @return   An iterator to the list of WordPictureSound objects. 
+	 */
+	public ListIterator<WordPictureSound> GetIterator()
+	{
+		return m_wps.listIterator();
+	}
 
 	
 	/**
@@ -73,7 +86,7 @@ public class Letter extends Observable implements Observer {
 	 * @param theme        The theme.
 	 */
 	public void addResource(String imageName, String soundName, String wordText, Theme theme) {
-		m_wps.add(new WordPictureSound(wordText, imageName, soundName, theme));
+		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme));
 		if(m_index < 0)
 			nextExample();
 	}
@@ -243,5 +256,11 @@ public class Letter extends Observable implements Observer {
 			m_index = -1;
 			nextExample();
 		}
+	}
+	
+	public int removeResource(WordPictureSound wps) {
+		// Do I need to do more cleanup here?
+		m_wps.remove(wps);
+		return 0;
 	}
 }
