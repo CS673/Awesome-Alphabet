@@ -7,9 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Struct;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Properties;
 
 /**
@@ -32,7 +34,7 @@ public class Database {
 	 * 
 	 * @return The database object.
 	 */
-	static Database getDatabaseInstance()
+	public static Database getDatabaseInstance()
 	{
 		if(m_db == null)
 			m_db = new Database();
@@ -93,8 +95,8 @@ public class Database {
 							   		"id INTEGER PRIMARY KEY AUTOINCREMENT," +  
 							   		"name TEXT UNIQUE);");
 			  
-			stat.executeUpdate("CREATE TABLE IF NOT EXISTS word(" +
-					           		"Word TEXT PRIMARY KEY," + 
+			stat.executeUpdate("CREATE TABLE IF NOT EXISTS Word(" +
+					           		"name TEXT PRIMARY KEY," + 
 					                "ThemeId INTEGER DEFAULT 0," + 
 					           		"SoundPath TEXT," +
 					           		"PicturePath TEXT," + 
@@ -130,6 +132,10 @@ public class Database {
 			//Do Nothing
 		}	
 	}
+	
+	
+	
+	// ***** Theme Table Functions *****
 	
 	
 	
@@ -217,6 +223,102 @@ public class Database {
 	
 	
 	/**
+	 * Checks if theme exists in database.
+	 * 
+	 * @param themeName
+	 * @return 1 = Theme exists,
+	 *         0 = Theme does not exist,
+	 *         -1 = Error querying database
+	 */
+	public int hasTheme(String themeName)
+	{
+		if(m_con == null)
+			return -1;
+		
+		try
+		{
+			PreparedStatement prep = m_con.prepareStatement(
+					"SELECT id FROM Theme WHERE name = ?;");
+			prep.setString(1, themeName);
+
+			ResultSet rs = prep.executeQuery();
+			if(rs.next()) //check if number of rows returned is non-zero
+				return 1;
+			else
+				return 0;
+		}
+		catch(Exception ex)
+		{
+			return -1;
+		}
+	}
+	
+	
+	
+	/**
+	 * Gets the theme ID based on the theme name.
+	 * 
+	 * @param themeName Theme Name
+	 * @return >=0: Theme ID
+	 *          <0:  Error querying database
+	 */
+	private int getThemeId(String themeName)
+	{
+		if(m_con == null)
+			return -1;
+		
+		try
+		{
+			PreparedStatement prep = m_con.prepareStatement(
+					"SELECT id FROM Theme WHERE name = ?;");
+			prep.setString(1, themeName);
+
+			ResultSet rs = prep.executeQuery();
+			if(rs.next())
+				return rs.getInt(1);
+			else
+				return -1;
+		}
+		catch(Exception ex)
+		{
+			return -1;
+		}
+	}
+	
+	
+	
+	/**
+	 * Gets the theme name based on the theme ID.
+	 * 
+	 * @param themeID Theme ID
+	 * @return The theme name or null if theme ID not found.
+	 */
+	private String getThemeName(int themeId)
+	{
+		if(m_con == null)
+			return null;
+		
+		try
+		{
+			PreparedStatement prep = m_con.prepareStatement(
+					"SELECT name FROM Theme WHERE id = ?;");
+			prep.setInt(1, themeId);
+
+			ResultSet rs = prep.executeQuery();
+			if(rs.next())
+				return rs.getString(1);
+			else
+				return null;
+		}
+		catch(Exception ex)
+		{
+			return null;
+		}
+	}
+	
+	
+	
+	/**
 	 * Retrieves an iterator to a collection of theme names
 	 * that are stored in the database.
 	 * 
@@ -247,15 +349,165 @@ public class Database {
 	
 	
 	
+	//**** Word Table Functions *****
+	
+	
+	
 	/**
-	 * Checks if theme exists in database.
+	 * Adds a Word entry to the database.
 	 * 
-	 * @param themeName
-	 * @return 1 = Theme exists,
-	 *         0 = Theme does not exist,
+	 * @param word The word.
+	 * @param picturePath The picture path name.
+	 * @param soundPath The sound path name
+	 * @param letter The letter that the word is associated with.
+	 * @param themeName The theme name. Must be a valid theme name.
+	 * @return
+	 */
+	public boolean addWord(String wordName, String picturePath, String soundPath, char letter, String themeName)
+	{
+		if(   m_con == null || wordName == "" || hasWord(wordName) == 0 || themeName == "" ||
+		    letter < 'a' || letter > 'z')
+		{
+			return false;
+		}
+		
+		try
+		{
+			int iThemeId = getThemeId(themeName);
+			if(iThemeId < 0)
+				return false;
+			
+			PreparedStatement prep = m_con.prepareStatement(
+					"INSERT INTO Theme (name, ThemeId, SoundPath, PicturePath, letter) " +
+			        "VALUES (?,?,?,?,?);");
+			prep.setString(1, wordName);
+			prep.setInt(2, iThemeId);
+			prep.setString(3, soundPath);
+			prep.setString(4, picturePath);
+			prep.setString(5, Character.toString(letter));
+			
+			return prep.executeUpdate() > 0;
+		}
+		catch(Exception ex)
+		{
+			return false;
+		}
+	}
+	
+	
+	
+	/**
+	 * Deletes a word from the Word table
+	 * 
+	 * @param wordName Word Name
+	 * @return True if word was deleted successfully; otherwise false.
+	 */
+	public boolean deleteWord(String wordName)
+	{
+		if(m_con == null)
+			return false;
+		
+		try
+		{
+			PreparedStatement prep = m_con.prepareStatement(
+					"DELETE FROM Word WHERE name = ?;");
+			prep.setString(1, wordName);
+			
+			return prep.executeUpdate() > 0;
+		}
+		catch(Exception ex)
+		{
+			return false;
+		}	
+	}
+	
+	
+	
+	/**
+	 * Changes the name of an existing word in the Word table.
+	 * 
+	 * @param oldWordName Old word name.
+	 * @param newWordName New word name.
+	 * @return True if word name was changed successfully; otherwise false.
+	 */
+	public boolean changeWordName(String oldWordName, String newWordName)
+	{
+		if(m_con == null || hasWord(newWordName) == 1)
+			return false;
+		
+		try
+		{
+			PreparedStatement prep = m_con.prepareStatement(
+					"UPDATE Word SET name = ? WHERE name = ?;");
+			prep.setString(1, newWordName);
+			prep.setString(2, oldWordName);
+			
+			return prep.executeUpdate() > 0;
+		}
+		catch(Exception ex)
+		{
+			return false;
+		}
+	}
+	
+
+	
+	/**
+	 * Modified all fields of an existing word
+	 * @param oldWordName Old word name
+	 * @param newWordName New word name. May be the same as the old word name
+	 * @param picturePath The picture path name.
+	 * @param soundPath The sound path name.
+	 * @param letter The letter word is associated with.
+	 * @param themeName The theme name.
+	 * @return True if word data was changed successfully; otherwise false.
+	 */
+	public boolean changeWordData(String oldWordName, String newWordName, String picturePath,
+			                      String soundPath, char letter, String themeName)
+	{
+		if(   m_con == null || oldWordName == "" || hasWord(oldWordName) == 0 || themeName == "" ||
+		    letter < 'a' || letter > 'z' || (oldWordName != newWordName && hasWord(newWordName) == 1))
+		{
+			return false;
+		}
+		
+		try
+		{
+			int iThemeId = getThemeId(themeName);
+			if(iThemeId < 0)
+				return false;
+			
+			PreparedStatement prep = m_con.prepareStatement(
+					"UPDATE Word " +
+			        "SET name = ?, ThemeId = ?, PicturePath = ?, SoundPath = ?, letter = ? " +
+					"WHERE name = ?;");
+			
+			prep.setString(1, newWordName);
+			prep.setInt(2, iThemeId);
+			prep.setString(3, picturePath);
+			prep.setString(4, soundPath);
+			prep.setString(5, Character.toString(letter));
+			prep.setString(6, oldWordName);
+			
+			return prep.executeUpdate() > 0;
+		}
+		catch(Exception ex)
+		{
+			return false;
+		}
+	}
+	
+	
+	
+	/**
+	 * Checks if word exists in database
+	 * 
+	 * @param word The word.
+	 * @return 1 = Word exists,
+	 *         0 = Word does not exist,
 	 *         -1 = Error querying database
 	 */
-	public int hasTheme(String themeName)
+	public int hasWord(String wordName)
 	{
 		if(m_con == null)
 			return -1;
@@ -263,8 +515,8 @@ public class Database {
 		try
 		{
 			PreparedStatement prep = m_con.prepareStatement(
-					"SELECT id FROM Theme WHERE name = ?;");
-			prep.setString(1, themeName);
+					"SELECT name FROM Word WHERE name = '?';");
+			prep.setString(1, wordName);
 
 			ResultSet rs = prep.executeQuery();
 			if(rs.next()) //check if number of rows returned is non-zero
@@ -275,6 +527,103 @@ public class Database {
 		catch(Exception ex)
 		{
 			return -1;
+		}
+	}
+	
+	
+	
+	/**
+	 * Retrieves an iterator to a collection of word names
+	 * that are stored in the database.
+	 * 
+	 * @return The iterator.
+	 */
+	public Iterator<String> getWordNames()
+	{
+		if(m_con == null)
+			return null;
+		
+		try
+		{
+			LinkedList<String> list = new LinkedList<String>();
+			PreparedStatement prep = m_con.prepareStatement(
+					"SELECT name FROM Words;");
+			ResultSet rs = prep.executeQuery();
+			
+			while(rs.next())
+				list.add(rs.getString(1));
+			Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
+			return list.iterator();
+		}
+		catch(Exception ex)
+		{
+			return null;
+		}
+	}
+	
+	
+	
+	/**
+	 * Retrieves an iterator to a collection of row data retrieved
+	 * form the Word table based on the specified letter.
+	 * 
+	 * @return The iterator.
+	 */
+	public Iterator<WordData> getWordData(char letter)
+	{
+		if(m_con == null)
+			return null;
+		
+		try
+		{
+			LinkedList<WordData> list = new LinkedList<WordData>();
+			PreparedStatement prep = m_con.prepareStatement(
+					"SELECT name, ThemeId, SoundPath, PicturePath, letter FROM Words Where letter=?;");
+			prep.setString(1, Character.toString(letter));
+			ResultSet rs = prep.executeQuery();
+			String themeName;
+			
+			while(rs.next())
+			{
+				themeName = getThemeName(rs.getInt(2));
+				if(themeName != null)
+				{
+					list.add(new WordData(rs.getString(1),
+							              rs.getString(3),
+							              rs.getString(4),
+							              rs.getString(5).charAt(0),
+							              themeName));
+				}
+			}
+			return list.iterator();
+		}
+		catch(Exception ex)
+		{
+			return null;
+		}
+	}
+	
+	
+	
+	/**
+	 * Inner class that defines row data returned by
+	 * Word query functions.
+	 */
+	public class WordData
+	{
+		public String word;
+		public String picturePath;
+		public String soundPath;
+		public char letter;
+		public String theme;
+		
+		public WordData(String word, String picturePath, String soundPath, char letter, String theme)
+		{
+			this.word = word;
+			this.picturePath = picturePath;
+			this.soundPath = soundPath;
+			this.letter = letter;
+			this.theme = theme;
 		}
 	}
 }
