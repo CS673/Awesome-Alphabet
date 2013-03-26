@@ -47,7 +47,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordImage_1()
 		throws Exception {
-		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(Theme.DEFAULT_THEME_NAME));
 		int width = 1;
 		int height = 1;
 
@@ -67,7 +67,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordImage_2()
 		throws Exception {
-		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(Theme.DEFAULT_THEME_NAME));
 		int width = 1;
 		int height = 1;
 
@@ -87,7 +87,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testGetWordString_1()
 		throws Exception {
-		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(Theme.DEFAULT_THEME_NAME));
 
 		String result = fixture.GetWordString();
 
@@ -105,7 +105,7 @@ public class WordPictureSoundTest {
 	@Test
 	public void testPlaySound_1()
 		throws Exception {
-		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(Theme.DEFAULT_THEME_NAME));
 
 		fixture.PlaySound();
 
