@@ -1,12 +1,15 @@
 package edu.bu.cs673.AwesomeAlphabet.controller;
 
-import org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
-import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
+import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
-import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
-import static org.junit.Assert.*;
 
 /**
  * The class <code>TitlePageControllerTest</code> contains tests for the class <code>{@link TitlePageController}</code>.

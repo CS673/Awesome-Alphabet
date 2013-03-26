@@ -1,15 +1,19 @@
 package edu.bu.cs673.AwesomeAlphabet.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.image.BufferedImage;
 
-import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
-import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
+import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
-import edu.bu.cs673.AwesomeAlphabet.model.IPageObserver;
-import static org.junit.Assert.*;
+import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 
 /**
  * The class <code>LetterPageControllerTest</code> contains tests for the class <code>{@link LetterPageController}</code>.

@@ -1,11 +1,15 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 
-import org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import edu.bu.cs673.AwesomeAlphabet.model.MainWindow;
-import edu.bu.cs673.AwesomeAlphabet.view.PageView;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
-import static org.junit.Assert.*;
+import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
+import edu.bu.cs673.AwesomeAlphabet.view.PageView;
 
 /**
  * The class <code>MainWindowTest</code> contains tests for the class <code>{@link MainWindow}</code>.
