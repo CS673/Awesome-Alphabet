@@ -30,7 +30,7 @@ public class WordPictureSoundTest {
 		String imageFile = "";
 		String soundFile = "";
 
-		WordPictureSound result = new WordPictureSound(word, imageFile, soundFile, new Theme(Theme.DEFAULT_THEME_NAME));
+		WordPictureSound result = new WordPictureSound('c', word, imageFile, soundFile, new Theme(Theme.DEFAULT_THEME_NAME));
 
 		// add additional test code here
 		assertNotNull(result);

@@ -29,7 +29,7 @@ public class WordPictureSoundTest {
 		String soundFile = "";
 		char letter = 'c';
 
-		WordPictureSound result = new WordPictureSound(word, imageFile, soundFile, new Theme(Theme.DEFAULT_THEME_NAME));
+		WordPictureSound result = new WordPictureSound(letter, word, imageFile, soundFile, new Theme(Theme.DEFAULT_THEME_NAME));
 
 		// add additional test code here
 		assertNotNull(result);
