@@ -24,7 +24,6 @@ public class TitlePageController extends PageController {
 		super(pageObserver);
 
 		m_view = view;
-		m_view.SetController(this);
 	}
 	
 	
@@ -38,5 +37,10 @@ public class TitlePageController extends PageController {
 	public boolean Start()
 	{
 		return GoToPage(PageName.AlphabetPage);
+	}
+
+
+	public boolean Options() {
+		return GoToPage(PageName.OptionsPage);
 	}
 }

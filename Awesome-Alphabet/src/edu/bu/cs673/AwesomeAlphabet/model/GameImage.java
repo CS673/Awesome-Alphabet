@@ -28,8 +28,9 @@ public class GameImage {
 		InputStream is = AAConfig.getGraphicsResource(filename);
 //		InputStream is = cl.getResourceAsStream(AA_RESOURCE_FILE_PATH + filename);
 		
-		if(is == null){
+		if (is == null){
 			System.out.println("Input stream is null");
+			return null;
 		}
 		
 		try {

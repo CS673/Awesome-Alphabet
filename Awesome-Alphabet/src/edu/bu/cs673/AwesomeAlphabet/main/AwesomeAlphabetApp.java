@@ -1,23 +1,23 @@
 
 package edu.bu.cs673.AwesomeAlphabet.main;
-import org.apache.log4j.Logger;
+
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
-
-import java.io.InputStream;
-import java.util.Properties;
-
+import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
 import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
+import edu.bu.cs673.AwesomeAlphabet.controller.OptionsPageController;
+import edu.bu.cs673.AwesomeAlphabet.controller.ThemeController;
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
-import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
+import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
+import edu.bu.cs673.AwesomeAlphabet.view.OptionsPageView;
+import edu.bu.cs673.AwesomeAlphabet.view.ThemePageView;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
-
 
 /**
  * This class contains the application's main() method.
@@ -48,29 +48,25 @@ public class AwesomeAlphabetApp {
 		TitlePageView titlePageView = new TitlePageView(PageName.TitlePage.toString());
 		AlphabetPageView alphabetPageView = new AlphabetPageView(PageName.AlphabetPage.toString());
 		LetterPageView letterPageView = new LetterPageView(PageName.LetterPage.toString());
+		OptionsPageView optionsPageView = new OptionsPageView(PageName.OptionsPage.toString());
+		ThemePageView themePageView = new ThemePageView(PageName.ThemePage.toString());
 		
 		log.info("Creating the controllers");
 		titlePageView.SetController(new TitlePageController(mainWindow, titlePageView));
 		alphabetPageView.SetController(new AlphabetPageController(mainWindow, alphabetPageView, alphabet));
 		letterPageView.SetController(new LetterPageController(mainWindow, letterPageView, alphabet));
+		optionsPageView.SetController(new OptionsPageController(mainWindow, optionsPageView));
+		themePageView.SetController(new ThemeController(mainWindow, themePageView, themeMgr, alphabet, AAConfig.getLetterProps()));
 		
 		log.info("Registering views with the main controlling window"); 
 		mainWindow.registerPage(titlePageView);
 		mainWindow.registerPage(alphabetPageView);
 		mainWindow.registerPage(letterPageView);
+		mainWindow.registerPage(optionsPageView);
+		mainWindow.registerPage(themePageView);
 		
 		log.info("Processing the resource file");
-		Properties prop = new Properties();
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();           
-		InputStream stream = loader.getResourceAsStream("letter.properties");
-		try {
-			prop.load(stream);
-			alphabet.LoadResources(prop);
-		} catch (Exception e) {
-			log.error("An exception occurred while loading the letter properties file");
-			log.error(e.getMessage());
-			e.printStackTrace();
-		}
+		alphabet.LoadResources(AAConfig.getLetterProps());
 		
 		mainWindow.GoToPage(PageName.TitlePage.toString());
 		mainWindow.Show();

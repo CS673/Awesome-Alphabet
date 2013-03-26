@@ -43,8 +43,11 @@ public class Alphabet extends Observable {
 	 */
 	public void Initialize()
 	{
-		for(int i=0; i<AA_ALPHABET_SIZE; i++)
+		for (int i=0; i<AA_ALPHABET_SIZE; i++) {
+			if (m_letters[i] != null)
+				m_letters[i].removeAllEntries();
 			m_letters[i] = new Letter((char)((int)'a' + i), m_themeMgr);
+		}
 	}
 	
 	
@@ -170,6 +173,7 @@ public class Alphabet extends Observable {
 			return;
 		
 		for (char c = 'a'; c <= 'z'; c++) {
+			Letter letter = m_letters[GetLetterIndex(c)];
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
@@ -181,13 +185,13 @@ public class Alphabet extends Observable {
 					String themeName = prop.getProperty(propName + "theme");
 					
 					if(themeName == null)
-						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText,
-								new Theme(ThemeManager.DEFAULT_THEME_NAME));
+						letter.addResource(imageName, soundName, wordText,
+								ThemeManager.DEFAULT_THEME);
 					else
 					{
 						if(!m_themeMgr.addTheme(themeName))
 							throw new Exception("Error adding theme.");
-						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText, 
+						letter.addResource(imageName, soundName, wordText, 
 								m_themeMgr.getTheme(themeName));
 					}
 				} catch (Exception e) {
@@ -196,24 +200,23 @@ public class Alphabet extends Observable {
 					e.printStackTrace();
 				}
 			}
-			log.info("Add Letter Sound");
+			// log.info("Add Letter Sound");
 			try {
 				//String propName = "letter." + c + ".lettersound";
 				//String letterSoundName = prop.getProperty(propName);
 				String letterSoundName = c + ".wav";
 				if (letterSoundName != null)
-					m_letters[GetLetterIndex(c)].addLetterSoundResource(letterSoundName);
+					letter.addLetterSoundResource(letterSoundName);
 			} catch (Exception e) {
 				log.error("An exception occurred while getting the letter sound for letter " + c);
 				log.error(e.getMessage());
 				e.printStackTrace();
 			}
-			// 
-			log.info("Add Phonic Sound");
+			// log.info("Add Phonic Sound");
 			try {
 				String phonicSoundName = c + "phonics.wav";
 				if (phonicSoundName != null)
-					m_letters[GetLetterIndex(c)].addPhonicSoundResource(phonicSoundName);
+					letter.addPhonicSoundResource(phonicSoundName);
 			} catch (Exception e) {
 				log.error("An exception occurred while getting the phonice sound for letter " + c);
 				log.error(e.getMessage());
@@ -221,7 +224,7 @@ public class Alphabet extends Observable {
 			}
 		}
 		
-		log.info("Load alphabet song");
+		// log.info("Load alphabet song");
 		try {
 			String soundName = prop.getProperty("alphabetsong");
 			if (soundName != null) {

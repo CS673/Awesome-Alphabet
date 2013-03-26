@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
+import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
@@ -41,12 +42,10 @@ public class ThemeController extends PageController {
 		m_alphabet = alphabet;
 		m_letterProp = letterProp;
 		
-		m_view.SetController(this);
 		themeMgr.addObserver(m_view);
 	}
-	
-	
-	
+
+
 	/**
 	 * Gets a theme name iterator.
 	 * 
@@ -140,5 +139,10 @@ public class ThemeController extends PageController {
 	public boolean setCurrentTheme(String themeName)
 	{
 		return m_themeMgr.setCurrentTheme(themeName);
+	}
+
+
+	public void GoToTitlePage() {
+		GoToPage(PageName.TitlePage);
 	}
 }

@@ -18,20 +18,22 @@ public class AAConfig {
 	
 	private static final ClassLoader loader = AAConfig.class.getClassLoader();
 	
-	private static String baseDir;
+	private static String baseDirName;
 	private static String graphicsSubDir;
 	private static String soundsSubDir;
-	private static String letterProps;
+	private static String letterPropsName;
+	
+	private static Properties letterProps = null;
 	
 	static {
 		InputStream stream = loader.getResourceAsStream(CONFIG_PROPS);
 		Properties prop = new Properties();
 		try {
 			prop.load(stream);
-			baseDir = prop.getProperty(BASE_DIR);
+			baseDirName = prop.getProperty(BASE_DIR);
 			graphicsSubDir = prop.getProperty(GRAPHICS_DIR);
 			soundsSubDir = prop.getProperty(SOUNDS_DIR);
-			letterProps = prop.getProperty(DEFAULT_LETTERS);
+			letterPropsName = prop.getProperty(DEFAULT_LETTERS);
 			stream.close();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -41,34 +43,35 @@ public class AAConfig {
 	
 
 	public static InputStream getGraphicsResource(String filename) {
-		return loader.getResourceAsStream(baseDir + "/" + graphicsSubDir + "/" + filename);
+		return loader.getResourceAsStream(baseDirName + "/" + graphicsSubDir + "/" + filename);
 	}
 	
 	public static String getGraphicsResourceDir() {
-		return baseDir + "/" + graphicsSubDir + "/";
+		return baseDirName + "/" + graphicsSubDir + "/";
 	}
 
 	public static InputStream getSoundResource(String filename) {
-		return loader.getResourceAsStream(baseDir + "/" + soundsSubDir + "/" + filename);
+		return loader.getResourceAsStream(baseDirName + "/" + soundsSubDir + "/" + filename);
 	}
 	
 	public static String getSoundResourceDir() {
-		return baseDir + "/" + soundsSubDir + "/";
+		return baseDirName + "/" + soundsSubDir + "/";
 	}
 	
 
 	public static Properties getLetterProps() {
-		try {
-			Properties props = new Properties();
-			InputStream is = loader.getResourceAsStream(letterProps);
-			props.load(is);
-			is.close();
-			return props;
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			System.exit(1);
+		if (letterProps == null) {
+			try {
+				letterProps = new Properties();
+				InputStream is = loader.getResourceAsStream(letterPropsName);
+				letterProps.load(is);
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+				System.exit(1);
+			}
 		}
-		return null;
+		
+		return letterProps;
 	}
 	
 	/** copy file
@@ -112,7 +115,7 @@ public class AAConfig {
 	 * @return
 	 */
 	public static int addSoundResource(String srcFileName, String destFileName) {
-		return copy_file(srcFileName, baseDir + "/" + soundsSubDir + "/" + destFileName);
+		return copy_file(srcFileName, baseDirName + "/" + soundsSubDir + "/" + destFileName);
 	}
 	
 	/** Add a word image file.
@@ -121,7 +124,7 @@ public class AAConfig {
 	 * @return
 	 */
 	public static int addImageResource(String srcFileName, String destFileName) {
-		return copy_file(srcFileName, baseDir + "/" + graphicsSubDir + "/" + destFileName);
+		return copy_file(srcFileName, baseDirName + "/" + graphicsSubDir + "/" + destFileName);
 	}
 
 	/** Add a word to letter.properties file
@@ -135,7 +138,7 @@ public class AAConfig {
 		try {
 			Properties props = getLetterProps();
 			File outputFile = new File(letterProps + "temp");
-			File destFile = new File(letterProps);
+			File destFile = new File(letterPropsName);
 			OutputStream outStream = new FileOutputStream(outputFile);
 			
 			while (true) {
@@ -164,7 +167,7 @@ public class AAConfig {
 		boolean rc;
 		
 		try {
-			File file = new File(baseDir + "/" + soundsSubDir + "/" + srcFileName);
+			File file = new File(baseDirName + "/" + soundsSubDir + "/" + srcFileName);
 			rc = file.delete();
 			if (!rc)
 				ret = 1;
@@ -184,7 +187,7 @@ public class AAConfig {
 		boolean rc;
 		
 		try {
-			File file = new File(baseDir + "/" + graphicsSubDir + "/" + srcFileName);
+			File file = new File(baseDirName + "/" + graphicsSubDir + "/" + srcFileName);
 			rc = file.delete();
 			if (!rc)
 				ret = 1;
@@ -206,7 +209,7 @@ public class AAConfig {
 		try {
 			Properties props = getLetterProps();
 			File outputFile = new File(letterProps + "temp");
-			File destFile = new File(letterProps);
+			File destFile = new File(letterPropsName);
 			OutputStream outStream = new FileOutputStream(outputFile);
 			int tablesize = props.size();
 			boolean found = false;
@@ -222,8 +225,10 @@ public class AAConfig {
 					break;
 			}
 			
-			if (!found)
+			if (!found) {
+				outStream.close();
 				return 1;
+			}
 			
 			props.remove("letter." + letter + "." + i + ".word");
 			props.remove("letter." + letter + "." + i + ".theme");

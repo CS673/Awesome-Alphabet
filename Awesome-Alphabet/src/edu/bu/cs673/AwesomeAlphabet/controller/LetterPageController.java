@@ -33,9 +33,7 @@ public class LetterPageController extends PageController {
 		
 		m_view = view;
 		m_alphabet = alphabet;
-		
-		m_view.SetController(this);
-		
+				
 		alphabet.addObserver(m_view);
 		alphabet.GetCurrentLetter().addObserver(m_view);
 	}

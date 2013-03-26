@@ -1,5 +1,7 @@
 package edu.bu.cs673.AwesomeAlphabet.view;
+
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.util.Observer;
@@ -37,7 +39,11 @@ public abstract class PageView implements Observer {
 	protected static final String AA_NAV_BUTTON_NEXT_EXAMPLE	= "NextExample.png";
 	protected static final String AA_NAV_BUTTON_ALPHABET_PAGE	= "AlphabetPage.png";
 	protected static final String AA_NAV_BUTTON_START			= "StartButton.png";
-
+	protected static final String AA_NAV_BUTTON_OPTIONS			= "OptionsButton.png";
+	protected static final String AA_NAV_BUTTON_MANAGE_THEMES	= "ManageThemes.png";
+	protected static final String AA_NAV_BUTTON_MANAGE_WORDS	= "ManageWords.png";
+	protected static final String AA_NAV_BUTTON_MANAGE_SETTINGS	= "ManageOptions.png";
+	protected static final String AA_NAV_BUTTON_RETURN_HOME		= "ReturnHome.png";
 
 	/**
 	 * Class constructor.
@@ -84,11 +90,15 @@ public abstract class PageView implements Observer {
 	 */
 	public JButton getButtonImage(String filename, String defaultName) {
 		Image i = GameImage.getImage(filename);
+		JButton b;
 		if (i == null) {
-			return new JButton(defaultName);
+			b = new JButton(defaultName);
+			b.setAlignmentX(Component.CENTER_ALIGNMENT);
+		} else {
+			b = new JButton(new ImageIcon(i));
+			b.setBorder(border);
+			b.setAlignmentX(Component.CENTER_ALIGNMENT);
 		}
-		JButton b = new JButton(new ImageIcon(i));
-		b.setBorder(border);
 		return b;
 	}
 
