@@ -1,6 +1,8 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Properties;
 
@@ -27,6 +29,12 @@ public class Alphabet extends Observable {
 	private GameSound m_alphabetsong;
 	private ThemeManager m_themeMgr;
 	private Database m_db;
+	/* 
+	 * A cache of all word strings. This will not be in sync with any changes to model.
+	 * So every time it should be flushed and populated fresh to get the latest
+	 * list
+	 */
+	private List<String> m_word_cache = new LinkedList<String>();
 	
 	
 	/**
@@ -80,6 +88,33 @@ public class Alphabet extends Observable {
 	public Iterator<Letter> GetIterator()
 	{
 		return Arrays.asList(m_letters).iterator();
+	}
+	
+	/**
+	 * Gets an iterator to the list of String objects.
+	 * 
+	 * @return   An iterator to the list of String objects. 
+	 */
+	public Iterator<String> GetWordCacheIterator()
+	{
+		Iterator<Letter> iter_letter = GetIterator();
+		Iterator<WordPictureSound> iter_wps;
+		WordPictureSound wps;
+		
+		/* Flush existing cache */
+		while(!m_word_cache.isEmpty())
+			m_word_cache.remove(0);
+		
+		/* Populate list again */
+		while (iter_letter.hasNext()) {
+			Letter l = iter_letter.next();
+			iter_wps = l.GetIterator();
+			while (iter_wps.hasNext()) {
+				wps = iter_wps.next();
+				m_word_cache.add(wps.GetWordString());
+			}
+		}
+		return m_word_cache.listIterator();
 	}
 	
 	
