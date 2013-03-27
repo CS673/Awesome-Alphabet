@@ -171,6 +171,14 @@ public class Alphabet extends Observable {
 		
 		//if(m_themeMgr == null)
 		//	return;
+		boolean reload_db = true;
+		int nr_rows = 0;
+		
+		/* This is a hack to detect if database should be reloaded or not */
+		nr_rows = m_db.getNumberRowsWordTable();
+		log.info("Number of rows in Word Table=" + nr_rows);
+		if (nr_rows > 0)
+			reload_db = false;
 		
 		/* Parse letter.properties and populate database */
 		for (char c = 'a'; c <= 'z'; c++) {
@@ -188,10 +196,13 @@ public class Alphabet extends Observable {
 						themeName = "No Theme";
 					}
 						
-					if(!m_themeMgr.addTheme(themeName))
+					if(reload_db && !m_themeMgr.addTheme(themeName))
 						throw new Exception("Error adding theme.");
-					if (!m_db.addWord(wordText, imageName, soundName, c, themeName))
+				
+					
+					if (reload_db && !m_db.addWord(wordText, imageName, soundName, c, themeName))
 						throw new Exception("Error adding word to database.");
+					
 					m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText, 
 								m_themeMgr.getTheme(themeName));
 				} catch (Exception e) {
