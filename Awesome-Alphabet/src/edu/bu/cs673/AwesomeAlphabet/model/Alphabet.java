@@ -284,6 +284,7 @@ public class Alphabet extends Observable {
 		int letter_index = GetLetterIndex(letter_c);
 		Letter letter = m_letters[letter_index];
 		WordPictureSound wps;
+		String soundDir, imageDir;
 		
 		//Verify new word does not exist already.
 		wps = getWordPictureSound(wordText);
@@ -293,7 +294,12 @@ public class Alphabet extends Observable {
 		// Add sound and image files to resource dir.
 		AAConfig.addSoundResource(soundName, wordText + ".wav");
 		AAConfig.addImageResource(imageName, wordText + ".jpg");
-		AAConfig.addWordToIndex(letter_c, wordText, theme.getThemeName());
+		
+		soundDir = AAConfig.getSoundResourceDir();
+		imageDir = AAConfig.getGraphicsResourceDir();
+		
+		m_db.addWord(wordText, imageDir + imageName, soundDir + soundName, letter_c, theme.getThemeName());
+		//AAConfig.addWordToIndex(letter_c, wordText, theme.getThemeName());
 		
 		letter.addResource(imageName, soundName, wordText, theme);
 		return 0;
@@ -322,7 +328,8 @@ public class Alphabet extends Observable {
 		// Add sound and image files to resource dir.
 		AAConfig.removeSoundResource(wordText + ".wav");
 		AAConfig.removeImageResource(wordText + ".jpg");
-		AAConfig.removeWordFromIndex(letter_c, wordText);
+		m_db.deleteWord(wordText);
+		//AAConfig.removeWordFromIndex(letter_c, wordText);
 		
 		letter.removeResource(wps);
 		return 0;
