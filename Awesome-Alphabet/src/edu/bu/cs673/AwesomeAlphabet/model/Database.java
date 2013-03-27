@@ -44,7 +44,15 @@ public class Database {
 		return m_db;
 	}
 	
-	
+	public void closeConnection()
+	{
+		try {
+		
+			m_con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * Constructor.
@@ -70,6 +78,7 @@ public class Database {
 			// database PATH, if it's new database, then it will be created in the project folder
 			// Create a connection to the SQLite database : AwesomeAlphabet.db is the target
 			m_con = DriverManager.getConnection("jdbc:sqlite:AwesomeAlphabet.db");
+			m_con.setAutoCommit(true);
 		}
 		catch(Exception ex)
 		{
@@ -97,7 +106,7 @@ public class Database {
 			stat.executeUpdate("CREATE TABLE IF NOT EXISTS Theme(" +
 							   		"id INTEGER PRIMARY KEY AUTOINCREMENT," +  
 							   		"name TEXT UNIQUE);");
-			  
+			
 			stat.executeUpdate("CREATE TABLE IF NOT EXISTS Word(" +
 					           		"name TEXT PRIMARY KEY," + 
 					                "ThemeId INTEGER DEFAULT 0," + 
@@ -109,7 +118,7 @@ public class Database {
 		}
 		catch(Exception ex)
 		{
-			//Do Nothing
+			ex.printStackTrace();
 		}
 	}
 	
@@ -252,6 +261,7 @@ public class Database {
 		}
 		catch(Exception ex)
 		{
+			ex.printStackTrace();
 			return -1;
 		}
 	}
@@ -354,7 +364,25 @@ public class Database {
 	
 	//**** Word Table Functions *****
 	
-	
+	public int getNumberRowsWordTable()
+	{
+		int nr_rows = 0;
+		
+		try {
+			PreparedStatement prep = m_con.prepareStatement(
+					"SELECT *" +
+					"FROM Word"
+					);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				nr_rows++;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return nr_rows;
+	}
 	
 	/**
 	 * Adds a Word entry to the database.
@@ -395,9 +423,9 @@ public class Database {
 			
 			ret = prep.executeUpdate();
 			
-			if (ret > 0)
+			if (ret > 0) {
 				return true;
-			else {
+			} else {
 				log.error("prep.executeUpdate failed");
 				return false;
 			}
@@ -532,7 +560,7 @@ public class Database {
 		try
 		{
 			PreparedStatement prep = m_con.prepareStatement(
-					"SELECT name FROM Word WHERE name = '?';");
+					"SELECT name FROM Word WHERE name = ?;");
 			prep.setString(1, wordName);
 
 			ResultSet rs = prep.executeQuery();
@@ -543,6 +571,7 @@ public class Database {
 		}
 		catch(Exception ex)
 		{
+			ex.printStackTrace();
 			return -1;
 		}
 	}
