@@ -14,7 +14,7 @@ public class ThemeManager extends Observable {
 	private Theme m_currentTheme;
 	private Database m_db;
 	
-	public static Theme DEFAULT_THEME = new Theme(DEFAULT_THEME_NAME);
+	//public static Theme DEFAULT_THEME = new Theme(DEFAULT_THEME_NAME);
 	
 	/**
 	 * Constructor.
