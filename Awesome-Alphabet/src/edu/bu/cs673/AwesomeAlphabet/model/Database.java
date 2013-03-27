@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 /**
  * This class defines the interface to the database.
  * It uses the singleton pattern.
@@ -22,6 +24,7 @@ import java.util.Properties;
 public class Database {
 
 	private static Database m_db = null;
+	protected static Logger log = Logger.getLogger(Database.class);
 	
 	private Connection m_con;
 	private final int m_iDefThemeId = 0;
@@ -365,7 +368,11 @@ public class Database {
 	 */
 	public boolean addWord(String wordName, String picturePath, String soundPath, char letter, String themeName)
 	{
-		if(   m_con == null || wordName == "" || hasWord(wordName) == 0 || themeName == "" ||
+		int ret;
+		
+		log.info("addWord Called for:"+wordName);	
+		
+		if(m_con == null || wordName == "" || hasWord(wordName) == 1 || themeName == "" ||
 		    letter < 'a' || letter > 'z')
 		{
 			return false;
@@ -374,11 +381,11 @@ public class Database {
 		try
 		{
 			int iThemeId = getThemeId(themeName);
-			if(iThemeId < 0)
+			if(iThemeId < 0) {
 				return false;
-			
+			}
 			PreparedStatement prep = m_con.prepareStatement(
-					"INSERT INTO Theme (name, ThemeId, SoundPath, PicturePath, letter) " +
+					"INSERT INTO Word (name, ThemeId, SoundPath, PicturePath, letter) " +
 			        "VALUES (?,?,?,?,?);");
 			prep.setString(1, wordName);
 			prep.setInt(2, iThemeId);
@@ -386,10 +393,20 @@ public class Database {
 			prep.setString(4, picturePath);
 			prep.setString(5, Character.toString(letter));
 			
-			return prep.executeUpdate() > 0;
+			ret = prep.executeUpdate();
+			
+			if (ret > 0)
+				return true;
+			else {
+				log.error("prep.executeUpdate failed");
+				return false;
+			}
 		}
 		catch(Exception ex)
 		{
+			log.error("An exception occurred while adding word to database");
+			log.error(ex.getMessage());
+			ex.printStackTrace();
 			return false;
 		}
 	}
