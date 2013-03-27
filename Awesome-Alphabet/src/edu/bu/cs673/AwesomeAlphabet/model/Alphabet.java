@@ -26,6 +26,7 @@ public class Alphabet extends Observable {
 	public int m_iCurLetterIndex;
 	private GameSound m_alphabetsong;
 	private ThemeManager m_themeMgr;
+	private Database m_db;
 	
 	
 	/**
@@ -43,6 +44,8 @@ public class Alphabet extends Observable {
 	 */
 	public void Initialize()
 	{
+		m_db = Database.getDatabaseInstance();
+		
 		for(int i=0; i<AA_ALPHABET_SIZE; i++)
 			m_letters[i] = new Letter((char)((int)'a' + i), m_themeMgr);
 	}
@@ -169,8 +172,8 @@ public class Alphabet extends Observable {
 		//if(m_themeMgr == null)
 		//	return;
 		
+		/* Parse letter.properties and populate database */
 		for (char c = 'a'; c <= 'z'; c++) {
-			/*
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
@@ -181,23 +184,23 @@ public class Alphabet extends Observable {
 					String soundName = wordText + ".wav";
 					String themeName = prop.getProperty(propName + "theme");
 					
-					if(themeName == null)
-						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText,
-								new Theme(ThemeManager.DEFAULT_THEME_NAME));
-					else
-					{
-						if(!m_themeMgr.addTheme(themeName))
-							throw new Exception("Error adding theme.");
-						m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText, 
-								m_themeMgr.getTheme(themeName));
+					if(themeName == null) {
+						themeName = "No Theme";
 					}
+						
+					if(!m_themeMgr.addTheme(themeName))
+						throw new Exception("Error adding theme.");
+					if (!m_db.addWord(wordText, imageName, soundName, c, themeName))
+						throw new Exception("Error adding word to database.");
+					m_letters[GetLetterIndex(c)].addResource(imageName, soundName, wordText, 
+								m_themeMgr.getTheme(themeName));
 				} catch (Exception e) {
 					log.error("An exception occurred while loading properties for leter "+c);
 					log.error(e.getMessage());
 					e.printStackTrace();
 				}
 			}
-			*/
+			
 			log.info("Add Letter Sound");
 			try {
 				//String propName = "letter." + c + ".lettersound";
