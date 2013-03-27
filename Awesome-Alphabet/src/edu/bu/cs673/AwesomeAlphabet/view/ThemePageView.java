@@ -34,6 +34,7 @@ public class ThemePageView extends PageView implements IThemeControllerView {
 		m_panel.setLayout(new BorderLayout());
 		
 		JPanel centerPanel = new JPanel();
+		centerPanel.setBackground(backgroundColor);
 		centerPanel.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -52,6 +53,7 @@ public class ThemePageView extends PageView implements IThemeControllerView {
 		centerPanel.add(m_themeList, c);
 
 		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBackground(backgroundColor);
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
 		c.gridx = 1;
 		c.gridy = 0;

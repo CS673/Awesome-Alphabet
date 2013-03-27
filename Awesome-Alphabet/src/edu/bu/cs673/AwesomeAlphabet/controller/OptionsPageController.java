@@ -22,4 +22,8 @@ public class OptionsPageController extends PageController {
 		GoToPage(PageName.ThemePage);
 	}
 
+	public void GoToWordEditPage() {
+		GoToPage(PageName.WPSPage);
+	}
+
 }

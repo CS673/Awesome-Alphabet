@@ -10,7 +10,9 @@ public enum PageName {
 	AlphabetPage ("AlphabetPage"),
 	LetterPage   ("LetterPage"),
 	OptionsPage	 ("OptionsPage"),
-	ThemePage	 ("ThemePage");
+	ThemePage	 ("ThemePage"),
+	WPSPage		 ("WPSPage"),
+	WordEditPage ("WordEditPage");
 	
 	private final String stringValue;
 	private PageName(final String s) { stringValue = s; }
