@@ -5,21 +5,22 @@ import java.util.Iterator;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.WPSView;
+import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;;
 
 public class WPSController extends PageController {
 
 	private WPSView m_view;
-	// TODO: private Model m_model;
+	private Alphabet m_model;
 	
-	public WPSController(IPageObserver pageObserver, WPSView wpsView /*, Model model */) {
+	public WPSController(IPageObserver pageObserver, WPSView wpsView , Alphabet model) {
 		super(pageObserver);
 		m_view = wpsView;
-		// TODO: m_model = model;
+		m_model = model;
 	}
 	
 	public Iterator<String> getWords() {
 		// TODO: model.getWords(); convert to list of strings; return iterator
-		return null;
+		return m_model.GetWordCacheIterator();
 	}
 
 	public void GoToMainMenu() {
