@@ -25,6 +25,7 @@ public class OptionsPageView extends PageView {
 		JButton b;
 		
 		b = getButtonImage(AA_NAV_BUTTON_MANAGE_WORDS, "Manage Words");
+		b.addActionListener(new ButtonHandler(this, "OnManageWordsClick"));
 		m_panel.add(b);
 		
 		m_panel.add(Box.createVerticalStrut(10));
@@ -51,8 +52,7 @@ public class OptionsPageView extends PageView {
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
+		// Do nothing.
 	}
 
 	@Override
@@ -68,6 +68,11 @@ public class OptionsPageView extends PageView {
 	public void OnManageThemesClick() {
 		if (m_controller != null)
 			m_controller.GoToThemesPage();
+	}
+	
+	public void OnManageWordsClick() {
+		if (m_controller != null)
+			m_controller.GoToWordEditPage();
 	}
 	
 	/**
