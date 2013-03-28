@@ -136,8 +136,11 @@ public class WordEditView extends PageView {
 	}
 	
 	public void OnSaveClicked() {
-		if (m_controller != null) 
-			m_controller.SaveEditWord();
+		if (m_controller != null) {
+			/* TODO: Retrieve theme fromm combo box */ 
+			m_controller.SaveEditWord(m_wordField.getText(), m_imageFileField.getText(),
+					m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
+		}
 	}
 
 	@Override
