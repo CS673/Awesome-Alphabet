@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.WordEditController;
+import edu.bu.cs673.AwesomeAlphabet.model.WordPictureSound;
 
 public class WordEditView extends PageView {
 	
@@ -136,8 +137,17 @@ public class WordEditView extends PageView {
 	}
 	
 	public void OnSaveClicked() {
-		if (m_controller != null) 
-			m_controller.SaveEditWord();
+		if (m_controller != null) {
+			WordPictureSound wps = m_controller.getCurrentWordEditing();
+			if (wps == null) {
+				/* It is new word being added */
+				m_controller.SaveNewWord(m_wordField.getText(), m_imageFileField.getText(),
+					m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
+			} else {
+				m_controller.SaveEditWord(m_wordField.getText(), m_imageFileField.getText(),
+						m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
+			}
+		}
 	}
 
 	@Override
@@ -150,6 +160,8 @@ public class WordEditView extends PageView {
 	public void activated() {
 		if (m_controller != null) {
 			Iterator<String> themes = m_controller.getThemeNamesIterator();
+			WordPictureSound wps = m_controller.getCurrentWordEditing();
+			String absSoundFilePath, absImageFilePath;
 			
 			m_themeChoice.removeAllItems();
 			m_themeChoice.addItem("--none--");
@@ -157,6 +169,16 @@ public class WordEditView extends PageView {
 				String s = themes.next();
 				m_themeChoice.addItem(s);
 			}
+			
+			if (wps != null) {
+				m_wordField.setText(wps.GetWordString());
+				m_themeChoice.setName(wps.getTheme().getThemeName());
+				absImageFilePath = m_controller.getAbsImageFilePath(wps.GetWordString());
+				absSoundFilePath = m_controller.getAbsSoundFilePath(wps.GetWordString());
+				m_imageFileField.setText(absImageFilePath);
+				m_soundFileField.setText(absSoundFilePath);
+			}
+			
 		}
 	}
 

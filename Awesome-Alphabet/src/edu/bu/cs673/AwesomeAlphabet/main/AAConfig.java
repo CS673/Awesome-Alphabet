@@ -8,6 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import org.apache.log4j.Logger;
+
+import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
+
 public class AAConfig {
 
 	private static final String CONFIG_PROPS = "config.properties";
@@ -24,6 +28,7 @@ public class AAConfig {
 	private static String letterPropsName;
 	
 	private static Properties letterProps = null;
+	protected static Logger log = Logger.getLogger(AAConfig.class);
 	
 	static {
 		InputStream stream = loader.getResourceAsStream(CONFIG_PROPS);
@@ -83,11 +88,30 @@ public class AAConfig {
 		InputStream inStream = null;
 		OutputStream outStream = null;
 		
+		File currentdir = new File(".");
+		try {
+			log.info("CWD is:" + currentdir.getCanonicalPath());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			log.info("copy: " + srcFileName + " to " + destFileName);
+		
     	try {
     		 
     		File sfile = new File(srcFileName);
-    		File dfile = new File(destFileName);
- 
+    		File dfile = new File(currentdir.getCanonicalPath() + "/" + destFileName);
+    		
+    		/* Create dest file */
+    		if (!dfile.exists()) {
+    			log.info("Trying to create file:" + dfile.getPath());
+    			if (!dfile.getParentFile().exists()) {
+    				log.info("Parent dir does not exist. Creating:"+ dfile.getParentFile().getPath());
+    				dfile.getParentFile().mkdirs();
+    			} else 
+    				log.info("Parent file (dir) exists");
+    			dfile.createNewFile();
+    		}
+    		
     		inStream = new FileInputStream(sfile);
     		outStream = new FileOutputStream(dfile);
  
@@ -137,9 +161,18 @@ public class AAConfig {
 	
 		try {
 			Properties props = getLetterProps();
-			File outputFile = new File(letterProps + "temp");
-			File destFile = new File(letterPropsName);
-			OutputStream outStream = new FileOutputStream(outputFile);
+			File currentdir = new File(".");
+			File outputFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName + ".temp");
+			File destFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName);
+			OutputStream outStream;
+			
+			log.info("Temp index file is:" + outputFile);
+			log.info("Dest index file is:" + destFile);
+			if (!outputFile.exists()) {
+				outputFile.createNewFile();
+			}
+			
+			outStream = new FileOutputStream(outputFile);
 			
 			while (true) {
 				if (props.getProperty("letter." + letter + "." + i + ".word") == null)
@@ -152,6 +185,7 @@ public class AAConfig {
 			props.store(outStream, null);
 			outStream.close();
 			outputFile.renameTo(destFile);
+			outputFile.delete();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -165,9 +199,10 @@ public class AAConfig {
 	public static int removeSoundResource(String srcFileName) {
 		int ret = 0;
 		boolean rc;
+		File currentdir = new File(".");
 		
 		try {
-			File file = new File(baseDirName + "/" + soundsSubDir + "/" + srcFileName);
+			File file = new File(currentdir.getCanonicalPath() + "/" + baseDirName + "/" + soundsSubDir + "/" + srcFileName);
 			rc = file.delete();
 			if (!rc)
 				ret = 1;
@@ -185,9 +220,10 @@ public class AAConfig {
 	public static int removeImageResource(String srcFileName) {
 		int ret = 0;
 		boolean rc;
+		File currentdir = new File(".");
 		
 		try {
-			File file = new File(baseDirName + "/" + graphicsSubDir + "/" + srcFileName);
+			File file = new File(currentdir.getCanonicalPath() + "/" + baseDirName + "/" + graphicsSubDir + "/" + srcFileName);
 			rc = file.delete();
 			if (!rc)
 				ret = 1;
@@ -208,11 +244,22 @@ public class AAConfig {
 	
 		try {
 			Properties props = getLetterProps();
-			File outputFile = new File(letterProps + "temp");
-			File destFile = new File(letterPropsName);
-			OutputStream outStream = new FileOutputStream(outputFile);
+			File currentdir = new File(".");
+			File outputFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName + ".temp");
+			File destFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName);
+			OutputStream outStream;
 			int tablesize = props.size();
 			boolean found = false;
+			
+			
+			log.info("Temp index file is:" + outputFile);
+			log.info("Dest index file is:" + destFile);
+			
+			if (!outputFile.exists()) {
+				outputFile.createNewFile();
+			}
+			
+			outStream = new FileOutputStream(outputFile);
 			
 			while (true) {
 				if (props.getProperty("letter." + letter + "." + i + ".word") == wordText) {
@@ -236,6 +283,7 @@ public class AAConfig {
 			props.store(outStream, null);
 			outStream.close();
 			outputFile.renameTo(destFile);
+			outputFile.delete();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
