@@ -72,9 +72,13 @@ public class ThemePageView extends PageView implements IThemeControllerView {
 		b.addActionListener(new ButtonHandler(this, "OnThemeDeleteClicked"));
 		buttonPanel.add(b);
 		
+		b = new JButton("Set As Current Theme");
+		b.addActionListener(new ButtonHandler(this, "OnSetThemeClicked"));
+		buttonPanel.add(b);
+		
 		m_panel.add(centerPanel, BorderLayout.CENTER);
 		
-		b = getButtonImage(AA_NAV_BUTTON_RETURN_HOME, "Return to Main Menu");
+		b = getButtonImage(AA_NAV_BUTTON_RETURN_HOME, "Return to Options Menu");
 		b.addActionListener(new ButtonHandler(this, "OnReturnHomeClick"));
 		m_panel.add(b, BorderLayout.SOUTH);
 				
@@ -105,7 +109,7 @@ public class ThemePageView extends PageView implements IThemeControllerView {
 	
 	public void OnReturnHomeClick() {
 		if (m_controller != null)
-			m_controller.GoToTitlePage();
+			m_controller.GoToOptionsPage();
 	}
 	
 	public void OnThemeAddClicked() {
@@ -130,6 +134,13 @@ public class ThemePageView extends PageView implements IThemeControllerView {
 		String themeName = (String) m_themeList.getSelectedValue();
 		if (m_controller != null) {
 			m_controller.deleteTheme(themeName);
+		}
+	}
+	
+	public void OnSetThemeClicked() {
+		String themeName = (String) m_themeList.getSelectedValue();
+		if (m_controller != null) {
+			m_controller.setCurrentTheme(themeName);
 		}
 	}
 	
