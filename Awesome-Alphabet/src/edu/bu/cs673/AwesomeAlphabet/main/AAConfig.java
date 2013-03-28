@@ -242,11 +242,22 @@ public class AAConfig {
 	
 		try {
 			Properties props = getLetterProps();
-			File outputFile = new File(letterProps + "temp");
-			File destFile = new File(letterPropsName);
-			OutputStream outStream = new FileOutputStream(outputFile);
+			File currentdir = new File(".");
+			File outputFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName + ".temp");
+			File destFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName);
+			OutputStream outStream;
 			int tablesize = props.size();
 			boolean found = false;
+			
+			
+			log.info("Temp index file is:" + outputFile);
+			log.info("Dest index file is:" + destFile);
+			
+			if (!outputFile.exists()) {
+				outputFile.createNewFile();
+			}
+			
+			outStream = new FileOutputStream(outputFile);
 			
 			while (true) {
 				if (props.getProperty("letter." + letter + "." + i + ".word") == wordText) {
@@ -270,6 +281,7 @@ public class AAConfig {
 			props.store(outStream, null);
 			outStream.close();
 			outputFile.renameTo(destFile);
+			outputFile.delete();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

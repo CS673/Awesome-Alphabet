@@ -375,11 +375,11 @@ public class Alphabet extends Observable {
 		letter_index = GetLetterIndex(letter_c);
 		letter = m_letters[letter_index];
 		
-		// Add sound and image files to resource dir.
+		// Remove sound and image files from resource dir.
 		AAConfig.removeSoundResource(wordText + ".wav");
 		AAConfig.removeImageResource(wordText + ".jpg");
 		m_db.deleteWord(wordText);
-		//AAConfig.removeWordFromIndex(letter_c, wordText);
+		AAConfig.removeWordFromIndex(letter_c, wordText);
 		
 		letter.removeResource(wps);
 		return 0;

@@ -38,7 +38,7 @@ public class WPSController extends PageController {
 	}
 
 	public void DeleteWord(String word) {
-		// TODO: model.deleteWord(word);
+		m_model.deleteWord(word);
 	}
 
 }
