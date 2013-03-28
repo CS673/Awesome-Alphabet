@@ -128,7 +128,7 @@ public class ThemeController extends PageController {
 	}
 
 
-	public void GoToTitlePage() {
-		GoToPage(PageName.TitlePage);
+	public void GoToOptionsPage() {
+		GoToPage(PageName.OptionsPage);
 	}
 }
