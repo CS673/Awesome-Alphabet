@@ -48,6 +48,7 @@ public class WPSView extends PageView {
 		
 		c.gridx = 1;
 		c.gridy = 0;
+		c.gridwidth = 2;
 		centerPanel.add(m_textField, c);
 		
 		m_wordList.setModel(m_wordModel);

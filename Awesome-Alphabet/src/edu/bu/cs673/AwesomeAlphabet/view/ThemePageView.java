@@ -84,18 +84,23 @@ public class ThemePageView extends PageView implements IThemeControllerView {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o != null) {
-			Iterator<String> i = m_controller.getThemeNamesIterator();
-			
-			m_themeModel.removeAllElements();
-			while (i.hasNext()) {
-				m_themeModel.addElement(i.next());
-			}
+			repopulateThemes();
 		}
 	}
 
 	@Override
 	public void activated() {
 		log.info("Activated " + super.getPageName());
+		repopulateThemes();
+	}
+
+	private void repopulateThemes() {
+		Iterator<String> i = m_controller.getThemeNamesIterator();
+		
+		m_themeModel.removeAllElements();
+		while (i.hasNext()) {
+			m_themeModel.addElement(i.next());
+		}
 	}
 	
 	public void OnReturnHomeClick() {

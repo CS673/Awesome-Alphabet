@@ -41,6 +41,8 @@ public class ThemeManager extends Observable {
 		//Load theme names that were read from database
 		while(it.hasNext())
 			m_themes.add(new Theme(it.next()));
+		setChanged();
+		notifyObservers();
 		return true;
 	}
 	
