@@ -43,21 +43,11 @@ public class AlphabetPageControllerTest {
 
 		AlphabetPageController result = new AlphabetPageController(pageObserver, view, alphabet);
 		
-		// set mock expectation
-		view.SetController(result);
-		EasyMock.expectLastCall();
-		
 
 		// verify the result
 		assertNotNull(result);
 		
-		/*IPageObserver pageObserver = new MainWindow();
-		AlphabetPageView view = new AlphabetPageView("");
-		Alphabet alphabet = new Alphabet(new ThemeManager());
-
-		AlphabetPageController result = new AlphabetPageController(pageObserver, view, alphabet);
-
-		assertNotNull(result);*/
+	
 		
 	}
 
