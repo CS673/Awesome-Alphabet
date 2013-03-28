@@ -4,7 +4,7 @@ import java.util.Observable;
 
 public class Theme extends Observable {
 
-	public static String DEFAULT_THEME_NAME = "No Theme";
+	public static String DEFAULT_THEME_NAME = "Default Theme";
 	
 	private String m_themeName;
 	private Database m_db;
