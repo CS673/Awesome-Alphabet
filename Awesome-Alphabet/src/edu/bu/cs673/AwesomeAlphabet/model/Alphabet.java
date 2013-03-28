@@ -226,8 +226,10 @@ public class Alphabet extends Observable {
 				String propName = "letter." + c + "." + i + ".";
 				try {
 					String wordText = prop.getProperty(propName + "word");
+					
 					if (wordText == null)
 						break;
+					
 					String imageName = wordText + ".jpg";
 					String soundName = wordText + ".wav";
 					String themeName = prop.getProperty(propName + "theme");
@@ -347,7 +349,7 @@ public class Alphabet extends Observable {
 		
 		log.info("Add word word=" + wordText + " letter=" + letter_c + " image=" + wordText + ".jpg" + " sound=" + wordText + ".wav" + " theme=" + themeName);
 		m_db.addWord(wordText, wordText + ".jpg", wordText + ".wav", letter_c, themeName);
-		//AAConfig.addWordToIndex(letter_c, wordText, themeName);
+		AAConfig.addWordToIndex(letter_c, wordText, themeName);
 		
 		letter.addResource(wordText + ".jpg", wordText + ".wav", wordText, m_themeMgr.getTheme(themeName));
 		return 0;
