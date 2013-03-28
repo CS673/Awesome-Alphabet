@@ -92,14 +92,7 @@ public class WPSView extends PageView {
 		log.info("Initialized the " + pageName);
 	}
 	
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void activated() {
+	private void refreshWordList() {
 		Iterator<String> words = m_controller.getWords();
 		
 		if (words != null) {
@@ -108,6 +101,17 @@ public class WPSView extends PageView {
 				m_wordModel.addElement(words.next());
 			}
 		}
+	}
+	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void activated() {
+		refreshWordList();
 	}
 	
 	public void OnWordAddClicked() {
@@ -127,6 +131,7 @@ public class WPSView extends PageView {
 		String word = (String) m_wordList.getSelectedValue();
 		if (m_controller != null && word != null) {
 			m_controller.DeleteWord(word);
+			refreshWordList();
 		}
 	}
 	
