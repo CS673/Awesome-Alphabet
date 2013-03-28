@@ -23,8 +23,8 @@ public class WPSController extends PageController {
 		return m_model.GetWordCacheIterator();
 	}
 
-	public void GoToMainMenu() {
-		GoToPage(PageName.TitlePage);
+	public void GoToOptionsMenu() {
+		GoToPage(PageName.OptionsPage);
 	}
 
 	public void CreateNewWord() {
@@ -39,6 +39,12 @@ public class WPSController extends PageController {
 
 	public void DeleteWord(String word) {
 		m_model.deleteWord(word);
+	}
+
+	public void SubstringSearch(String newText) {
+		// TODO: Iterator<String> i = model.searchForWords(newText);
+		Iterator<String> i = null;
+		m_view.updateWordList(i);
 	}
 
 }

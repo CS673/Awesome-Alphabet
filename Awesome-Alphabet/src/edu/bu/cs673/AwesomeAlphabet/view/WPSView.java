@@ -9,11 +9,14 @@ import java.util.Observable;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.apache.log4j.Logger;
 
@@ -25,12 +28,33 @@ public class WPSView extends PageView {
 	private JList m_wordList = new JList();
 	private DefaultListModel m_wordModel = new DefaultListModel();
 	private JTextField m_textField = new JTextField();
+	
+	private String[] letters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+			"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+	};
+	private JComboBox m_letterChoice = new JComboBox(letters);
 
 	private WPSController m_controller;
 	static Logger log = Logger.getLogger(WPSView.class);
 
 	public WPSView(String pageName) {
 		super(pageName);
+		
+		m_textField.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updateText(m_textField.getText());
+			}
+			public void removeUpdate(DocumentEvent e) {
+				updateText(m_textField.getText());
+			}
+			public void insertUpdate(DocumentEvent e) {
+				updateText(m_textField.getText());
+			}
+			public void updateText(String newText) {
+				if (newText != null && m_controller != null)
+					m_controller.SubstringSearch(newText);
+			}
+		});
 		
 		m_panel.setLayout(new BorderLayout());
 		
@@ -58,15 +82,23 @@ public class WPSView extends PageView {
 		scroll.setViewportView(m_wordList);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 2;
 		c.gridwidth = 2;
 		centerPanel.add(scroll, c);
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		centerPanel.add(new JLabel("Associated Letter:"), c);
+		
+		c.gridx = 1;
+		centerPanel.add(m_letterChoice, c);
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(backgroundColor);
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
 		c.gridx = 2;
-		c.gridy = 1;
+		c.gridy = 2;
 		c.gridheight = 2;
 		c.gridwidth = 1;
 		centerPanel.add(buttonPanel, c);
@@ -85,7 +117,7 @@ public class WPSView extends PageView {
 		
 		m_panel.add(centerPanel, BorderLayout.CENTER);
 		
-		b = getButtonImage(AA_NAV_BUTTON_RETURN_HOME, "Return to Main Menu");
+		b = getButtonImage(AA_NAV_BUTTON_RETURN_HOME, "Return to Options Menu");
 		b.addActionListener(new ButtonHandler(this, "OnReturnHomeClicked"));
 		m_panel.add(b, BorderLayout.SOUTH);
 				
@@ -102,6 +134,10 @@ public class WPSView extends PageView {
 	public void activated() {
 		Iterator<String> words = m_controller.getWords();
 		
+		updateWordList(words);
+	}
+
+	public void updateWordList(Iterator<String> words) {
 		if (words != null) {
 			m_wordModel.removeAllElements();
 			while (words.hasNext()) {
@@ -132,7 +168,7 @@ public class WPSView extends PageView {
 	
 	public void OnReturnHomeClicked() {
 		if (m_controller != null)
-			m_controller.GoToMainMenu();
+			m_controller.GoToOptionsMenu();
 	}
 	
 	/**
