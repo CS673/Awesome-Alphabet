@@ -30,7 +30,10 @@ public class WordEditView extends PageView {
 	private JTextField m_imageFileField = new JTextField();
 	private JTextField m_soundFileField = new JTextField();
 	private static final JFileChooser chooser = new JFileChooser();
-	
+	private String[] letters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+			"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+	};
+	private JComboBox m_letterChoice = new JComboBox(letters);	
 	
 	public WordEditView(String pageName) {
 		super(pageName);
@@ -90,26 +93,34 @@ public class WordEditView extends PageView {
 		
 		c.gridx = 0;
 		c.gridy = 2;
-		centerPanel.add(new JLabel("Image file:"), c);
+		centerPanel.add(new JLabel("Associated Letter:"), c);
 		
 		c.gridx = 1;
 		c.gridy = 2;
-		centerPanel.add(m_imageFileField, c);
-		
-		c.gridx = 2;
-		c.gridy = 2;
-		centerPanel.add(selectImage, c);
+		centerPanel.add(m_letterChoice, c);
 		
 		c.gridx = 0;
 		c.gridy = 3;
-		centerPanel.add(new JLabel("Sound file:"), c);
+		centerPanel.add(new JLabel("Image file:"), c);
 		
 		c.gridx = 1;
 		c.gridy = 3;
-		centerPanel.add(m_soundFileField, c);
+		centerPanel.add(m_imageFileField, c);
 		
 		c.gridx = 2;
 		c.gridy = 3;
+		centerPanel.add(selectImage, c);
+		
+		c.gridx = 0;
+		c.gridy = 4;
+		centerPanel.add(new JLabel("Sound file:"), c);
+		
+		c.gridx = 1;
+		c.gridy = 4;
+		centerPanel.add(m_soundFileField, c);
+		
+		c.gridx = 2;
+		c.gridy = 4;
 		centerPanel.add(selectSound, c);
 		
 		m_panel.add(centerPanel, BorderLayout.CENTER);
@@ -139,9 +150,11 @@ public class WordEditView extends PageView {
 	public void OnSaveClicked() {
 		if (m_controller != null) {
 			WordPictureSound wps = m_controller.getCurrentWordEditing();
+			String character = (String) m_letterChoice.getSelectedItem();
+			char letter_c = character.charAt(0);
 			if (wps == null) {
 				/* It is new word being added */
-				m_controller.SaveNewWord(m_wordField.getText(), m_imageFileField.getText(),
+				m_controller.SaveNewWord(m_wordField.getText(), letter_c, m_imageFileField.getText(),
 					m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
 			} else {
 				m_controller.SaveEditWord(m_wordField.getText(), m_imageFileField.getText(),
@@ -173,6 +186,7 @@ public class WordEditView extends PageView {
 			if (wps != null) {
 				m_wordField.setText(wps.GetWordString());
 				m_themeChoice.setName(wps.getTheme().getThemeName());
+				m_letterChoice.setSelectedIndex(m_controller.getLetterIndex(wps.getWordLetter()));
 				absImageFilePath = m_controller.getAbsImageFilePath(wps.GetWordString());
 				absSoundFilePath = m_controller.getAbsSoundFilePath(wps.GetWordString());
 				m_imageFileField.setText(absImageFilePath);
