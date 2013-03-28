@@ -33,12 +33,12 @@ public class WPSController extends PageController {
 	}
 
 	public void EditWord(String word) {
-		// TODO: model.selectWordToEdit(word);
+		m_model.setCurrentWordEditing(word);
 		GoToPage(PageName.WordEditPage);
 	}
 
 	public void DeleteWord(String word) {
-		// TODO: model.deleteWord(word);
+		m_model.deleteWord(word);
 	}
 
 }
