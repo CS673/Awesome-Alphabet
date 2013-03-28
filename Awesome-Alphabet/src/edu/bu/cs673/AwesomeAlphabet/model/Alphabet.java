@@ -409,7 +409,7 @@ public class Alphabet extends Observable {
 	 * @return 0 on success. Failure otherwise. 
 	 */
 	 
-	public int editWord(String wordText, String imageName, String soundName, String themeName) {
+	public int editWord(String wordText, char associated_letter, String imageName, String soundName, String themeName) {
 		WordPictureSound old_wps;
 		String soundDir, imageDir, srcSoundFile, srcImageFile, absSoundDir, absImageDir;
 		File currentdir = new File(".");
@@ -438,7 +438,7 @@ public class Alphabet extends Observable {
 			AAConfig.copy_file(srcImageFile, imageDir +"temp.jpg");
 		
 			deleteWord(old_wps.GetWordString());
-			addNewWord(wordText, old_wps.getWordLetter(), absImageDir + "temp.jpg", absSoundDir + "temp.wav", themeName);
+			addNewWord(wordText, associated_letter, absImageDir + "temp.jpg", absSoundDir + "temp.wav", themeName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

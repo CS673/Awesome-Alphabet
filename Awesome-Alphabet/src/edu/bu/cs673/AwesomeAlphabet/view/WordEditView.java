@@ -161,7 +161,7 @@ public class WordEditView extends PageView {
 				m_controller.SaveNewWord(m_wordField.getText(), letter_c, m_imageFileField.getText(),
 					m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
 			} else {
-				m_controller.SaveEditWord(m_wordField.getText(), m_imageFileField.getText(),
+				m_controller.SaveEditWord(m_wordField.getText(), letter_c, m_imageFileField.getText(),
 						m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
 			}
 		}
