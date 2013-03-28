@@ -9,6 +9,7 @@ import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.WordEditView;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
+import edu.bu.cs673.AwesomeAlphabet.model.WordPictureSound;
 
 public class WordEditController extends PageController {
 
@@ -39,13 +40,36 @@ public class WordEditController extends PageController {
 	}
 
 	public void CancelEditWord() {
-		// TODO: m_model.rollback();
+		m_model.unsetCurrentWordEditing();
+		GoToPage(PageName.WPSPage);
+	}
+	
+	public void SaveNewWord(String wordText, String imageFile, String soundFile, String themeName) {
+		// TODO: m_model.commit();
+		m_model.addNewWord(wordText, imageFile, soundFile, themeName);
 		GoToPage(PageName.WPSPage);
 	}
 	
 	public void SaveEditWord(String wordText, String imageFile, String soundFile, String themeName) {
 		// TODO: m_model.commit();
-		m_model.addNewWord(wordText, imageFile, soundFile, themeName);
+		m_model.editWord(wordText, imageFile, soundFile, themeName);
+		m_model.unsetCurrentWordEditing();
 		GoToPage(PageName.WPSPage);
 	}
+	
+	public WordPictureSound getCurrentWordEditing()
+	{
+		return m_model.getCurrentWordEditing();
+	}
+	
+	public String getAbsSoundFilePath(String wordText)
+	{
+		return m_model.getAbsSoundFilePath(wordText);
+	}
+	
+	public String getAbsImageFilePath(String wordText)
+	{
+		return m_model.getAbsImageFilePath(wordText);
+	}
+
 }

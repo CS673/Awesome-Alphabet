@@ -199,9 +199,10 @@ public class AAConfig {
 	public static int removeSoundResource(String srcFileName) {
 		int ret = 0;
 		boolean rc;
+		File currentdir = new File(".");
 		
 		try {
-			File file = new File(baseDirName + "/" + soundsSubDir + "/" + srcFileName);
+			File file = new File(currentdir.getCanonicalPath() + "/" + baseDirName + "/" + soundsSubDir + "/" + srcFileName);
 			rc = file.delete();
 			if (!rc)
 				ret = 1;
@@ -219,9 +220,10 @@ public class AAConfig {
 	public static int removeImageResource(String srcFileName) {
 		int ret = 0;
 		boolean rc;
+		File currentdir = new File(".");
 		
 		try {
-			File file = new File(baseDirName + "/" + graphicsSubDir + "/" + srcFileName);
+			File file = new File(currentdir.getCanonicalPath() + "/" + baseDirName + "/" + graphicsSubDir + "/" + srcFileName);
 			rc = file.delete();
 			if (!rc)
 				ret = 1;

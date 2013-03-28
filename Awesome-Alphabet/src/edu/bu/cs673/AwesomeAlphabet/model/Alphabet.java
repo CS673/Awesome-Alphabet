@@ -1,4 +1,5 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -29,6 +30,8 @@ public class Alphabet extends Observable {
 	private GameSound m_alphabetsong;
 	private ThemeManager m_themeMgr;
 	private Database m_db;
+	private String m_currentWordEditing;
+	
 	/* 
 	 * A cache of all word strings. This will not be in sync with any changes to model.
 	 * So every time it should be flushed and populated fresh to get the latest
@@ -371,6 +374,7 @@ public class Alphabet extends Observable {
 		if (wps == null)
 			return 1;
 		
+		log.info("Delete Word: " + wordText);
 		letter_c = wps.getWordLetter();
 		letter_index = GetLetterIndex(letter_c);
 		letter = m_letters[letter_index];
@@ -390,27 +394,99 @@ public class Alphabet extends Observable {
 	 * @return 0 on success. Failure otherwise. 
 	 */
 	 
-	public int editWord(String oldWordText, char letter_c, String wordText, String imageName, String soundName, Theme theme) {
-		
+	public int editWord(String wordText, String imageName, String soundName, String themeName) {
 		WordPictureSound old_wps;
-		String soundDir, imageDir;
+		String soundDir, imageDir, srcSoundFile, srcImageFile, absSoundDir, absImageDir;
+		File currentdir = new File(".");
 		
-		old_wps = getWordPictureSound(oldWordText);
-		if (old_wps == null)
+		log.info("Edit word: " + wordText +  " image=" + imageName + " sound=" + soundName + " theme=" + themeName);
+		old_wps = getWordPictureSound(m_currentWordEditing);
+		if (old_wps == null) {
+			log.error("There is no current word being edited");
 			return 1;
+		}
 		
-		/* If sound and Image file names have not changed, save these away
-		 * otherwise these will be deleted upon delete word. Save these away.
-		 */
-		soundDir = AAConfig.getSoundResourceDir();
-		imageDir = AAConfig.getGraphicsResourceDir();
+		try {
+			/* If sound and Image file names have not changed, save these away
+			 * otherwise these will be deleted upon delete word. Save these away.
+			 */
+			soundDir = AAConfig.getSoundResourceDir() + "/";
+			imageDir = AAConfig.getGraphicsResourceDir() + "/";
+			
+			absSoundDir = currentdir.getCanonicalPath() + "/" + soundDir + "/";
+			absImageDir = currentdir.getCanonicalPath() + "/" + imageDir + "/";
 		
-		AAConfig.copy_file(soundName, soundDir + "temp.wav");
-		AAConfig.copy_file(imageName, imageDir +"temp.jpg");
+			srcSoundFile = absSoundDir + old_wps.GetWordString() + ".wav";
+			srcImageFile = absImageDir + old_wps.GetWordString() + ".jpg";
+			
+			AAConfig.copy_file(srcSoundFile, soundDir + "temp.wav");
+			AAConfig.copy_file(srcImageFile, imageDir +"temp.jpg");
 		
-		deleteWord(oldWordText);
-		addNewWord(wordText, imageDir + "temp.jpg", soundDir + "temp.wav", theme.getThemeName());
-		
+			deleteWord(old_wps.GetWordString());
+			addNewWord(wordText, absImageDir + "temp.jpg", absSoundDir + "temp.wav", themeName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return 0;
+	}
+	
+	public boolean setCurrentWordEditing(String wordText) {
+		WordPictureSound wps;
+		
+		wps = getWordPictureSound(wordText);
+		
+		if (wps == null)
+			return false;
+		
+		m_currentWordEditing = wordText;
+		return true;
+		
+	}
+	
+	public boolean unsetCurrentWordEditing() {
+		m_currentWordEditing = null;
+		return true;
+	}
+	
+	public WordPictureSound getCurrentWordEditing() {
+		if (m_currentWordEditing == null)
+			return null;
+		return getWordPictureSound(m_currentWordEditing);
+	}
+	
+	public String getAbsImageFilePath(String wordText)
+	{
+		File currentdir = new File(".");
+		String imageDir, absImageDir = null;
+		
+		try {
+			imageDir = AAConfig.getGraphicsResourceDir() + "/";
+			absImageDir = currentdir.getCanonicalPath() + "/" + imageDir + "/";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (absImageDir != null)
+			return absImageDir + wordText + ".jpg";
+		else
+			return null;
+	}
+	
+	public String getAbsSoundFilePath(String wordText)
+	{
+		File currentdir = new File(".");
+		String soundDir, absSoundDir = null;
+		
+		try {
+			soundDir = AAConfig.getSoundResourceDir() + "/";
+			absSoundDir = currentdir.getCanonicalPath() + "/" + soundDir + "/";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (absSoundDir != null)
+			return absSoundDir + wordText + ".wav";
+		else
+			return null;
 	}
 }
