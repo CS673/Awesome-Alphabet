@@ -120,7 +120,28 @@ public class Alphabet extends Observable {
 		return m_word_cache.listIterator();
 	}
 	
-	
+	public Iterator<String> GetWordCacheIterator(String regex)
+	{
+		Iterator<Letter> iter_letter = GetIterator();
+		Iterator<WordPictureSound> iter_wps;
+		WordPictureSound wps;
+		
+		/* Flush existing cache */
+		while(!m_word_cache.isEmpty())
+			m_word_cache.remove(0);
+		
+		/* Populate list again */
+		while (iter_letter.hasNext()) {
+			Letter l = iter_letter.next();
+			iter_wps = l.GetIterator();
+			while (iter_wps.hasNext()) {
+				wps = iter_wps.next();
+				if (wps.GetWordString().matches(regex))
+					m_word_cache.add(wps.GetWordString());
+			}
+		}
+		return m_word_cache.listIterator();
+	}
 	
 	/**
 	 * Sets the letter selection.

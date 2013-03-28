@@ -1,13 +1,9 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.*;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.Icon;
+
+import org.apache.log4j.Logger;
 
 
 /**
@@ -28,6 +24,7 @@ public class Letter extends Observable implements Observer {
 	private enum Sound_Type {NONE, WPS, LETTER, PHONIC};
 	private Sound_Type curr_sound = Sound_Type.NONE;
 	private ThemeManager m_themeMgr;
+	protected static Logger log = Logger.getLogger(Letter.class);
 	
 	
 	/**
@@ -86,6 +83,7 @@ public class Letter extends Observable implements Observer {
 	 * @param theme        The theme.
 	 */
 	public void addResource(String imageName, String soundName, String wordText, Theme theme) {
+		log.info("Vivek: addResource(): word=" + wordText + " image=" + imageName + " sound="+ soundName + " theme=" + theme.getThemeName());
 		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme));
 		if(m_index < 0)
 			nextExample();
@@ -138,6 +136,7 @@ public class Letter extends Observable implements Observer {
 		WordPictureSound wps = getWPSData(m_index);
 		if (wps == null)
 			return null;
+		log.info("Vivek: getIcon(): word=" + wps.GetWordString());
 		return wps.GetWordImage(width, height);
 	}
 
@@ -152,6 +151,7 @@ public class Letter extends Observable implements Observer {
 		Theme curTheme = (m_themeMgr == null) ? null : m_themeMgr.getCurrentTheme();
 		Theme theme;
 		
+		log.info("Vivek: nextExample(): iWpsSize=" + iWpsSize + " m_index=" + m_index + " curTheme=" + curTheme);
 		setChanged();
 		
 		//If there are no words for the current letter
@@ -193,6 +193,7 @@ public class Letter extends Observable implements Observer {
 			}
 		} while(theme != curTheme); //While the word is not part of the current theme
 		
+		log.info("Vivek: nextExample() end: m_index=" + m_index);
 		notifyObservers(this);
 	}
 
@@ -251,7 +252,6 @@ public class Letter extends Observable implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
 		if(o == null)
 			return;
 		else if(o == m_themeMgr)
@@ -264,8 +264,20 @@ public class Letter extends Observable implements Observer {
 	}
 	
 	public int removeResource(WordPictureSound wps) {
-		// Do I need to do more cleanup here?
+		boolean reset_index = false;
+		
+		/* If current word is being deleted, reset the index */
+		log.info("remove word=" + wps.GetWordString() + " current word=" + getWord());
+		if (wps.GetWordString().equals(getWord())) {
+			reset_index = true;
+		}
+		
 		m_wps.remove(wps);
+		
+		if (reset_index == true) {
+			m_index = -1;
+			nextExample();
+		}
 		return 0;
 	}
 }
