@@ -1,6 +1,9 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 import edu.bu.cs673.AwesomeAlphabet.model.GameSound;
 import static org.junit.Assert.*;
@@ -15,19 +18,21 @@ import static org.junit.Assert.*;
 public class GameSoundTest {
 	/**
 	 * Run the GameSound(String) constructor test.
-	 *
+	 * Verify that the constructor creates an object
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:38 AM
 	 */
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
 	@Test
-	public void testGameSound_1()
+	public void testGameSoundConstructor()
 		throws Exception {
-		String soundfilepath = "";
+		String soundfilepath = "testSoundPath";
 
 		GameSound result = new GameSound(soundfilepath);
 
-		// add additional test code here
 		assertNotNull(result);
 	}
 
@@ -39,13 +44,16 @@ public class GameSoundTest {
 	 * @generatedBy CodePro at 2/22/13 1:38 AM
 	 */
 	@Test
-	public void testPlaySound_1()
-		throws Exception {
+	public void testPlaySoundForInvalidParameter()throws Exception {
 		GameSound fixture = new GameSound("");
 
+		//TODO modify the code to have this error thrown? It's currently being caught and written to the log
+		
+		//exception.expect(UnsupportedAudioFileException.class);  
+		
+		
 		fixture.PlaySound();
 
-		// add additional test code here
 	}
 
 	/**
@@ -56,13 +64,14 @@ public class GameSoundTest {
 	 * @generatedBy CodePro at 2/22/13 1:38 AM
 	 */
 	@Test
-	public void testPlaySound_2()
-		throws Exception {
-		GameSound fixture = new GameSound("");
+	public void testPlaySoundInvalidSoundFile()	throws Exception {
+		
+		GameSound fixture = new GameSound("testSound");
 
+		exception.expect(NullPointerException.class);
+		
 		fixture.PlaySound();
 
-		// add additional test code here
 	}
 
 	/**

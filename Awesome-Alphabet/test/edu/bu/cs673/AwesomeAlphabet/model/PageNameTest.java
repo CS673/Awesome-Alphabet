@@ -15,13 +15,13 @@ import static org.junit.Assert.*;
 public class PageNameTest {
 	/**
 	 * Run the String toString() method test.
-	 *
+	 * Verify the method returns the string AlphabetPage
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
-	public void testToString_1()
+	public void testToStringAlphabetPage()
 		throws Exception {
 		PageName fixture = PageName.AlphabetPage;
 
@@ -31,6 +31,38 @@ public class PageNameTest {
 		assertEquals("AlphabetPage", result);
 	}
 
+	/**
+	 * Run the String toString() method test.
+	 * Verify the method returns the string TitlePage
+	 * @throws Exception
+	 *
+	 * @generatedBy CodePro at 2/22/13 1:54 AM
+	 */
+	@Test
+	public void testToStringTitlePage()
+		throws Exception {
+		PageName fixture = PageName.TitlePage;
+
+		String result = fixture.toString();
+
+		assertEquals("TitlePage", result);
+	}
+	/**
+	 * Run the String toString() method test.
+	 * Verify the method returns the string LetterPage
+	 * @throws Exception
+	 *
+	 * @generatedBy CodePro at 2/22/13 1:54 AM
+	 */
+	@Test
+	public void testToStringLetterPage()
+		throws Exception {
+		PageName fixture = PageName.LetterPage;
+
+		String result = fixture.toString();
+
+		assertEquals("LetterPage", result);
+	}
 	/**
 	 * Perform pre-test initialization.
 	 *
