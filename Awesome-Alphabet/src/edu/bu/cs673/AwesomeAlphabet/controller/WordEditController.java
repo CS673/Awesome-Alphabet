@@ -44,9 +44,9 @@ public class WordEditController extends PageController {
 		GoToPage(PageName.WPSPage);
 	}
 	
-	public void SaveNewWord(String wordText, String imageFile, String soundFile, String themeName) {
+	public void SaveNewWord(String wordText, char letter_c, String imageFile, String soundFile, String themeName) {
 		// TODO: m_model.commit();
-		m_model.addNewWord(wordText, imageFile, soundFile, themeName);
+		m_model.addNewWord(wordText, letter_c, imageFile, soundFile, themeName);
 		GoToPage(PageName.WPSPage);
 	}
 	
@@ -70,6 +70,10 @@ public class WordEditController extends PageController {
 	public String getAbsImageFilePath(String wordText)
 	{
 		return m_model.getAbsImageFilePath(wordText);
+	}
+
+	public int getLetterIndex(char wordLetter) {
+		return m_model.GetLetterIndex(wordLetter);
 	}
 
 }

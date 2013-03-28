@@ -72,7 +72,7 @@ public class Alphabet extends Observable {
 	 * @return    The index of the letter in the array or
 	 *            -1 if the letter is invalid.
 	 */
-	private int GetLetterIndex(char c)
+	public int GetLetterIndex(char c)
 	{
 		char cTemp = Character.toLowerCase(c);
 		
@@ -330,10 +330,8 @@ public class Alphabet extends Observable {
 	 * @return 0 on success. Failure otherwise. 
 	 */
 	 
-	public int addNewWord(String wordText, String imageName, String soundName, String themeName) {
-		/* TODO: Let view pass the char instead of taking first char as letter */
-		char letter_c = wordText.charAt(0);
-		int letter_index = GetLetterIndex(letter_c);
+	public int addNewWord(String wordText, char associatedLetter, String imageName, String soundName, String themeName) {
+		int letter_index = GetLetterIndex(associatedLetter);
 		Letter letter = m_letters[letter_index];
 		WordPictureSound wps;
 		
@@ -346,9 +344,9 @@ public class Alphabet extends Observable {
 		AAConfig.addSoundResource(soundName, wordText + ".wav");
 		AAConfig.addImageResource(imageName, wordText + ".jpg");
 				
-		log.info("Add word word=" + wordText + " letter=" + letter_c + " image=" + wordText + ".jpg" + " sound=" + wordText + ".wav" + " theme=" + themeName);
-		m_db.addWord(wordText, wordText + ".jpg", wordText + ".wav", letter_c, themeName);
-		AAConfig.addWordToIndex(letter_c, wordText, themeName);
+		log.info("Add word word=" + wordText + " letter=" + associatedLetter + " image=" + wordText + ".jpg" + " sound=" + wordText + ".wav" + " theme=" + themeName);
+		m_db.addWord(wordText, wordText + ".jpg", wordText + ".wav", associatedLetter, themeName);
+		AAConfig.addWordToIndex(associatedLetter, wordText, themeName);
 		
 		letter.addResource(wordText + ".jpg", wordText + ".wav", wordText, m_themeMgr.getTheme(themeName));
 		return 0;
@@ -419,7 +417,7 @@ public class Alphabet extends Observable {
 			AAConfig.copy_file(srcImageFile, imageDir +"temp.jpg");
 		
 			deleteWord(old_wps.GetWordString());
-			addNewWord(wordText, absImageDir + "temp.jpg", absSoundDir + "temp.wav", themeName);
+			addNewWord(wordText, old_wps.getWordLetter(), absImageDir + "temp.jpg", absSoundDir + "temp.wav", themeName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

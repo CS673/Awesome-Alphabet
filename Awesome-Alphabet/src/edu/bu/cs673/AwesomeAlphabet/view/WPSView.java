@@ -29,11 +29,6 @@ public class WPSView extends PageView {
 	private DefaultListModel m_wordModel = new DefaultListModel();
 	private JTextField m_textField = new JTextField();
 	
-	private String[] letters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
-			"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
-	};
-	private JComboBox m_letterChoice = new JComboBox(letters);
-
 	private WPSController m_controller;
 	static Logger log = Logger.getLogger(WPSView.class);
 
@@ -85,14 +80,6 @@ public class WPSView extends PageView {
 		c.gridy = 2;
 		c.gridwidth = 2;
 		centerPanel.add(scroll, c);
-		
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		centerPanel.add(new JLabel("Associated Letter:"), c);
-		
-		c.gridx = 1;
-		centerPanel.add(m_letterChoice, c);
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(backgroundColor);
