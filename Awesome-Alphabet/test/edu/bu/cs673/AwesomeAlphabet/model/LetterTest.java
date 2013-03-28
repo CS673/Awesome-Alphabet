@@ -1,10 +1,13 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
+
+import org.easymock.EasyMock;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -18,63 +21,58 @@ import static org.junit.Assert.*;
 public class LetterTest {
 	/**
 	 * Run the Letter(char) constructor test.
-	 *
+	 * Verify a Letter object is created
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testLetter_1()
-		throws Exception {
-		char cLetter = '';
+	public void testLetterObjectIsCreated()	throws Exception {
+		char cLetter = 'a';
 
 		Letter result = new Letter(cLetter, new ThemeManager());
 
 		// add additional test code here
 		assertNotNull(result);
-		assertEquals(null, result.getWord());
+		/*assertEquals(null, result.getWord());
 		assertEquals('', result.GetUppercaseLetter());
 		assertEquals('', result.GetLetterAsChar());
 		assertEquals(false, result.hasChanged());
-		assertEquals(0, result.countObservers());
+		assertEquals(0, result.countObservers());*/
 	}
 
 	/**
 	 * Run the char GetLetterAsChar() method test.
-	 *
+	 * Verify the method returns a letter as a lower case character
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetLetterAsChar_1()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
+	public void testGetLetterAsChar() throws Exception {
+		
+		Letter fixture = new Letter('a', new ThemeManager());
 
 		char result = fixture.GetLetterAsChar();
 
-		// add additional test code here
-		assertEquals('', result);
+		assertEquals('a', result);
 	}
 
 	/**
 	 * Run the char GetUppercaseLetter() method test.
-	 *
+	 * Verify the method returns a letter as an upper case character
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetUppercaseLetter_1()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
-
+	public void testGetUppercaseLetter() throws Exception {
+		
+		Letter fixture = new Letter('b', new ThemeManager());
+		
 		char result = fixture.GetUppercaseLetter();
 
-		// add additional test code here
-		assertEquals('', result);
+		assertEquals('B', result);
 	}
 
 	/**
@@ -85,37 +83,35 @@ public class LetterTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testAddResource_1()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
-		String imageName = "";
-		String soundName = "";
-		String wordText = "";
+	public void testAddResource() throws Exception {
+		
+		Letter fixture = new Letter('f', new ThemeManager());
+		
+		String imageName = "frog.jpg";
+		String soundName = "frog.wav";
+		String wordText = "Frog";
 
 		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
 
-		// add additional test code here
 	}
 
 	/**
 	 * Run the Icon getIcon(int,int) method test.
-	 *
+	 * Verify the method returns null for invalid value
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetIcon_1()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
+	public void testGetIconForInvalidValue() throws Exception {
+		
+		Letter fixture = new Letter('c', new ThemeManager());
+	
 		int width = 1;
 		int height = 1;
 
 		Icon result = fixture.getIcon(width, height);
 
-		// add additional test code here
 		assertEquals(null, result);
 	}
 
@@ -127,16 +123,39 @@ public class LetterTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetIcon_2()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
+	public void testGetIconForValidValue()	throws Exception {
+		
+		Letter fixture = new Letter('c', new ThemeManager());
+		
+		String imageName = "frog.jpg";
+		String soundName = "frog.wav";
+		String wordText = "Frog";
+
+		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		
 		int width = 1;
 		int height = 1;
 
-		Icon result = fixture.getIcon(width, height);
+		
+		ImageIcon result = (ImageIcon) fixture.getIcon(width, height);
 
-		// add additional test code here
+		assertNotNull(result);
+	}
+
+	/**
+	 * Run the String getWord() method test.
+	 *
+	 * @throws Exception
+	 *
+	 * @generatedBy CodePro at 2/22/13 1:46 AM
+	 */
+	@Test
+	public void testGetWordForInvalidValue()	throws Exception {
+		
+		Letter fixture = new Letter('t', new ThemeManager());
+
+		String result = fixture.getWord();
+
 		assertEquals(null, result);
 	}
 
@@ -148,34 +167,19 @@ public class LetterTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetWord_1()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
+	public void testGetWordForValidValue()	throws Exception {
+		
+		Letter fixture = new Letter('c', new ThemeManager());
+		
+		String imageName = "frog.jpg";
+		String soundName = "frog.wav";
+		String wordText = "Frog";
+
+		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
 
 		String result = fixture.getWord();
 
-		// add additional test code here
-		assertEquals(null, result);
-	}
-
-	/**
-	 * Run the String getWord() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testGetWord_2()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
-
-		String result = fixture.getWord();
-
-		// add additional test code here
-		assertEquals(null, result);
+		assertEquals(wordText, result);
 	}
 
 	/**
@@ -186,14 +190,13 @@ public class LetterTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testNextExample_1()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
-
+	public void testNextExampleForInvalidValue()	throws Exception {
+		
+		Letter fixture = new Letter('t', new ThemeManager());
+		
+		// TODO write review code and modify test case, not quite sure how to verify this test
 		fixture.nextExample();
 
-		// add additional test code here
 	}
 
 	/**
@@ -204,14 +207,14 @@ public class LetterTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testNextExample_2()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
+	public void testNextExampleForValidValue()	throws Exception {
+		
+		Letter fixture = new Letter('t', new ThemeManager());
 		fixture.addObserver(new AlphabetPageView(""));
 
 		fixture.nextExample();
 
-		// add additional test code here
+		// TODO write review code and modify test case, not quite sure how to verify this test
 	}
 
 	/**
@@ -222,10 +225,9 @@ public class LetterTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testPlaySound_1()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
+	public void testPlaySoundForInvalidValue() throws Exception {
+		Letter fixture = new Letter('t', new ThemeManager());
+		//fixture.addObserver(new AlphabetPageView(""));
 
 		fixture.playSound();
 
@@ -240,11 +242,14 @@ public class LetterTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testPlaySound_2()
-		throws Exception {
-		Letter fixture = new Letter('', new ThemeManager());
-		fixture.addObserver(new AlphabetPageView(""));
+	public void testPlaySoundForValidValue() throws Exception {
+		Letter fixture = new Letter('f', new ThemeManager());
+		
+		String imageName = "frog.jpg";
+		String soundName = "frog.wav";
+		String wordText = "Frog";
 
+		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
 		fixture.playSound();
 
 		// add additional test code here

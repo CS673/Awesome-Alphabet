@@ -1,7 +1,10 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 
 import javax.swing.ImageIcon;
+
+import org.easymock.EasyMock;
 import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 import edu.bu.cs673.AwesomeAlphabet.model.WordPictureSound;
 import static org.junit.Assert.*;
@@ -14,6 +17,10 @@ import static org.junit.Assert.*;
  * @version $Revision: 1.0 $
  */
 public class WordPictureSoundTest {
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
 	/**
 	 * Run the WordPictureSound(String,String,String) constructor test.
 	 *
@@ -22,37 +29,49 @@ public class WordPictureSoundTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testWordPictureSound_1()
+	public void testWordPictureSoundObjectIsCreated()
 		throws Exception {
-		String word = "";
-		String imageFile = "";
-		String soundFile = "";
+		String word = "TestWord";
+		String imageFile = "bicycle.jpg";
+		String soundFile = "testSound";
 		char letter = 'c';
+	
+		Theme themeMock = EasyMock.createMock(Theme.class);
+		
+		
+		WordPictureSound result = new WordPictureSound(letter, word, imageFile, soundFile, themeMock);
 
-		WordPictureSound result = new WordPictureSound(letter, word, imageFile, soundFile, new Theme(ThemeManager.DEFAULT_THEME_NAME));
-
-		// add additional test code here
 		assertNotNull(result);
-		assertEquals("", result.GetWordString());
+		
 	}
 
 	/**
 	 * Run the ImageIcon GetWordImage(int,int) method test.
-	 *
+	 * Verify that the method returns null when the image object is null
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetWordImage_1()
-		throws Exception {
-		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
+	public void testGetWordImageForBlankImage()	throws Exception {
+		String word = "testWord";
+		String imageFile = "testImage";
+		String soundFile = "testSound";
+		char letter = 'c';
+		
+		Theme theme = new Theme(ThemeManager.DEFAULT_THEME_NAME);
+		
+		WordPictureSound fixture = new WordPictureSound(letter, word, imageFile, soundFile, theme);
+		
 		int width = 1;
 		int height = 1;
-
+		
+		//exception.expect(IllegalArgumentException.class);
+		//exception.expectMessage("input == null!");
+		
 		ImageIcon result = fixture.GetWordImage(width, height);
 
-		// add additional test code here
+		
 		assertEquals(null, result);
 	}
 
@@ -64,16 +83,22 @@ public class WordPictureSoundTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetWordImage_2()
-		throws Exception {
-		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
+	public void testGetWordImagePassesForValidImageValue() throws Exception {
+		
+		String word = "TestWord";
+		String imageFile = "bicycle.jpg";
+		String soundFile = "testSound";
+		char letter = 'c';
+		Theme theme = new Theme(ThemeManager.DEFAULT_THEME_NAME);
+		
+		WordPictureSound fixture = new WordPictureSound(letter, word, imageFile, soundFile, theme);
+		
 		int width = 1;
 		int height = 1;
 
 		ImageIcon result = fixture.GetWordImage(width, height);
 
-		// add additional test code here
-		assertEquals(null, result);
+		assertNotNull(result);
 	}
 
 	/**
@@ -84,31 +109,43 @@ public class WordPictureSoundTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetWordString_1()
-		throws Exception {
-		WordPictureSound fixture = new WordPictureSound('c', "", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
+	public void testGetWordStringPassesForValidWordValue() throws Exception {
+		
+		String word = "TestWord";
+		String imageFile = "bicycle.jpg";
+		String soundFile = "testSound";
+		char letter = 'c';
+		Theme theme = new Theme(ThemeManager.DEFAULT_THEME_NAME);
+		
+		WordPictureSound fixture = new WordPictureSound(letter, word, imageFile, soundFile, theme);
 
 		String result = fixture.GetWordString();
 
 		// add additional test code here
-		assertEquals("", result);
+		assertEquals(word, result);
 	}
 
 	/**
 	 * Run the void PlaySound() method test.
-	 *
+	 * Test that the provided sound file is played.
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testPlaySound_1()
-		throws Exception {
-		WordPictureSound fixture = new WordPictureSound('c',"", "", "", new Theme(ThemeManager.DEFAULT_THEME_NAME));
-
-		fixture.PlaySound();
-
-		// add additional test code here
+	public void testPlaySound() throws Exception {
+		String word = "TestWord";
+		String imageFile = "bicycle.jpg";
+		String soundFile = "frog.wav";
+		char letter = 'c';
+		
+		
+		Theme themeMock = EasyMock.createMock(Theme.class);
+				
+		WordPictureSound fixture = new WordPictureSound(letter, word, imageFile, soundFile, themeMock);
+		fixture.PlaySound(); // note: cannot verify that the gameSound method got called since it is being call via a private variable
+		
+		
 	}
 
 	/**
