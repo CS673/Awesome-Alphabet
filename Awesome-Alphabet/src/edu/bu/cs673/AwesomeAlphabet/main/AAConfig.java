@@ -8,6 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import org.apache.log4j.Logger;
+
+import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
+
 public class AAConfig {
 
 	private static final String CONFIG_PROPS = "config.properties";
@@ -24,6 +28,7 @@ public class AAConfig {
 	private static String letterPropsName;
 	
 	private static Properties letterProps = null;
+	protected static Logger log = Logger.getLogger(AAConfig.class);
 	
 	static {
 		InputStream stream = loader.getResourceAsStream(CONFIG_PROPS);
@@ -83,11 +88,30 @@ public class AAConfig {
 		InputStream inStream = null;
 		OutputStream outStream = null;
 		
+		File currentdir = new File(".");
+		try {
+			log.info("CWD is:" + currentdir.getCanonicalPath());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			log.info("copy: " + srcFileName + " to " + destFileName);
+		
     	try {
     		 
     		File sfile = new File(srcFileName);
-    		File dfile = new File(destFileName);
- 
+    		File dfile = new File(currentdir.getCanonicalPath() + "/" + destFileName);
+    		
+    		/* Create dest file */
+    		if (!dfile.exists()) {
+    			log.info("Trying to create file:" + dfile.getPath());
+    			if (!dfile.getParentFile().exists()) {
+    				log.info("Parent dir does not exist. Creating:"+ dfile.getParentFile().getPath());
+    				dfile.getParentFile().mkdirs();
+    			} else 
+    				log.info("Parent file (dir) exists");
+    			dfile.createNewFile();
+    		}
+    		
     		inStream = new FileInputStream(sfile);
     		outStream = new FileOutputStream(dfile);
  

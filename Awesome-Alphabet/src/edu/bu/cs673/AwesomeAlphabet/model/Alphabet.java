@@ -325,7 +325,9 @@ public class Alphabet extends Observable {
 	 * @return 0 on success. Failure otherwise. 
 	 */
 	 
-	public int addNewWord(char letter_c, String wordText, String imageName, String soundName, Theme theme) {
+	public int addNewWord(String wordText, String imageName, String soundName, String themeName) {
+		/* TODO: Let view pass the char instead of taking first char as letter */
+		char letter_c = wordText.charAt(0);
 		int letter_index = GetLetterIndex(letter_c);
 		Letter letter = m_letters[letter_index];
 		WordPictureSound wps;
@@ -343,10 +345,11 @@ public class Alphabet extends Observable {
 		soundDir = AAConfig.getSoundResourceDir();
 		imageDir = AAConfig.getGraphicsResourceDir();
 		
-		m_db.addWord(wordText, imageDir + imageName, soundDir + soundName, letter_c, theme.getThemeName());
-		//AAConfig.addWordToIndex(letter_c, wordText, theme.getThemeName());
+		log.info("Add word word=" + wordText + " letter=" + letter_c + " image=" + wordText + ".jpg" + " sound=" + wordText + ".wav" + " theme=" + themeName);
+		m_db.addWord(wordText, wordText + ".jpg", wordText + ".wav", letter_c, themeName);
+		//AAConfig.addWordToIndex(letter_c, wordText, themeName);
 		
-		letter.addResource(imageName, soundName, wordText, theme);
+		letter.addResource(wordText + ".jpg", wordText + ".wav", wordText, m_themeMgr.getTheme(themeName));
 		return 0;
 	}
 	
@@ -404,7 +407,7 @@ public class Alphabet extends Observable {
 		AAConfig.copy_file(imageName, imageDir +"temp.jpg");
 		
 		deleteWord(oldWordText);
-		addNewWord(letter_c, wordText, imageDir + "temp.jpg", soundDir + "temp.wav", theme);
+		addNewWord(wordText, imageDir + "temp.jpg", soundDir + "temp.wav", theme.getThemeName());
 		
 		return 0;
 	}

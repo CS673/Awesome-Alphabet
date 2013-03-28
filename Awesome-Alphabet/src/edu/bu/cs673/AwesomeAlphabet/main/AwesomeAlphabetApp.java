@@ -41,7 +41,12 @@ public class AwesomeAlphabetApp {
 	 */
 	public static void main(String[] args)  {
 		BasicConfigurator.configure();
-
+		String workingDir = System.getProperty("user.dir");
+		log.info("CWD is:" + workingDir);
+		System.setProperty( "user.dir", workingDir + "/src/" );
+		workingDir = System.getProperty("user.dir");
+		log.info("CWD is:" + workingDir);
+		
 		MainWindow mainWindow = new MainWindow();
 		
 		log.info("Creating the Models");
@@ -65,7 +70,7 @@ public class AwesomeAlphabetApp {
 		//themePageView.SetController(new ThemeController(mainWindow, themePageView, themeMgr, alphabet, AAConfig.getLetterProps()));
 		themePageView.SetController(new ThemeController(mainWindow, themePageView, themeMgr, alphabet));
 		wpsView.SetController(new WPSController(mainWindow, wpsView, alphabet));
-		wordEditView.SetController(new WordEditController(mainWindow, wordEditView, themeMgr));
+		wordEditView.SetController(new WordEditController(mainWindow, wordEditView, themeMgr, alphabet));
 		
 		log.info("Registering views with the main controlling window"); 
 		mainWindow.registerPage(titlePageView);
