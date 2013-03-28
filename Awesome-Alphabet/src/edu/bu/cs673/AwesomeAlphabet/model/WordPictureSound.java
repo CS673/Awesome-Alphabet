@@ -3,6 +3,8 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import org.apache.log4j.Logger;
+
 
 
 public class WordPictureSound {
@@ -11,6 +13,7 @@ public class WordPictureSound {
 	private Image m_image;
 	private Theme m_theme;
 	private char m_cLetter;
+	protected static Logger log = Logger.getLogger(WordPictureSound.class);
 
 	
 	public WordPictureSound(char Letter, String word, String imageFile, String soundFile, Theme theme) {
@@ -34,7 +37,9 @@ public class WordPictureSound {
 	}
 	
 	public ImageIcon GetWordImage(int width, int height) {
-		if (m_image == null || width == 0 || height == 0)
+		if (m_image == null)
+			log.info("Vivek:GetWordImage(): m_image is null ");
+		if (m_image == null || width == 0 || height == 0) 
 			return null;
 		return new ImageIcon(m_image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
 	}
