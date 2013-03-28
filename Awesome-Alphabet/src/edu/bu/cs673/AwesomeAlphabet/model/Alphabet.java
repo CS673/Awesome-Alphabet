@@ -126,6 +126,9 @@ public class Alphabet extends Observable {
 		Iterator<WordPictureSound> iter_wps;
 		WordPictureSound wps;
 		
+		if (regex.isEmpty())
+			return GetWordCacheIterator();
+		
 		/* Flush existing cache */
 		while(!m_word_cache.isEmpty())
 			m_word_cache.remove(0);
@@ -136,7 +139,7 @@ public class Alphabet extends Observable {
 			iter_wps = l.GetIterator();
 			while (iter_wps.hasNext()) {
 				wps = iter_wps.next();
-				if (wps.GetWordString().matches(regex))
+				if (wps.GetWordString().startsWith(regex))
 					m_word_cache.add(wps.GetWordString());
 			}
 		}
@@ -409,7 +412,7 @@ public class Alphabet extends Observable {
 	 * @return 0 on success. Failure otherwise. 
 	 */
 	 
-	public int editWord(String wordText, String imageName, String soundName, String themeName) {
+	public int editWord(String wordText, char associated_letter, String imageName, String soundName, String themeName) {
 		WordPictureSound old_wps;
 		String soundDir, imageDir, srcSoundFile, srcImageFile, absSoundDir, absImageDir;
 		File currentdir = new File(".");
@@ -438,7 +441,7 @@ public class Alphabet extends Observable {
 			AAConfig.copy_file(srcImageFile, imageDir +"temp.jpg");
 		
 			deleteWord(old_wps.GetWordString());
-			addNewWord(wordText, old_wps.getWordLetter(), absImageDir + "temp.jpg", absSoundDir + "temp.wav", themeName);
+			addNewWord(wordText, associated_letter, absImageDir + "temp.jpg", absSoundDir + "temp.wav", themeName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

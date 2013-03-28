@@ -50,9 +50,9 @@ public class WordEditController extends PageController {
 		GoToPage(PageName.WPSPage);
 	}
 	
-	public void SaveEditWord(String wordText, String imageFile, String soundFile, String themeName) {
+	public void SaveEditWord(String wordText, char associated_letter, String imageFile, String soundFile, String themeName) {
 		// TODO: m_model.commit();
-		m_model.editWord(wordText, imageFile, soundFile, themeName);
+		m_model.editWord(wordText, associated_letter, imageFile, soundFile, themeName);
 		m_model.unsetCurrentWordEditing();
 		GoToPage(PageName.WPSPage);
 	}
