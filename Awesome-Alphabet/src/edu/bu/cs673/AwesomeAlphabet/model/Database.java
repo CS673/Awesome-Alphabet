@@ -1,18 +1,14 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Struct;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
