@@ -262,7 +262,8 @@ public class Alphabet extends Observable {
 					String themeName = prop.getProperty(propName + "theme");
 					
 					if(themeName == null) {
-						themeName = "No Theme";
+						//TODO: Get default theme from theme manager
+						themeName = "Default Theme";
 					}
 						
 					if(reload_db && !m_themeMgr.addTheme(themeName))
