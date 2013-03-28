@@ -126,6 +126,9 @@ public class Alphabet extends Observable {
 		Iterator<WordPictureSound> iter_wps;
 		WordPictureSound wps;
 		
+		if (regex.isEmpty())
+			return GetWordCacheIterator();
+		
 		/* Flush existing cache */
 		while(!m_word_cache.isEmpty())
 			m_word_cache.remove(0);
@@ -136,7 +139,7 @@ public class Alphabet extends Observable {
 			iter_wps = l.GetIterator();
 			while (iter_wps.hasNext()) {
 				wps = iter_wps.next();
-				if (wps.GetWordString().matches(regex))
+				if (wps.GetWordString().startsWith(regex))
 					m_word_cache.add(wps.GetWordString());
 			}
 		}
