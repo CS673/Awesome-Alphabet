@@ -18,8 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.WordEditController;
+import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.WordPictureSound;
 
 public class WordEditView extends PageView {
@@ -33,7 +36,8 @@ public class WordEditView extends PageView {
 	private String[] letters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
 			"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 	};
-	private JComboBox m_letterChoice = new JComboBox(letters);	
+	private JComboBox m_letterChoice = new JComboBox(letters);
+	protected static Logger log = Logger.getLogger(WordEditView.class);
 	
 	public WordEditView(String pageName) {
 		super(pageName);
@@ -157,7 +161,7 @@ public class WordEditView extends PageView {
 				m_controller.SaveNewWord(m_wordField.getText(), letter_c, m_imageFileField.getText(),
 					m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
 			} else {
-				m_controller.SaveEditWord(m_wordField.getText(), m_imageFileField.getText(),
+				m_controller.SaveEditWord(m_wordField.getText(), letter_c, m_imageFileField.getText(),
 						m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
 			}
 		}
@@ -171,6 +175,8 @@ public class WordEditView extends PageView {
 
 	@Override
 	public void activated() {
+		int i;
+		
 		if (m_controller != null) {
 			Iterator<String> themes = m_controller.getThemeNamesIterator();
 			WordPictureSound wps = m_controller.getCurrentWordEditing();
@@ -185,7 +191,13 @@ public class WordEditView extends PageView {
 			
 			if (wps != null) {
 				m_wordField.setText(wps.GetWordString());
-				m_themeChoice.setName(wps.getTheme().getThemeName());
+				log.info("word theme is:" + wps.getTheme().getThemeName());
+				
+				for (i = 0; i < m_themeChoice.getItemCount(); i++) {
+					if (m_themeChoice.getItemAt(i).toString().equals(wps.getTheme().getThemeName())) {
+						m_themeChoice.setSelectedIndex(i);
+					}
+				}
 				m_letterChoice.setSelectedIndex(m_controller.getLetterIndex(wps.getWordLetter()));
 				absImageFilePath = m_controller.getAbsImageFilePath(wps.GetWordString());
 				absSoundFilePath = m_controller.getAbsSoundFilePath(wps.GetWordString());
