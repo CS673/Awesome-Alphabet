@@ -187,11 +187,28 @@ public class Database {
 		
 		try
 		{
+			int iThemeId = getThemeId(themeName);
+			if(iThemeId < 0)
+				return false;
+         
+			//Delete Theme
 			PreparedStatement prep = m_con.prepareStatement(
-					"DELETE FROM Theme WHERE name = ?;");
-			prep.setString(1, themeName);
-			
-			return prep.executeUpdate() > 0;
+					"DELETE FROM Theme WHERE id = ?;");
+			prep.setInt(1, iThemeId);
+         
+			if(prep.executeUpdate() <= 0)
+				return false;
+         
+			//Update foreign key references in Word table.
+			//This is a temporary fix until we find out how
+			//to enable automatic foreign key / referential 
+			//integrity enformcement by the database.
+			prep = m_con.prepareStatement(
+					"UPDATE Word SET ThemeId = ? WHERE ThemeId = ?;");
+			prep.setInt(1, m_iDefThemeId);
+			prep.setInt(2, iThemeId);
+			prep.executeUpdate();
+			return true;
 		}
 		catch(Exception ex)
 		{

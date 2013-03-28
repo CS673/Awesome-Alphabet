@@ -1,4 +1,5 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -254,18 +255,46 @@ public class Letter extends Observable implements Observer {
 		}
 	}
 
+	
+	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o == null)
-			return;
-		else if(o == m_themeMgr)
-		{
-			//There was a change to the theme model.
-			//The current theme was possibly changed.
-			m_index = -1;
-			nextExample();
-		}
+
+	    if(o == null)
+	        return;
+	    else if(o == m_themeMgr)
+	    {
+	        //There was a change to the theme model.
+	        //The current theme was possibly changed
+	        //or a theme may have been deleted.
+	       
+	        Iterator<WordPictureSound> it = m_wps.iterator();
+	        WordPictureSound wps;
+	        Theme defaultTheme = m_themeMgr.getTheme(Theme.DEFAULT_THEME_NAME);
+	        Theme theme;
+	       
+	        //If theme was deleted, set WPS theme references to the default
+	        //theme if they originally pointed to deleted theme object.
+	        if(defaultTheme != null)
+	        {
+	            while(it.hasNext())
+	            {
+	                wps = it.next();
+	                theme = wps.getTheme();
+	               
+	                if(m_themeMgr.hasTheme(theme.getThemeName()) == false)
+	                    wps.changeTheme(defaultTheme);
+	            }
+	        }
+	       
+	        //Get another word example since existing word may
+	        //no longer be valid for current theme selection.
+	        m_index = -1;
+	        nextExample();
+	    }
 	}
+	
+	
 	
 	public int removeResource(WordPictureSound wps) {
 		boolean reset_index = false;
