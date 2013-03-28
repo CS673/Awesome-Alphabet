@@ -42,8 +42,12 @@ public class WPSController extends PageController {
 	}
 
 	public void SubstringSearch(String newText) {
-		// TODO: Iterator<String> i = model.searchForWords(newText);
 		Iterator<String> i = null;
+		if (newText.length() == 0) {
+			i = m_model.GetWordCacheIterator();
+		} else {
+			i = m_model.GetWordCacheIterator(".*" + newText + ".*");
+		}
 		m_view.updateWordList(i);
 	}
 
