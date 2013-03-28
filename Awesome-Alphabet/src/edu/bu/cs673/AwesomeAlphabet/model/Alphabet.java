@@ -1,6 +1,8 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Properties;
 
@@ -26,6 +28,13 @@ public class Alphabet extends Observable {
 	public int m_iCurLetterIndex;
 	private GameSound m_alphabetsong;
 	private ThemeManager m_themeMgr;
+	private Database m_db;
+	/* 
+	 * A cache of all word strings. This will not be in sync with any changes to model.
+	 * So every time it should be flushed and populated fresh to get the latest
+	 * list
+	 */
+	private List<String> m_word_cache = new LinkedList<String>();
 	
 	
 	/**
@@ -43,6 +52,8 @@ public class Alphabet extends Observable {
 	 */
 	public void Initialize()
 	{
+		m_db = Database.getDatabaseInstance();
+
 		for (int i=0; i<AA_ALPHABET_SIZE; i++) {
 			if (m_letters[i] != null)
 				m_letters[i].removeAllEntries();
@@ -77,6 +88,33 @@ public class Alphabet extends Observable {
 	public Iterator<Letter> GetIterator()
 	{
 		return Arrays.asList(m_letters).iterator();
+	}
+	
+	/**
+	 * Gets an iterator to the list of String objects.
+	 * 
+	 * @return   An iterator to the list of String objects. 
+	 */
+	public Iterator<String> GetWordCacheIterator()
+	{
+		Iterator<Letter> iter_letter = GetIterator();
+		Iterator<WordPictureSound> iter_wps;
+		WordPictureSound wps;
+		
+		/* Flush existing cache */
+		while(!m_word_cache.isEmpty())
+			m_word_cache.remove(0);
+		
+		/* Populate list again */
+		while (iter_letter.hasNext()) {
+			Letter l = iter_letter.next();
+			iter_wps = l.GetIterator();
+			while (iter_wps.hasNext()) {
+				wps = iter_wps.next();
+				m_word_cache.add(wps.GetWordString());
+			}
+		}
+		return m_word_cache.listIterator();
 	}
 	
 	
@@ -169,11 +207,21 @@ public class Alphabet extends Observable {
 	 */
 	public void LoadResources(Properties prop) {
 		
-		if(m_themeMgr == null)
-			return;
+		//if(m_themeMgr == null)
+		//	return;
+		boolean reload_db = true;
+		int nr_rows = 0;
 		
+		/* This is a hack to detect if database should be reloaded or not */
+		nr_rows = m_db.getNumberRowsWordTable();
+		log.info("Number of rows in Word Table=" + nr_rows);
+		if (nr_rows > 0)
+			reload_db = false;
+		
+		/* Parse letter.properties and populate database */
 		for (char c = 'a'; c <= 'z'; c++) {
 			Letter letter = m_letters[GetLetterIndex(c)];
+
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
@@ -184,23 +232,26 @@ public class Alphabet extends Observable {
 					String soundName = wordText + ".wav";
 					String themeName = prop.getProperty(propName + "theme");
 					
-					if(themeName == null)
-						letter.addResource(imageName, soundName, wordText,
-								ThemeManager.DEFAULT_THEME);
-					else
-					{
-						if(!m_themeMgr.addTheme(themeName))
-							throw new Exception("Error adding theme.");
-						letter.addResource(imageName, soundName, wordText, 
-								m_themeMgr.getTheme(themeName));
+					if(themeName == null) {
+						themeName = "No Theme";
 					}
+						
+					if(reload_db && !m_themeMgr.addTheme(themeName))
+						throw new Exception("Error adding theme.");
+				
+					
+					if (reload_db && !m_db.addWord(wordText, imageName, soundName, c, themeName))
+						throw new Exception("Error adding word to database.");
+					letter.addResource(imageName, soundName, wordText, 
+								m_themeMgr.getTheme(themeName));
 				} catch (Exception e) {
 					log.error("An exception occurred while loading properties for leter "+c);
 					log.error(e.getMessage());
 					e.printStackTrace();
 				}
 			}
-			// log.info("Add Letter Sound");
+			
+			log.info("Add Letter Sound");
 			try {
 				//String propName = "letter." + c + ".lettersound";
 				//String letterSoundName = prop.getProperty(propName);
@@ -235,8 +286,8 @@ public class Alphabet extends Observable {
 			log.error(e.getMessage());
 			e.printStackTrace();
 		}
-		
 	}
+	
 	public void PlayAlphabetSong() {
 		m_alphabetsong.PlaySound();
 	}
@@ -278,6 +329,7 @@ public class Alphabet extends Observable {
 		int letter_index = GetLetterIndex(letter_c);
 		Letter letter = m_letters[letter_index];
 		WordPictureSound wps;
+		String soundDir, imageDir;
 		
 		//Verify new word does not exist already.
 		wps = getWordPictureSound(wordText);
@@ -287,7 +339,12 @@ public class Alphabet extends Observable {
 		// Add sound and image files to resource dir.
 		AAConfig.addSoundResource(soundName, wordText + ".wav");
 		AAConfig.addImageResource(imageName, wordText + ".jpg");
-		AAConfig.addWordToIndex(letter_c, wordText, theme.getThemeName());
+		
+		soundDir = AAConfig.getSoundResourceDir();
+		imageDir = AAConfig.getGraphicsResourceDir();
+		
+		m_db.addWord(wordText, imageDir + imageName, soundDir + soundName, letter_c, theme.getThemeName());
+		//AAConfig.addWordToIndex(letter_c, wordText, theme.getThemeName());
 		
 		letter.addResource(imageName, soundName, wordText, theme);
 		return 0;
@@ -316,7 +373,8 @@ public class Alphabet extends Observable {
 		// Add sound and image files to resource dir.
 		AAConfig.removeSoundResource(wordText + ".wav");
 		AAConfig.removeImageResource(wordText + ".jpg");
-		AAConfig.removeWordFromIndex(letter_c, wordText);
+		m_db.deleteWord(wordText);
+		//AAConfig.removeWordFromIndex(letter_c, wordText);
 		
 		letter.removeResource(wps);
 		return 0;

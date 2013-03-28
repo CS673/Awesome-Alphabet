@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/hamcrest.jar"/>
+	<classpathentry kind="lib" path="lib/sqlitejdbc-v056.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

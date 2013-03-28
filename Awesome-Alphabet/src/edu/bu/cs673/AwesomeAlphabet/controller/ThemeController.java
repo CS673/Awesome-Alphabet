@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
+import edu.bu.cs673.AwesomeAlphabet.model.Database;
 import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
@@ -20,7 +21,7 @@ public class ThemeController extends PageController {
 	private IThemeControllerView m_view;
 	private ThemeManager m_themeMgr;
 	private Alphabet m_alphabet;
-	private Properties m_letterProp;
+	private Database m_db;
 	
 	/**
 	 * Constructor
@@ -33,14 +34,13 @@ public class ThemeController extends PageController {
 	 * @param alphabet       The alphabet.
 	 */
 	public ThemeController(IPageObserver pageObserver, IThemeControllerView view,
-			               ThemeManager themeMgr, Alphabet alphabet, Properties letterProp) 
+			               ThemeManager themeMgr, Alphabet alphabet) 
 	{
 		super(pageObserver);
 
 		m_view = view;
 		m_themeMgr = themeMgr;
 		m_alphabet = alphabet;
-		m_letterProp = letterProp;
 		
 		themeMgr.addObserver(m_view);
 	}
@@ -79,14 +79,7 @@ public class ThemeController extends PageController {
 		if(m_themeMgr.hasTheme(themeName))
 			return false;
 					
-		if(m_themeMgr.addTheme(themeName))
-		{
-			m_alphabet.Initialize();
-			m_alphabet.LoadResources(m_letterProp);
-			return true;
-		}
-		else
-			return false;
+		return m_themeMgr.addTheme(themeName);
 	}
 	
 	
@@ -102,14 +95,7 @@ public class ThemeController extends PageController {
 		if(m_themeMgr.hasTheme(themeName) == false)
 			return false;
 			
-		if(m_themeMgr.deleteTheme(themeName))
-		{
-			m_alphabet.Initialize();
-			m_alphabet.LoadResources(m_letterProp);
-			return true;
-		}
-		else
-			return false;
+		return m_themeMgr.deleteTheme(themeName);
 	}
 	
 	
