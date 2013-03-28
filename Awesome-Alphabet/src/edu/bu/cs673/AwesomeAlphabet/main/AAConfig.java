@@ -44,9 +44,19 @@ public class AAConfig {
 		}
 	}
 	
-
 	public static InputStream getGraphicsResource(String filename) {
-		return loader.getResourceAsStream(baseDirName + "/" + graphicsSubDir + "/" + filename);
+		InputStream is = null;
+		File currentdir = new File(".");
+		
+	//	is = loader.getResourceAsStream(baseDirName + "/" + graphicsSubDir + "/" + filename);
+		try {
+			String absPath = currentdir.getCanonicalPath() + "/" + baseDirName + "/" + graphicsSubDir + "/" + filename;
+			log.info("Loading resource=" + absPath);
+			File f = new File(absPath);
+			is = new FileInputStream(f);
+		} catch (Exception e) {
+		}
+		return is;
 	}
 	
 	public static String getGraphicsResourceDir() {
@@ -54,7 +64,21 @@ public class AAConfig {
 	}
 
 	public static InputStream getSoundResource(String filename) {
+		
 		return loader.getResourceAsStream(baseDirName + "/" + soundsSubDir + "/" + filename);
+		/*
+		InputStream is = null;
+		File currentdir = new File(".");
+		
+		try {
+			String absPath = currentdir.getCanonicalPath() + "/" + baseDirName + "/" + soundsSubDir + "/" + filename;
+			log.info("Loading resource=" + absPath);
+			File f = new File(absPath);
+			is = new FileInputStream(f);
+		} catch (Exception e) {
+		}
+		return is;
+		*/
 	}
 	
 	public static String getSoundResourceDir() {
@@ -63,10 +87,19 @@ public class AAConfig {
 	
 
 	public static Properties getLetterProps() {
+		File currentdir = new File(".");
+		String absPath;
+		File f;
+		InputStream is;
+		
 		if (letterProps == null) {
 			try {
 				letterProps = new Properties();
-				InputStream is = loader.getResourceAsStream(letterPropsName);
+				absPath = currentdir.getCanonicalPath() + "/" + letterPropsName;
+				//InputStream is = loader.getResourceAsStream(letterPropsName);
+				log.info("Loading resource=" + absPath);
+				f = new File(absPath);
+				is = new FileInputStream(f);
 				letterProps.load(is);
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
