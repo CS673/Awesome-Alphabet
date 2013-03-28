@@ -252,7 +252,6 @@ public class Letter extends Observable implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
 		if(o == null)
 			return;
 		else if(o == m_themeMgr)
@@ -265,8 +264,20 @@ public class Letter extends Observable implements Observer {
 	}
 	
 	public int removeResource(WordPictureSound wps) {
-		// Do I need to do more cleanup here?
+		boolean reset_index = false;
+		
+		/* If current word is being deleted, reset the index */
+		log.info("remove word=" + wps.GetWordString() + " current word=" + getWord());
+		if (wps.GetWordString().equals(getWord())) {
+			reset_index = true;
+		}
+		
 		m_wps.remove(wps);
+		
+		if (reset_index == true) {
+			m_index = -1;
+			nextExample();
+		}
 		return 0;
 	}
 }
