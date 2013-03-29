@@ -57,6 +57,8 @@ public class ThemeController extends PageController {
 		LinkedList<String> themeNames = new LinkedList<String>();
 		Theme theme;
 		
+		themeNames.add(Theme.ALL_THEMES);
+		
 		while(themes.hasNext())
 		{
 			theme = themes.next();
@@ -92,6 +94,10 @@ public class ThemeController extends PageController {
 	 */
 	public boolean deleteTheme(String themeName)
 	{
+		if (themeName.matches(Theme.DEFAULT_THEME_NAME) ||
+				themeName.matches(Theme.ALL_THEMES))
+			return false;
+		
 		if(m_themeMgr.hasTheme(themeName) == false)
 			return false;
 			
@@ -109,6 +115,10 @@ public class ThemeController extends PageController {
 	 */
 	public boolean changeThemeName(String oldThemeName, String newThemeName)
 	{
+		if (newThemeName.matches(Theme.DEFAULT_THEME_NAME) ||
+				newThemeName.matches(Theme.ALL_THEMES))
+			return false;
+
 		return m_themeMgr.changeThemeName(oldThemeName, newThemeName);
 	}
 	
@@ -124,7 +134,10 @@ public class ThemeController extends PageController {
 	 */
 	public boolean setCurrentTheme(String themeName)
 	{
-		return m_themeMgr.setCurrentTheme(themeName);
+		if (themeName.matches(Theme.ALL_THEMES))
+			return m_themeMgr.setCurrentTheme(null);
+		else
+			return m_themeMgr.setCurrentTheme(themeName);
 	}
 
 
