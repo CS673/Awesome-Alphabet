@@ -1,6 +1,9 @@
 
 package edu.bu.cs673.AwesomeAlphabet.main;
 
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -40,6 +43,17 @@ public class AwesomeAlphabetApp {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args)  {
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
 		BasicConfigurator.configure();
 		String workingDir = System.getProperty("user.dir");
 		log.info("CWD is:" + workingDir);

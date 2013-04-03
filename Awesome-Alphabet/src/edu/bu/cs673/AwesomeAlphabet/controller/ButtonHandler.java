@@ -44,7 +44,7 @@ public class ButtonHandler implements ActionListener {
 			try {
 				method.invoke(pv);
 			} catch (Exception e) {
-				log.error("An exception occurred while invoking the page view method for "+pv.getPageName());
+				log.error("An exception occurred while invoking the " + method + " method for "+pv.getPageName());
 				log.error(e.getMessage());
 				e.printStackTrace();
 			}

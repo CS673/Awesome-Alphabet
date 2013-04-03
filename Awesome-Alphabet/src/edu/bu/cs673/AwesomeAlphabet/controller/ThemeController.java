@@ -2,13 +2,13 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Properties;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.Database;
+import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
+import edu.bu.cs673.AwesomeAlphabet.value.ThemeViewData;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.IThemeControllerView;
 
@@ -51,18 +51,15 @@ public class ThemeController extends PageController {
 	 * 
 	 * @return  A theme name iterator.
 	 */
-	public Iterator<String> getThemeNamesIterator()
+	public Iterator<ThemeViewData> getThemeNamesIterator()
 	{
 		Iterator<Theme> themes = m_themeMgr.getIterator();
-		LinkedList<String> themeNames = new LinkedList<String>();
-		Theme theme;
-		
-		themeNames.add(Theme.ALL_THEMES);
+		LinkedList<ThemeViewData> themeNames = new LinkedList<ThemeViewData>();
 		
 		while(themes.hasNext())
 		{
-			theme = themes.next();
-			themeNames.add(theme.getThemeName());
+			Theme theme = themes.next();
+			themeNames.add(new ThemeViewData(theme.getThemeName(), theme.isEditable(), theme.getCount()));
 		}
 		
 		return themeNames.iterator();
@@ -115,10 +112,6 @@ public class ThemeController extends PageController {
 	 */
 	public boolean changeThemeName(String oldThemeName, String newThemeName)
 	{
-		if (newThemeName.matches(Theme.DEFAULT_THEME_NAME) ||
-				newThemeName.matches(Theme.ALL_THEMES))
-			return false;
-
 		return m_themeMgr.changeThemeName(oldThemeName, newThemeName);
 	}
 	
@@ -134,10 +127,7 @@ public class ThemeController extends PageController {
 	 */
 	public boolean setCurrentTheme(String themeName)
 	{
-		if (themeName.matches(Theme.ALL_THEMES))
-			return m_themeMgr.setCurrentTheme(null);
-		else
-			return m_themeMgr.setCurrentTheme(themeName);
+		return m_themeMgr.setCurrentTheme(themeName);
 	}
 
 

@@ -9,6 +9,7 @@ public class Theme extends Observable {
 	
 	private String m_themeName;
 	private Database m_db;
+	private int m_letterCount = 0;
 	
 	
 	/**
@@ -33,6 +34,27 @@ public class Theme extends Observable {
 		return m_themeName;
 	}
 	
+	/**
+	 * Determines editability.
+	 * 
+	 * @return true if editable.
+	 */
+	public boolean isEditable() {
+		return !(m_themeName.matches(DEFAULT_THEME_NAME)) &&
+				!(m_themeName.matches(ALL_THEMES));
+	}
+	
+	public void incRefCount() {
+		++m_letterCount;
+	}
+	
+	public void decRefCount() {
+		--m_letterCount;
+	}
+	
+	public int getCount() {
+		return m_letterCount;
+	}
 	
 	/**
 	 * Changes the theme name.
@@ -42,7 +64,7 @@ public class Theme extends Observable {
 	 */
 	public boolean changeThemeName(String newThemeName)
 	{
-		if(newThemeName == DEFAULT_THEME_NAME)
+		if(newThemeName.matches(DEFAULT_THEME_NAME))
 			return false;
 		
 		if(m_db.changeThemeName(m_themeName, newThemeName) == false)

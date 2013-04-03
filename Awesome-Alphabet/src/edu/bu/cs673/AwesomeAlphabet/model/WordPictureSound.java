@@ -22,6 +22,7 @@ public class WordPictureSound {
 		m_sound = new GameSound(soundFile);
 		m_image = GameImage.getImage(imageFile);
 		m_theme = theme;
+		m_theme.incRefCount();
 	}
 	
 	public void PlaySound() {
@@ -61,7 +62,11 @@ public class WordPictureSound {
 	 */
 	public void changeTheme(Theme newTheme)
 	{
+		if (m_theme != null)
+			m_theme.decRefCount();
 		m_theme = newTheme;
+		if (m_theme != null)
+			m_theme.incRefCount();
 	}
 	
 	/**
