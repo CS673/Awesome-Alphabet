@@ -213,7 +213,9 @@ public class ThemePageView extends PageView implements IThemeControllerView {
 	
 	public void OnSetThemeClicked() {
 		String themeName = m_themeModel.getThemeName(m_themeTable.getSelectedRow());
-		if (m_controller != null) {
+		if (themeName == null)
+			JOptionPane.showMessageDialog(m_panel, "Please select a theme.");
+		else if (m_controller != null) {
 			m_controller.setCurrentTheme(themeName);
 		}
 	}

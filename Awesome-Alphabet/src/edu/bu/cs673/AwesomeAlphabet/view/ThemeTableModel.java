@@ -61,7 +61,9 @@ public class ThemeTableModel extends AbstractTableModel {
 	}
 
 	public String getThemeName(int selectedRow) {
-		return m_themeTable.get(selectedRow).name();
+		if (selectedRow >= 0)
+			return m_themeTable.get(selectedRow).name();
+		return null;
 	}
 	
 	public boolean rowIsEditable(int selectedRow) {
