@@ -130,6 +130,17 @@ public class ThemeController extends PageController {
 		return m_themeMgr.setCurrentTheme(themeName);
 	}
 
+	/**
+	 * Finds the current theme.
+	 * 
+	 * @return	The name of the current theme, or a string indicating that no theme is currently active.
+	 */
+	public String getCurrentTheme() {
+		Theme t = m_themeMgr.getCurrentTheme();
+		if (t == null)
+			return "No theme selected.";
+		return t.getThemeName();
+	}
 
 	public void GoToOptionsPage() {
 		GoToPage(PageName.OptionsPage);
