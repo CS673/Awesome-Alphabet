@@ -89,8 +89,7 @@ public class Letter extends Observable implements Observer {
 	 */
 	public void addResource(String imageName, String soundName, String wordText, Theme theme) {
 		log.info("Vivek: addResource(): word=" + wordText + " image=" + imageName + " sound="+ soundName + " theme=" + theme.getThemeName());
-		WordPictureSound wps = new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme);
-		m_wps.add(wps);
+		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme));
 		if(m_index < 0)
 			nextExample();
 	}
@@ -305,6 +304,7 @@ public class Letter extends Observable implements Observer {
 		if (wps.GetWordString().equals(getWord())) {
 			reset_index = true;
 		}
+		
 		m_wps.remove(wps);
 		
 		if (reset_index == true) {
