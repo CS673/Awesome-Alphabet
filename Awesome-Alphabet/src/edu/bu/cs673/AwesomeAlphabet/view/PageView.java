@@ -27,9 +27,12 @@ public abstract class PageView implements Observer {
 	protected AAJPanel m_panel;
 	
 	protected static Font letterFont = new Font("Sans-Serif", Font.PLAIN, 32);
+	protected static Font headingFont = letterFont;
 	protected static Font wordFont = new Font("Sans-Serif", Font.PLAIN, 24);
+	protected static Font infoFont = new Font("Sans-Serif", Font.PLAIN, 18);
 	protected static Border border = BorderFactory.createEmptyBorder();
 	protected static Color backgroundColor = new Color(164,193,193);
+	protected static Color headingBackground = new Color(184, 213, 213);
 	
 	protected static final String AA_NAV_BUTTON_TITLE_PAGE		= "Home.png";
 	protected static final String AA_NAV_BUTTON_ALPHABET_SONG	= "Music.png";
