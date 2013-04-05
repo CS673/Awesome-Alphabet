@@ -1,8 +1,13 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 
 import java.awt.Image;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
 import org.junit.*;
 
+import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
 import edu.bu.cs673.AwesomeAlphabet.model.GameImage;
 import static org.junit.Assert.*;
 
@@ -20,28 +25,25 @@ public class GameImageTest {
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
-	public void testGameImage_1()
+	public void testGameImage()
 		throws Exception {
 		GameImage result = new GameImage();
 		assertNotNull(result);
-		// add additional test code here
 	}
 
 	/**
 	 * Run the Image getImage(String) method test.
-	 *
+	 * Verify that the method retruns null for invalid image value
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
-	public void testGetImage_1()
-		throws Exception {
+	public void testGetImageForInvalidImageValue() throws Exception {
 		String filename = "";
 
 		Image result = GameImage.getImage(filename);
 
-		// add additional test code here
 		assertEquals(null, result);
 	}
 
@@ -53,14 +55,15 @@ public class GameImageTest {
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
-	public void testGetImage_2()
-		throws Exception {
-		String filename = "";
+	public void testGetImageForValidImageValue() throws Exception {
+		String filename = "frog.jpg";
+		Image result = null;
 
-		Image result = GameImage.getImage(filename);
+		
+		result = GameImage.getImage(filename);
 
-		// add additional test code here
-		assertEquals(null, result);
+		// verify the method returns an object, not null. TODO update to verify an image object of frog is returned (?)
+		assertNotNull(result);
 	}
 
 	/**

@@ -19,11 +19,9 @@ public class AwesomeAlphabetAppTest {
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
-	public void testAwesomeAlphabetApp_1()
-		throws Exception {
+	public void testAwesomeAlphabetApp()throws Exception {
 		AwesomeAlphabetApp result = new AwesomeAlphabetApp();
 		assertNotNull(result);
-		// add additional test code here
 	}
 
 	/**
@@ -51,8 +49,7 @@ public class AwesomeAlphabetAppTest {
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
-	public void testMain_2()
-		throws Exception {
+	public void testMain_2() throws Exception {
 		String[] args = new String[] {};
 
 		AwesomeAlphabetApp.main(args);
