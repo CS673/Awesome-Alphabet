@@ -342,7 +342,7 @@ public class Alphabet extends Observable {
 			iter_wps = l.GetIterator();
 			while (iter_wps.hasNext()) {
 				wps = iter_wps.next();
-				if (word == wps.GetWordString())
+				if (word.matches(wps.GetWordString()))
 					return wps;
 			}
 		}
