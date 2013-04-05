@@ -14,25 +14,32 @@ import static org.junit.Assert.*;
  */
 public class VersionTest {
 	/**
-	 * Run the Version() constructor test.
+	 * Run the getVersion() constructor test.
+	 *Verify that the method returns the application version
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
 	@Test
-	public void testVersion_1()
+	public void testGetVersion()
 		throws Exception {
 		Version result = new Version();
 		assertNotNull(result);
-		// add additional test code here
+		
 		assertEquals("0.1.0.0", result.getVersion());
 	}
 
+	/**
+	 * Run the getVersion() constructor test.
+	 * Verify that the method returns the application name
+	 * 
+	 * @throws Exception
+	 */
 	@Test
-	public void testVersion_2()
+	public void testGetAppName()
 		throws Exception {
 		Version result = new Version();
 		assertNotNull(result);
-		// add additional test code here
+		
 		assertEquals("Awesome Alphabet", result.getAppName());
 	}
 

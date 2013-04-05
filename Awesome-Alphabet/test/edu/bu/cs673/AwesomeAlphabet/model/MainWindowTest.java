@@ -3,9 +3,12 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
@@ -19,74 +22,60 @@ import edu.bu.cs673.AwesomeAlphabet.view.PageView;
  * @version $Revision: 1.0 $
  */
 public class MainWindowTest {
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 	/**
 	 * Run the MainWindow() constructor test.
-	 *
+	 * Verify that the constructor creates an object
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testMainWindow_1()
+	public void testMainWindowConstructor()
 		throws Exception {
 
 		MainWindow result = new MainWindow();
 
-		// add additional test code here
 		assertNotNull(result);
 	}
 
-	/**
-	 * Run the MainWindow() constructor test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testMainWindow_2()
-		throws Exception {
-
-		MainWindow result = new MainWindow();
-
-		// add additional test code here
-		assertNotNull(result);
-	}
 
 	/**
 	 * Run the boolean GoToPage(String) method test.
-	 *
+	 * Verify that a NullPointerException error is thrown for invalid page request
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGoToPage_1()
-		throws Exception {
+	public void testGoToPageForPageNotRegistered() throws Exception {
+		
 		MainWindow fixture = new MainWindow();
-		String sPageName = "";
+		String sPageName = "LetterPage";
 
+		exception.expect(NullPointerException.class);
+		
 		boolean result = fixture.GoToPage(sPageName);
 
-		// add additional test code here
 		assertEquals(true, result);
 	}
 
 	/**
 	 * Run the void Show() method test.
-	 *
+	 * 
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testShow_1()
+	public void testShow()
 		throws Exception {
 		MainWindow fixture = new MainWindow();
-
-		fixture.Show();
-
-		// add additional test code here
+		
+		fixture.Show(); //Note: I am not quite sure how to verify this test.
+		
+		
 	}
 
 	/**
@@ -97,14 +86,17 @@ public class MainWindowTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testRegisterPage_1()
+	public void testRegisterAndGoToPagePassesForValidPageValue()
 		throws Exception {
 		MainWindow fixture = new MainWindow();
-		PageView page = new AlphabetPageView("");
+		PageView page = new AlphabetPageView("LetterPage");
 
 		fixture.registerPage(page);
 
-		// add additional test code here
+		String sPageName = "LetterPage";
+
+		boolean result = fixture.GoToPage(sPageName);
+		assertEquals(true, result);
 	}
 
 	/**

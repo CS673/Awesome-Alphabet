@@ -3,10 +3,13 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
+import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
@@ -27,16 +30,15 @@ public class TitlePageControllerTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testTitlePageController_1()
-		throws Exception {
-		IPageObserver pageObserver = new MainWindow();
-		TitlePageView view = new TitlePageView("");
+	public void testTitlePageController() 	throws Exception {
+		IPageObserver pageObserver = EasyMock.createMock(IPageObserver.class);
+		TitlePageView view =  EasyMock.createMock(TitlePageView.class);
 
 		TitlePageController result = new TitlePageController(pageObserver, view);
-
-		// add additional test code here
+		
+		
 		assertNotNull(result);
-		assertEquals(true, result.Start());
+
 	}
 
 	/**
@@ -47,13 +49,24 @@ public class TitlePageControllerTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testStart_1()
-		throws Exception {
-		TitlePageController fixture = new TitlePageController(new MainWindow(), new TitlePageView(""));
+	public void testStartForValidValue() throws Exception {
+		IPageObserver pageObserver = EasyMock.createMock(IPageObserver.class);
+		TitlePageView view =  EasyMock.createMock(TitlePageView.class);
+
+		EasyMock.expect(pageObserver.GoToPage("AlphabetPage")).andReturn(true);
+		
+		//alphabet.StopAlphabetSound();
+		//EasyMock.expectLastCall().atLeastOnce();
+		
+		EasyMock.replay(pageObserver);
+		//EasyMock.replay(alphabet);
+		
+		TitlePageController fixture = new TitlePageController(pageObserver, view);
 
 		boolean result = fixture.Start();
 
 		// add additional test code here
+		EasyMock.verify(pageObserver);
 		assertEquals(true, result);
 	}
 
@@ -65,14 +78,25 @@ public class TitlePageControllerTest {
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testStart_2()
-		throws Exception {
-		TitlePageController fixture = new TitlePageController(new MainWindow(), new TitlePageView(""));
+	public void testStartForInvalidValue()	throws Exception {
+		IPageObserver pageObserver = EasyMock.createMock(IPageObserver.class);
+		TitlePageView view =  EasyMock.createMock(TitlePageView.class);
+
+		EasyMock.expect(pageObserver.GoToPage("AlphabetPage")).andReturn(false);
+		
+		//alphabet.StopAlphabetSound();
+		//EasyMock.expectLastCall().atLeastOnce();
+		
+		EasyMock.replay(pageObserver);
+		//EasyMock.replay(alphabet);
+		
+		TitlePageController fixture = new TitlePageController(pageObserver, view);
 
 		boolean result = fixture.Start();
 
 		// add additional test code here
-		assertEquals(true, result);
+		EasyMock.verify(pageObserver);
+		assertEquals(false, result);
 	}
 
 	/**
