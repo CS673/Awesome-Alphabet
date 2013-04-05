@@ -65,20 +65,19 @@ public class AAConfig {
 
 	public static InputStream getSoundResource(String filename) {
 		
-		return loader.getResourceAsStream(baseDirName + "/" + soundsSubDir + "/" + filename);
-		/*
+		//return loader.getResourceAsStream(baseDirName + "/" + soundsSubDir + "/" + filename);
+		
 		InputStream is = null;
 		File currentdir = new File(".");
 		
 		try {
 			String absPath = currentdir.getCanonicalPath() + "/" + baseDirName + "/" + soundsSubDir + "/" + filename;
-			log.info("Loading resource=" + absPath);
+			log.info("Loading sound resource=" + absPath);
 			File f = new File(absPath);
 			is = new FileInputStream(f);
 		} catch (Exception e) {
 		}
 		return is;
-		*/
 	}
 	
 	public static String getSoundResourceDir() {
