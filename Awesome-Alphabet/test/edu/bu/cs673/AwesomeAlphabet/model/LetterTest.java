@@ -131,7 +131,7 @@ public class LetterTest {
 		String soundName = "frog.wav";
 		String wordText = "Frog";
 
-		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		fixture.addResource(imageName, soundName, wordText, new Theme(Theme.DEFAULT_THEME_NAME));
 		
 		int width = 1;
 		int height = 1;
@@ -175,7 +175,7 @@ public class LetterTest {
 		String soundName = "frog.wav";
 		String wordText = "Frog";
 
-		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		fixture.addResource(imageName, soundName, wordText, new Theme(Theme.DEFAULT_THEME_NAME));
 
 		String result = fixture.getWord();
 
@@ -249,7 +249,7 @@ public class LetterTest {
 		String soundName = "frog.wav";
 		String wordText = "Frog";
 
-		fixture.addResource(imageName, soundName, wordText, new Theme(ThemeManager.DEFAULT_THEME_NAME));
+		fixture.addResource(imageName, soundName, wordText, new Theme(Theme.DEFAULT_THEME_NAME));
 		fixture.playSound();
 
 		// add additional test code here
