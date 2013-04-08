@@ -13,8 +13,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.GroupLayout.Alignment;
 
 import org.apache.log4j.Logger;
+
+import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
@@ -61,16 +65,13 @@ public class TitlePageView extends PageView {
 		centerPanel.add(Box.createVerticalStrut(10));
 		centerPanel.add(Box.createVerticalGlue());
 
+		//Add "Start" Button
 		button = getButtonImage(AA_NAV_BUTTON_START, "Start");
 		button.addActionListener(new ButtonHandler(this, "OnStartButtonClick"));
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.add(button);
 		
-		centerPanel.add(Box.createVerticalStrut(10));
-		
-		button = getButtonImage(AA_NAV_BUTTON_OPTIONS, "Options");
-		button.addActionListener(new ButtonHandler(this, "OnOptionsButtonClick"));
-		centerPanel.add(button);
+		//centerPanel.add(Box.createVerticalStrut(10));
 
 		centerPanel.add(Box.createVerticalGlue());
 		centerPanel.setOpaque(false);
@@ -78,11 +79,30 @@ public class TitlePageView extends PageView {
 		m_panel.add(centerPanel, BorderLayout.CENTER);
 		
 		
+		
+		//Create Bottom Panel
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BorderLayout());
+		bottomPanel.setOpaque(false);
+		
 		//Add Version Label
 		JLabel versionLabel = new JLabel("Version " + Version.sVersionNum);
 		versionLabel.setFont(new Font("Sans-Serif", Font.BOLD, 14));
 		versionLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-		m_panel.add(versionLabel, BorderLayout.SOUTH);
+		versionLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		bottomPanel.add(versionLabel, BorderLayout.WEST);
+		
+		//Add "Options" Button
+		button = getButtonImage(AA_NAV_BUTTON_OPTIONS, "Options");
+		button.addActionListener(new ButtonHandler(this, "OnOptionsButtonClick"));
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		bottomPanel.add(button, BorderLayout.EAST);
+		
+		//Add Bottom Panel to Main Panel
+		m_panel.add(bottomPanel, BorderLayout.SOUTH);
+		
 		
 		log.info("Initialized the TitlePageView " + sPageName);
 	}
