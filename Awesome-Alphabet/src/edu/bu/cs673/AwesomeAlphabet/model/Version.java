@@ -17,13 +17,15 @@ package edu.bu.cs673.AwesomeAlphabet.model;
  * 
  * 2013-02-15  0.0.0.0  M. Grant
  *   (1) Initial version
- *   
+ *
+ * 2013-04-09  0.3.0.0  M. Grant
+ *   (2) Updated version number for iteration 3.
  */
 
 public class Version {
 
 	public static final String sAppName = "Awesome Alphabet";
-	public static final String sVersionNum = "0.1.0.0";
+	public static final String sVersionNum = "0.3.0.0";
 	public String getVersion()
 	{
 		return sVersionNum;

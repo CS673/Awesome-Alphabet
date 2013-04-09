@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 
 import javax.swing.BorderFactory;
@@ -71,13 +73,12 @@ public class TitlePageView extends PageView {
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.add(button);
 		
-		//centerPanel.add(Box.createVerticalStrut(10));
+		//centerPanel.add(Box.createVerticalStrut(10)); //Spacing between buttons
 
 		centerPanel.add(Box.createVerticalGlue());
 		centerPanel.setOpaque(false);
 	
 		m_panel.add(centerPanel, BorderLayout.CENTER);
-		
 		
 		
 		//Create Bottom Panel
@@ -94,7 +95,18 @@ public class TitlePageView extends PageView {
 		
 		//Add "Options" Button
 		button = getButtonImage(AA_NAV_BUTTON_OPTIONS, "Options");
-		button.addActionListener(new ButtonHandler(this, "OnOptionsButtonClick"));
+		button.addMouseListener(new MouseListener() {
+			
+			//Create button action on double-click
+			public void mouseClicked(MouseEvent arg0) {
+				  if (arg0.getClickCount() == 2)
+					  OnOptionsButtonClick();
+			}
+			public void mouseEntered(MouseEvent arg0)  {}
+			public void mouseExited(MouseEvent arg0)   {}
+			public void mousePressed(MouseEvent arg0)  {}
+			public void mouseReleased(MouseEvent arg0) {}
+		});
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
