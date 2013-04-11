@@ -4,7 +4,6 @@ import java.util.Iterator;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
-import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 
 
@@ -13,7 +12,6 @@ import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
  */
 public class AlphabetPageController extends PageController {
 
-	private AlphabetPageView m_view;
 	private Alphabet m_alphabet;
 	
 	
@@ -23,13 +21,11 @@ public class AlphabetPageController extends PageController {
 	 * @param pageObserver   A page observer reference so that page
 	 *                       transitions may be requested.  For example,
 	 *                       this may refer to the main window.
-	 * @param view           The view.
 	 * @param alphabet       The Alphabet model.
 	 */
-	public AlphabetPageController(IPageObserver pageObserver, AlphabetPageView view, Alphabet alphabet) {
+	public AlphabetPageController(IPageObserver pageObserver, Alphabet alphabet) {
 		super(pageObserver);
 
-		m_view = view;
 		m_alphabet = alphabet;
 	}
 	

@@ -16,11 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
 
 import org.apache.log4j.Logger;
-
-import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;

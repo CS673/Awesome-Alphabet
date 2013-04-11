@@ -9,8 +9,6 @@ import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
  */
 public class TitlePageController extends PageController {
 
-	private TitlePageView m_view;
-	
 	
 	/**
 	 * Class constructor.
@@ -22,8 +20,6 @@ public class TitlePageController extends PageController {
 	 */
 	public TitlePageController(IPageObserver pageObserver, TitlePageView view) {
 		super(pageObserver);
-
-		m_view = view;
 	}
 	
 	
