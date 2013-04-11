@@ -69,12 +69,16 @@ public class LetterPageView extends PageView {
 
 		b = getButtonImage(AA_NAV_BUTTON_PREV_LETTER, "Previous Letter");
 		b.addActionListener(new ButtonHandler(this, "OnPreviousLetterButtonClick"));
-		b.setBackground(backgroundColor);
+		b.setOpaque(false);
+		b.setContentAreaFilled(false);
+		b.setBorderPainted(false);
 		buttonBar.add(b, BorderLayout.WEST);
 		
 		b = getButtonImage(AA_NAV_BUTTON_NEXT_LETTER, "Next Letter");
 		b.addActionListener(new ButtonHandler(this, "OnNextLetterButtonClick"));
-		b.setBackground(backgroundColor);
+		b.setOpaque(false);
+		b.setContentAreaFilled(false);
+		b.setBorderPainted(false);
 		buttonBar.add(b, BorderLayout.EAST);
 
 		JPanel mid = new JPanel(new GridLayout(2, 3, 0, 30));
