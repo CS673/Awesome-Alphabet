@@ -64,7 +64,7 @@ public class AAConfig {
 		InputStream is = null;
 		
 		try {
-			String absPath = getGraphicsResourceDirAbs() + filename;
+			String absPath = getGraphicsResourceDirPersistentAbs() + filename;
 			log.info("Loading resource=" + absPath);
 			File f = new File(absPath);
 			is = new FileInputStream(f);
