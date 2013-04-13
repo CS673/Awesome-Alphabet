@@ -141,7 +141,7 @@ public class Letter extends Observable implements Observer {
 		WordPictureSound wps = getWPSData(m_index);
 		if (wps == null)
 			return null;
-		log.info("Vivek: getIcon(): word=" + wps.GetWordString());
+		//log.info("Vivek: getIcon(): word=" + wps.GetWordString());
 		return wps.GetWordImage(width, height);
 	}
 
@@ -156,7 +156,7 @@ public class Letter extends Observable implements Observer {
 		Theme curTheme = (m_themeMgr == null) ? null : m_themeMgr.getCurrentTheme();
 		Theme theme;
 		
-		log.info("Vivek: nextExample(): iWpsSize=" + iWpsSize + " m_index=" + m_index + " curTheme=" + curTheme);
+		//log.info("Vivek: nextExample(): iWpsSize=" + iWpsSize + " m_index=" + m_index + " curTheme=" + curTheme);
 		setChanged();
 		
 		//If there are no words for the current letter
@@ -198,7 +198,7 @@ public class Letter extends Observable implements Observer {
 			}
 		} while(theme != curTheme); //While the word is not part of the current theme
 		
-		log.info("Vivek: nextExample() end: m_index=" + m_index);
+		//log.info("Vivek: nextExample() end: m_index=" + m_index);
 		notifyObservers(this);
 	}
 

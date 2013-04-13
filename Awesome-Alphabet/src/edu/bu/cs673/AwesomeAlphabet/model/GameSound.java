@@ -42,6 +42,9 @@ public class GameSound {
 	public void PlaySound() {
 		try {
 			InputStream is = AAConfig.getSoundResource(soundName);
+			if (is == null)
+				is = AAConfig.getSoundResourcePersistent(soundName);
+			
 			BufferedInputStream bis = new BufferedInputStream(is);
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(bis);
 			curr_clip = AudioSystem.getClip();

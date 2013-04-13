@@ -57,9 +57,6 @@ public class AwesomeAlphabetApp {
 		BasicConfigurator.configure();
 		String workingDir = System.getProperty("user.dir");
 		log.info("CWD is:" + workingDir);
-		System.setProperty( "user.dir", workingDir + "/src/" );
-		workingDir = System.getProperty("user.dir");
-		log.info("CWD is:" + workingDir);
 		
 		MainWindow mainWindow = new MainWindow();
 		
