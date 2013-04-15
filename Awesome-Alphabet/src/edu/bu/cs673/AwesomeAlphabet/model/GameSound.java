@@ -6,6 +6,7 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.BufferedInputStream;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -41,7 +42,11 @@ public class GameSound {
 	public void PlaySound() {
 		try {
 			InputStream is = AAConfig.getSoundResource(soundName);
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
+			if (is == null)
+				is = AAConfig.getSoundResourcePersistent(soundName);
+			
+			BufferedInputStream bis = new BufferedInputStream(is);
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(bis);
 			curr_clip = AudioSystem.getClip();
 			
 			curr_clip.open(audioIn);

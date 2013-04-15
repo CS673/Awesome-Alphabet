@@ -26,9 +26,12 @@ public class GameImage {
 	public static Image getImage(String filename) 
 	{
 		InputStream is = AAConfig.getGraphicsResource(filename);
-//		InputStream is = cl.getResourceAsStream(AA_RESOURCE_FILE_PATH + filename);
 		
-		log.info("Vivek: getImage(): filename=" + filename);
+		//log.info("Vivek: getImage(): filename=" + filename);
+		
+		if (is == null)
+			is = AAConfig.getGraphicsResourcePersistent(filename);
+		
 		if (is == null){
 			System.out.println("Input stream is null");
 			return null;
