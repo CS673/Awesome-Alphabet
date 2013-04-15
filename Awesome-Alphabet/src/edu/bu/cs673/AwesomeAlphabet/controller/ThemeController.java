@@ -3,8 +3,6 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.model.Database;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
@@ -20,8 +18,6 @@ public class ThemeController extends PageController {
 	
 	private IThemeControllerView m_view;
 	private ThemeManager m_themeMgr;
-	private Alphabet m_alphabet;
-	private Database m_db;
 	
 	/**
 	 * Constructor
@@ -31,16 +27,14 @@ public class ThemeController extends PageController {
 	 *                       this may refer to the main window.
 	 * @param view           The view.
 	 * @param themeMgr       The Theme Manager.
-	 * @param alphabet       The alphabet.
 	 */
 	public ThemeController(IPageObserver pageObserver, IThemeControllerView view,
-			               ThemeManager themeMgr, Alphabet alphabet) 
+			               ThemeManager themeMgr) 
 	{
 		super(pageObserver);
 
 		m_view = view;
 		m_themeMgr = themeMgr;
-		m_alphabet = alphabet;
 		
 		themeMgr.addObserver(m_view);
 	}

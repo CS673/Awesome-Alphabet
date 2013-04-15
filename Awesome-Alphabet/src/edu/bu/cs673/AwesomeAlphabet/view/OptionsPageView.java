@@ -1,14 +1,11 @@
 package edu.bu.cs673.AwesomeAlphabet.view;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.Observable;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
