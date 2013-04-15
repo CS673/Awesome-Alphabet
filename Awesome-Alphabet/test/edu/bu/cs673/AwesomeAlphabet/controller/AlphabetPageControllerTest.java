@@ -12,9 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.model.GameSound;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
-import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
@@ -38,10 +36,9 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testAlphabetPageController() throws Exception {
 		IPageObserver pageObserver = EasyMock.createMock(MainWindow.class);
-		AlphabetPageView view =  EasyMock.createMock(AlphabetPageView.class);
 		Alphabet alphabet = EasyMock.createMock(Alphabet.class);
 
-		AlphabetPageController result = new AlphabetPageController(pageObserver, view, alphabet);
+		AlphabetPageController result = new AlphabetPageController(pageObserver, alphabet);
 		
 
 		// verify the result
@@ -61,14 +58,13 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGetLetterIterator()	throws Exception {
 		MainWindow mainWindow = EasyMock.createMock(MainWindow.class);
-		AlphabetPageView view =  EasyMock.createMock(AlphabetPageView.class);
 		Alphabet alphabet = EasyMock.createMock(Alphabet.class);
 		Iterator testIterator = EasyMock.createMock(Iterator.class);
 		
 		EasyMock.expect(alphabet.GetIterator()).andReturn(testIterator);
 		EasyMock.replay(alphabet);
 		
-		AlphabetPageController fixture = new AlphabetPageController(mainWindow, view, alphabet);
+		AlphabetPageController fixture = new AlphabetPageController(mainWindow, alphabet);
 		Iterator<Letter> result = fixture.GetLetterIterator();
 
 		assertNotNull(result);
@@ -86,7 +82,6 @@ public class AlphabetPageControllerTest {
 	public void testGoToLetterPageForLetterNull() throws Exception {
 		// create mock objects for dependency classes
 				MainWindow mainWindow = EasyMock.createMock(MainWindow.class);
-				AlphabetPageView view =  EasyMock.createMock(AlphabetPageView.class);
 				Alphabet alphabet = EasyMock.createMock(Alphabet.class);
 				Letter cLetter = EasyMock.createMock(Letter.class);
 				
@@ -95,7 +90,7 @@ public class AlphabetPageControllerTest {
 				EasyMock.replay(alphabet);
 				
 				
-				AlphabetPageController fixture = new AlphabetPageController(mainWindow, view, alphabet);
+				AlphabetPageController fixture = new AlphabetPageController(mainWindow, alphabet);
 				
 				
 
@@ -116,7 +111,6 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToLetterPageIsFalseIfRequestedPageIsNotLetterPage() throws Exception {
 		MainWindow mainWindow = EasyMock.createMock(MainWindow.class);
-		AlphabetPageView view =  EasyMock.createMock(AlphabetPageView.class);
 		Alphabet alphabet = EasyMock.createMock(Alphabet.class);
 		
 		Letter cLetter = EasyMock.createMock(Letter.class);
@@ -128,7 +122,7 @@ public class AlphabetPageControllerTest {
 		EasyMock.replay(mainWindow);
 		EasyMock.replay(alphabet);
 	
-		AlphabetPageController fixture = new AlphabetPageController(mainWindow, view, alphabet);
+		AlphabetPageController fixture = new AlphabetPageController(mainWindow, alphabet);
 		
 		
 
@@ -150,7 +144,6 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToLetterPageReturnTrueForValidLetter()throws Exception {
 		MainWindow mainWindow = EasyMock.createMock(MainWindow.class);
-		AlphabetPageView view =  EasyMock.createMock(AlphabetPageView.class);
 		Alphabet alphabet = EasyMock.createMock(Alphabet.class);
 		
 		Letter cLetter = EasyMock.createMock(Letter.class);
@@ -165,7 +158,7 @@ public class AlphabetPageControllerTest {
 		EasyMock.replay(mainWindow);
 		EasyMock.replay(alphabet);
 	
-		AlphabetPageController fixture = new AlphabetPageController(mainWindow, view, alphabet);
+		AlphabetPageController fixture = new AlphabetPageController(mainWindow, alphabet);
 		
 		
 
@@ -187,7 +180,6 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToTitlePageReturnTrueForValidPage()	throws Exception {
 		MainWindow mainWindow = EasyMock.createMock(MainWindow.class);
-		AlphabetPageView view =  EasyMock.createMock(AlphabetPageView.class);
 		Alphabet alphabet = EasyMock.createMock(Alphabet.class);
 		
 		
@@ -199,7 +191,7 @@ public class AlphabetPageControllerTest {
 		EasyMock.replay(mainWindow);
 		EasyMock.replay(alphabet);
 	
-		AlphabetPageController fixture = new AlphabetPageController(mainWindow, view, alphabet);
+		AlphabetPageController fixture = new AlphabetPageController(mainWindow, alphabet);
 		
 		
 
@@ -221,7 +213,6 @@ public class AlphabetPageControllerTest {
 	@Test
 	public void testGoToTitlePageReturnFalseForInvalidPage()	throws Exception {
 		MainWindow mainWindow = EasyMock.createMock(MainWindow.class);
-		AlphabetPageView view =  EasyMock.createMock(AlphabetPageView.class);
 		Alphabet alphabet = EasyMock.createMock(Alphabet.class);
 		
 		
@@ -233,7 +224,7 @@ public class AlphabetPageControllerTest {
 		EasyMock.replay(mainWindow);
 		EasyMock.replay(alphabet);
 	
-		AlphabetPageController fixture = new AlphabetPageController(mainWindow, view, alphabet);
+		AlphabetPageController fixture = new AlphabetPageController(mainWindow, alphabet);
 		
 		
 
@@ -255,8 +246,7 @@ public class AlphabetPageControllerTest {
 	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
 	public void testPlayAlphabetSong_1()
 		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new AlphabetPageView(""), 
-				                                                    new Alphabet(new ThemeManager()));
+		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new Alphabet(new ThemeManager()));
 
 		boolean result = fixture.PlayAlphabetSong();
 
