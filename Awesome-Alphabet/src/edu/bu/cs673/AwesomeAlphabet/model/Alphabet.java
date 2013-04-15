@@ -194,15 +194,14 @@ public class Alphabet extends Observable {
 	 */
 	public Letter GoToPreviousLetter()
 	{
-		if(m_iCurLetterIndex <= 0)
-			return null;
-		else
-		{
+		if(m_iCurLetterIndex <= 0) {
+			m_iCurLetterIndex = m_letters.length - 1;
+		} else {
 			m_iCurLetterIndex -= 1;
-			setChanged();
-			notifyObservers(m_letters[m_iCurLetterIndex]);
-			return m_letters[m_iCurLetterIndex];
 		}
+		setChanged();
+		notifyObservers(m_letters[m_iCurLetterIndex]);
+		return m_letters[m_iCurLetterIndex];
 	}
 	
 	
@@ -214,15 +213,14 @@ public class Alphabet extends Observable {
 	 */
 	public Letter GoToNextLetter()
 	{
-		if(m_iCurLetterIndex >= m_letters.length - 1)
-			return null;
-		else
-		{
+		if(m_iCurLetterIndex >= m_letters.length - 1) {
+			m_iCurLetterIndex = 0;
+		} else {
 			m_iCurLetterIndex += 1;
-			setChanged();
-			notifyObservers(m_letters[m_iCurLetterIndex]);
-			return m_letters[m_iCurLetterIndex];
 		}
+		setChanged();
+		notifyObservers(m_letters[m_iCurLetterIndex]);
+		return m_letters[m_iCurLetterIndex];
 	}
 	
 	public boolean createLoadPersistentResourceDir(Properties prop)
