@@ -17,6 +17,7 @@ public class AAConfig {
 	private static final String GRAPHICS_DIR = "dir.graphics";
 	private static final String SOUNDS_DIR = "dir.sounds";
 	private static final String DEFAULT_LETTERS = "prop.letters";
+	private static final String PERSISTENT_RES = "dir.persistent_resources";
 	
 	private static final ClassLoader loader = AAConfig.class.getClassLoader();
 	
@@ -24,8 +25,11 @@ public class AAConfig {
 	private static String graphicsSubDir;
 	private static String soundsSubDir;
 	private static String letterPropsName;
+	private static String persistentResDir;
+	private static String cwd = System.getProperty("user.dir") + "/";
 	
 	private static Properties letterProps = null;
+	private static Properties letterPropsPersistent = null;
 	protected static Logger log = Logger.getLogger(AAConfig.class);
 	
 	static {
@@ -37,6 +41,7 @@ public class AAConfig {
 			graphicsSubDir = prop.getProperty(GRAPHICS_DIR);
 			soundsSubDir = prop.getProperty(SOUNDS_DIR);
 			letterPropsName = prop.getProperty(DEFAULT_LETTERS);
+			persistentResDir = prop.getProperty(PERSISTENT_RES); 
 			stream.close();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -44,13 +49,22 @@ public class AAConfig {
 		}
 	}
 	
+	public static String getLetterPropFileName() {
+		return letterPropsName;
+	}
+	
 	public static InputStream getGraphicsResource(String filename) {
 		InputStream is = null;
-		File currentdir = new File(".");
 		
-	//	is = loader.getResourceAsStream(baseDirName + "/" + graphicsSubDir + "/" + filename);
+		is = loader.getResourceAsStream(baseDirName + "/" + graphicsSubDir + "/" + filename);
+		return is;
+	}
+	
+	public static InputStream getGraphicsResourcePersistent(String filename) {
+		InputStream is = null;
+		
 		try {
-			String absPath = currentdir.getCanonicalPath() + "/" + baseDirName + "/" + graphicsSubDir + "/" + filename;
+			String absPath = getGraphicsResourceDirPersistentAbs() + filename;
 			log.info("Loading resource=" + absPath);
 			File f = new File(absPath);
 			is = new FileInputStream(f);
@@ -59,47 +73,63 @@ public class AAConfig {
 		return is;
 	}
 	
+	public static String getResourceDirAbs() {
+		return cwd;
+	}
+	
+	public static String getResourceDirPersistentAbs() {
+		return cwd + persistentResDir + "/";
+	}
+	
 	public static String getGraphicsResourceDir() {
 		return baseDirName + "/" + graphicsSubDir + "/";
+	}
+	
+	public static String getGraphicsResourceDirAbs() {
+		return cwd + baseDirName + "/" + graphicsSubDir + "/";
+	}
+	
+	public static String getGraphicsResourceDirPersistentAbs() {
+		return cwd + persistentResDir + "/" + graphicsSubDir + "/";
 	}
 
 	public static InputStream getSoundResource(String filename) {
 		
 		return loader.getResourceAsStream(baseDirName + "/" + soundsSubDir + "/" + filename);
-		/*
+	}
+	
+	public static InputStream getSoundResourcePersistent(String filename) {
 		InputStream is = null;
-		File currentdir = new File(".");
 		
 		try {
-			String absPath = currentdir.getCanonicalPath() + "/" + baseDirName + "/" + soundsSubDir + "/" + filename;
-			log.info("Loading resource=" + absPath);
+			String absPath = getSoundResourceDirPersistentAbs() + filename;
+			log.info("Loading sound resource=" + absPath);
 			File f = new File(absPath);
 			is = new FileInputStream(f);
 		} catch (Exception e) {
 		}
 		return is;
-		*/
 	}
 	
 	public static String getSoundResourceDir() {
 		return baseDirName + "/" + soundsSubDir + "/";
 	}
 	
+	public static String getSoundResourceDirAbs() {
+		return cwd + baseDirName + "/" + soundsSubDir + "/";
+	}
+	
+	public static String getSoundResourceDirPersistentAbs() {
+		return cwd + persistentResDir + "/" + soundsSubDir + "/";
+	}
 
 	public static Properties getLetterProps() {
-		File currentdir = new File(".");
-		String absPath;
-		File f;
 		InputStream is;
 		
 		if (letterProps == null) {
 			try {
 				letterProps = new Properties();
-				absPath = currentdir.getCanonicalPath() + "/" + letterPropsName;
-				//InputStream is = loader.getResourceAsStream(letterPropsName);
-				log.info("Loading resource=" + absPath);
-				f = new File(absPath);
-				is = new FileInputStream(f);
+				is = loader.getResourceAsStream(letterPropsName);
 				letterProps.load(is);
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
@@ -108,6 +138,40 @@ public class AAConfig {
 		}
 		
 		return letterProps;
+	}
+	
+	public static Properties getLetterPropsPersistent() {
+		InputStream is;
+		
+		if (letterPropsPersistent == null) {
+			try {
+				letterPropsPersistent = new Properties();
+				is = new FileInputStream(new File(getResourceDirPersistentAbs() + letterPropsName));
+				letterPropsPersistent.load(is);
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+				System.exit(1);
+			}
+		}
+		
+		return letterPropsPersistent;
+	}
+	
+	public static int copy_stream(InputStream inStream, OutputStream outStream)
+	{
+		byte[] buffer = new byte[1024];
+	    int length;
+	  
+	    try {
+	    	//copy the file content in bytes
+	    	while ((length = inStream.read(buffer)) > 0) {
+	    		outStream.write(buffer, 0, length);
+	    	}
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    }
+	    
+	    return 0;
 	}
 	
 	/** copy file
@@ -119,41 +183,27 @@ public class AAConfig {
 		InputStream inStream = null;
 		OutputStream outStream = null;
 		
-		File currentdir = new File(".");
-		try {
-			log.info("CWD is:" + currentdir.getCanonicalPath());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-			log.info("copy: " + srcFileName + " to " + destFileName);
+		log.info("copy: " + srcFileName + " to " + destFileName);
 		
     	try {
     		 
     		File sfile = new File(srcFileName);
-    		File dfile = new File(currentdir.getCanonicalPath() + "/" + destFileName);
+    		File dfile = new File(destFileName);
     		
     		/* Create dest file */
     		if (!dfile.exists()) {
-    			log.info("Trying to create file:" + dfile.getPath());
+    			//log.info("Trying to create file:" + dfile.getPath());
     			if (!dfile.getParentFile().exists()) {
-    				log.info("Parent dir does not exist. Creating:"+ dfile.getParentFile().getPath());
+    			//	log.info("Parent dir does not exist. Creating:"+ dfile.getParentFile().getPath());
     				dfile.getParentFile().mkdirs();
     			} else 
-    				log.info("Parent file (dir) exists");
+    				//log.info("Parent file (dir) exists");
     			dfile.createNewFile();
     		}
     		
     		inStream = new FileInputStream(sfile);
     		outStream = new FileOutputStream(dfile);
- 
-    	    byte[] buffer = new byte[1024];
- 
-    	    int length;
-    	    
-    	    //copy the file content in bytes 
-    	    while ((length = inStream.read(buffer)) > 0) {
-    	    	outStream.write(buffer, 0, length);
-    	    }
+    		copy_stream(inStream, outStream);
  
     	    inStream.close();
     	    outStream.close();
@@ -163,6 +213,93 @@ public class AAConfig {
     	}
 		return 0;
 	}
+
+	/** copy resource to a file
+	 * @param resource: resource file name
+	 * @param dstFileName : Full path to dest file
+	 * @param type: type of resource. 0 - top level dir resource, 1 - graphics resource, 2- sound resource
+	 */
+	public static boolean copy_res_to_file(String resource, String destFileName, int type)
+	{
+		InputStream is;
+		OutputStream os;
+		String resource_path;
+		
+		//log.info("copy_res_to_file: " + resource + " to " + destFileName + " type=" + type);
+		
+		if (type == 0)
+			resource_path = resource;
+		else if (type == 1)
+			resource_path = baseDirName + "/" + graphicsSubDir + "/" + resource;
+		else if (type == 2)
+			resource_path = baseDirName + "/" + soundsSubDir + "/" + resource;
+		else
+			return false;
+		
+		try {
+			is = loader.getResourceAsStream(resource_path);
+			if (is == null) {
+				log.error("Failed to get resource as stream");
+				return false;
+			}
+			File dfile = new File(destFileName);
+    		if (!dfile.exists()) {
+    			if (!dfile.getParentFile().exists())
+    				dfile.getParentFile().mkdirs();
+    			dfile.createNewFile();
+    		}
+    		
+    		os = new FileOutputStream(dfile);
+    		copy_stream(is, os);
+ 
+    	    is.close();
+    	    os.close(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	/** copy dir
+	 * @param srcDirName: Absolute path to source Dir
+	 * @param dstDirName : Absolute path to dest Dir
+	 */
+	public static int copy_dir(String srcDirName, String destDirName)
+	{
+		File src = new File(srcDirName);
+		File dest = new File(destDirName);
+		
+		if (!src.exists()) {
+			log.error("src=" + srcDirName + "does not exist");
+			return 1;
+		}
+		
+		if (!src.isDirectory()) {
+			log.error("src=" + srcDirName + "is not a direcotyr");
+			return 1;
+		}
+		
+		if (!dest.exists()) {
+			log.error("dest=" + destDirName + "does not exist");
+			return 1;
+		}
+		
+		if (!dest.isDirectory()) {
+			log.error("dest=" + destDirName + "is not a direcotyr");
+			return 1;
+		}
+		
+		String files[] = src.list();
+		
+		for (String file : files) {
+ 		   String srcFile = srcDirName + "/" + file;
+ 		   String destFile = destDirName + "/" + file;
+ 		   
+ 		   copy_file(srcFile, destFile);
+ 		}
+		
+		return 0;
+	}
 	
 	/** Add a sound resource file.
 	 * @param srcFileName: Full path name to source sound file
@@ -170,7 +307,7 @@ public class AAConfig {
 	 * @return
 	 */
 	public static int addSoundResource(String srcFileName, String destFileName) {
-		return copy_file(srcFileName, baseDirName + "/" + soundsSubDir + "/" + destFileName);
+		return copy_file(srcFileName, getSoundResourceDirPersistentAbs() + destFileName);
 	}
 	
 	/** Add a word image file.
@@ -179,7 +316,7 @@ public class AAConfig {
 	 * @return
 	 */
 	public static int addImageResource(String srcFileName, String destFileName) {
-		return copy_file(srcFileName, baseDirName + "/" + graphicsSubDir + "/" + destFileName);
+		return copy_file(srcFileName, getGraphicsResourceDirPersistentAbs() + destFileName);
 	}
 
 	/** Add a word to letter.properties file
@@ -191,10 +328,9 @@ public class AAConfig {
 		int i = 1;
 	
 		try {
-			Properties props = getLetterProps();
-			File currentdir = new File(".");
-			File outputFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName + ".temp");
-			File destFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName);
+			Properties propsP = getLetterPropsPersistent();
+			File outputFile = new File(getResourceDirPersistentAbs() + letterPropsName + ".temp");
+			File destFile = new File(getResourceDirPersistentAbs() + letterPropsName);
 			OutputStream outStream;
 			
 			log.info("Temp index file is:" + outputFile);
@@ -206,14 +342,14 @@ public class AAConfig {
 			outStream = new FileOutputStream(outputFile);
 			
 			while (true) {
-				if (props.getProperty("letter." + letter + "." + i + ".word") == null)
+				if (propsP.getProperty("letter." + letter + "." + i + ".word") == null)
 					break;
 				i++;
 			}
 			
-			props.setProperty("letter." + letter + "." + i + ".word", wordText);
-			props.setProperty("letter." + letter + "." + i + ".theme", Theme);
-			props.store(outStream, null);
+			propsP.setProperty("letter." + letter + "." + i + ".word", wordText);
+			propsP.setProperty("letter." + letter + "." + i + ".theme", Theme);
+			propsP.store(outStream, null);
 			outStream.close();
 			outputFile.renameTo(destFile);
 			outputFile.delete();
@@ -230,10 +366,9 @@ public class AAConfig {
 	public static int removeSoundResource(String srcFileName) {
 		int ret = 0;
 		boolean rc;
-		File currentdir = new File(".");
 		
 		try {
-			File file = new File(currentdir.getCanonicalPath() + "/" + baseDirName + "/" + soundsSubDir + "/" + srcFileName);
+			File file = new File(getSoundResourceDirPersistentAbs() + srcFileName);
 			rc = file.delete();
 			if (!rc)
 				ret = 1;
@@ -251,10 +386,9 @@ public class AAConfig {
 	public static int removeImageResource(String srcFileName) {
 		int ret = 0;
 		boolean rc;
-		File currentdir = new File(".");
 		
 		try {
-			File file = new File(currentdir.getCanonicalPath() + "/" + baseDirName + "/" + graphicsSubDir + "/" + srcFileName);
+			File file = new File(getGraphicsResourceDirPersistentAbs() + srcFileName);
 			rc = file.delete();
 			if (!rc)
 				ret = 1;
@@ -274,12 +408,11 @@ public class AAConfig {
 		int i = 1;
 	
 		try {
-			Properties props = getLetterProps();
-			File currentdir = new File(".");
-			File outputFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName + ".temp");
-			File destFile = new File(currentdir.getCanonicalPath() + "/" + letterPropsName);
+			Properties propsP = getLetterPropsPersistent();
+			File outputFile = new File(getResourceDirPersistentAbs() + letterPropsName + ".temp");
+			File destFile = new File(getResourceDirPersistentAbs() + "/" + letterPropsName);
 			OutputStream outStream;
-			int tablesize = props.size();
+			int tablesize = propsP.size();
 			boolean found = false;
 			
 			
@@ -293,7 +426,7 @@ public class AAConfig {
 			outStream = new FileOutputStream(outputFile);
 			
 			while (true) {
-				if (props.getProperty("letter." + letter + "." + i + ".word") == wordText) {
+				if (propsP.getProperty("letter." + letter + "." + i + ".word") == wordText) {
 					found = true;
 					break;
 				}
@@ -308,10 +441,10 @@ public class AAConfig {
 				return 1;
 			}
 			
-			props.remove("letter." + letter + "." + i + ".word");
-			props.remove("letter." + letter + "." + i + ".theme");
+			propsP.remove("letter." + letter + "." + i + ".word");
+			propsP.remove("letter." + letter + "." + i + ".theme");
 			
-			props.store(outStream, null);
+			propsP.store(outStream, null);
 			outStream.close();
 			outputFile.renameTo(destFile);
 			outputFile.delete();

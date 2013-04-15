@@ -225,8 +225,83 @@ public class Alphabet extends Observable {
 		}
 	}
 	
+	public boolean createLoadPersistentResourceDir(Properties prop)
+	{
+		String graphicsPersistentResDirAbs = AAConfig.getGraphicsResourceDirPersistentAbs();
+		String soundPersistentResDirAbs = AAConfig.getSoundResourceDirPersistentAbs();
+		String persistentResDirAbs = AAConfig.getResourceDirPersistentAbs();
+		File gdir = new File(graphicsPersistentResDirAbs);
+		File sdir = new File(soundPersistentResDirAbs);
+		File prdir = new File(persistentResDirAbs);
+		
+		boolean ret = true;
+		
+		if (!prdir.exists()) {
+			ret = prdir.mkdirs();
+			if (ret != true)
+				return ret;
+			String resource = AAConfig.getLetterPropFileName();
+			String dfile = persistentResDirAbs + AAConfig.getLetterPropFileName();
+			
+			//log.info("Copying sfile=" + sfile + " dfile=" + dfile);
+			ret = AAConfig.copy_res_to_file(resource, dfile, 0);
+			if (ret == false) {
+				log.info("Copying res to file failed.");
+			}
+		}
 	
-	
+		if (!gdir.exists()) {
+			ret = gdir.mkdirs();
+			if (ret != true)
+				return ret;
+			
+			for (char c = 'a'; c <= 'z'; c++) {
+				String imageName = null;
+				for (int i = 1; i <= 10; i++) {
+					String propName = "letter." + c + "." + i + ".";
+					try {
+						String wordText = prop.getProperty(propName + "word");
+						
+						if (wordText == null)
+							break;
+						
+						imageName = wordText + ".jpg";
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					AAConfig.copy_res_to_file(imageName, graphicsPersistentResDirAbs + imageName, 1);
+				}
+			}
+		}
+		
+		if (!sdir.exists()) {
+			ret = sdir.mkdirs();
+			if (ret != true)
+				return ret;
+			
+			for (char c = 'a'; c <= 'z'; c++) {
+				String soundName = null;
+				for (int i = 1; i <= 10; i++) {
+					String propName = "letter." + c + "." + i + ".";
+					try {
+						String wordText = prop.getProperty(propName + "word");
+						
+						if (wordText == null)
+							break;
+						
+						soundName = wordText + ".wav";
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					AAConfig.copy_res_to_file(soundName, soundPersistentResDirAbs + soundName, 2);
+				}
+			}
+			AAConfig.copy_dir(AAConfig.getSoundResourceDirAbs(), soundPersistentResDirAbs);
+		}
+		
+		return ret;
+	}
+		
 	/**
 	 * Loads word, picture, and sound resources into Letter objects.
 	 * 
@@ -238,6 +313,11 @@ public class Alphabet extends Observable {
 		//	return;
 		boolean reload_db = true;
 		int nr_rows = 0;
+		Properties propP;
+		
+		createLoadPersistentResourceDir(prop);
+		/* Persistent properties */
+		propP = AAConfig.getLetterPropsPersistent();
 		
 		/* This is a hack to detect if database should be reloaded or not */
 		nr_rows = m_db.getNumberRowsWordTable();
@@ -252,14 +332,14 @@ public class Alphabet extends Observable {
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
-					String wordText = prop.getProperty(propName + "word");
+					String wordText = propP.getProperty(propName + "word");
 					
 					if (wordText == null)
 						break;
 					
 					String imageName = wordText + ".jpg";
 					String soundName = wordText + ".wav";
-					String themeName = prop.getProperty(propName + "theme");
+					String themeName = propP.getProperty(propName + "theme");
 					
 					if(themeName == null) {
 						themeName = Theme.DEFAULT_THEME_NAME;
@@ -306,7 +386,7 @@ public class Alphabet extends Observable {
 		
 		// log.info("Load alphabet song");
 		try {
-			String soundName = prop.getProperty("alphabetsong");
+			String soundName = propP.getProperty("alphabetsong");
 			if (soundName != null) {
 				m_alphabetsong = new GameSound(soundName);
 			}
@@ -342,7 +422,7 @@ public class Alphabet extends Observable {
 			iter_wps = l.GetIterator();
 			while (iter_wps.hasNext()) {
 				wps = iter_wps.next();
-				if (word == wps.GetWordString())
+				if (word.matches(wps.GetWordString()))
 					return wps;
 			}
 		}
@@ -414,8 +494,7 @@ public class Alphabet extends Observable {
 	 
 	public int editWord(String wordText, char associated_letter, String imageName, String soundName, String themeName) {
 		WordPictureSound old_wps;
-		String soundDir, imageDir, srcSoundFile, srcImageFile, absSoundDir, absImageDir;
-		File currentdir = new File(".");
+		String srcSoundFile, srcImageFile;
 		
 		log.info("Edit word: " + wordText +  " image=" + imageName + " sound=" + soundName + " theme=" + themeName);
 		old_wps = getWordPictureSound(m_currentWordEditing);
@@ -428,20 +507,14 @@ public class Alphabet extends Observable {
 			/* If sound and Image file names have not changed, save these away
 			 * otherwise these will be deleted upon delete word. Save these away.
 			 */
-			soundDir = AAConfig.getSoundResourceDir() + "/";
-			imageDir = AAConfig.getGraphicsResourceDir() + "/";
+			srcSoundFile = AAConfig.getSoundResourceDirPersistentAbs() + old_wps.GetWordString() + ".wav";
+			srcImageFile = AAConfig.getGraphicsResourceDirPersistentAbs() + old_wps.GetWordString() + ".jpg";
 			
-			absSoundDir = currentdir.getCanonicalPath() + "/" + soundDir + "/";
-			absImageDir = currentdir.getCanonicalPath() + "/" + imageDir + "/";
-		
-			srcSoundFile = absSoundDir + old_wps.GetWordString() + ".wav";
-			srcImageFile = absImageDir + old_wps.GetWordString() + ".jpg";
-			
-			AAConfig.copy_file(srcSoundFile, soundDir + "temp.wav");
-			AAConfig.copy_file(srcImageFile, imageDir +"temp.jpg");
+			AAConfig.copy_file(srcSoundFile, AAConfig.getSoundResourceDirPersistentAbs()+ "temp.wav");
+			AAConfig.copy_file(srcImageFile, AAConfig.getGraphicsResourceDirPersistentAbs() +"temp.jpg");
 		
 			deleteWord(old_wps.GetWordString());
-			addNewWord(wordText, associated_letter, absImageDir + "temp.jpg", absSoundDir + "temp.wav", themeName);
+			addNewWord(wordText, associated_letter, AAConfig.getGraphicsResourceDirPersistentAbs() + "temp.jpg", AAConfig.getSoundResourceDirPersistentAbs() + "temp.wav", themeName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -472,39 +545,14 @@ public class Alphabet extends Observable {
 		return getWordPictureSound(m_currentWordEditing);
 	}
 	
+	
 	public String getAbsImageFilePath(String wordText)
 	{
-		File currentdir = new File(".");
-		String imageDir, absImageDir = null;
-		
-		try {
-			imageDir = AAConfig.getGraphicsResourceDir() + "/";
-			absImageDir = currentdir.getCanonicalPath() + "/" + imageDir + "/";
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		if (absImageDir != null)
-			return absImageDir + wordText + ".jpg";
-		else
-			return null;
+		return AAConfig.getGraphicsResourceDirPersistentAbs() + wordText + ".jpg";
 	}
 	
 	public String getAbsSoundFilePath(String wordText)
 	{
-		File currentdir = new File(".");
-		String soundDir, absSoundDir = null;
-		
-		try {
-			soundDir = AAConfig.getSoundResourceDir() + "/";
-			absSoundDir = currentdir.getCanonicalPath() + "/" + soundDir + "/";
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		if (absSoundDir != null)
-			return absSoundDir + wordText + ".wav";
-		else
-			return null;
+		return AAConfig.getSoundResourceDirPersistentAbs() + wordText + ".wav";
 	}
 }
