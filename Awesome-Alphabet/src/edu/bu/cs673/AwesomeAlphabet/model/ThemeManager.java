@@ -111,6 +111,16 @@ public class ThemeManager extends Observable {
 		return true;
 	}
 	
+	public boolean loadTheme(String themeName)
+	{
+		if(hasTheme(themeName))
+			return true;
+		
+		m_themes.add(new Theme(themeName));
+		setChanged();
+		notifyObservers();
+		return true;
+	}
 	
 	/**
 	 * Deletes a theme from the Theme Manager.
