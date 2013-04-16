@@ -437,6 +437,7 @@ public class AAConfig {
 			}
 			
 			if (!found) {
+				log.info("word:" + wordText + " not found");
 				outStream.close();
 				return 1;
 			}

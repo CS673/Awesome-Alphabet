@@ -299,92 +299,87 @@ public class Alphabet extends Observable {
 		
 		return ret;
 	}
-		
-	/**
-	 * Loads word, picture, and sound resources into Letter objects.
-	 * 
-	 * @param prop   The property list containing resource information.
-	 */
-	public void LoadResources(Properties prop) {
-		
-		//if(m_themeMgr == null)
-		//	return;
-		boolean reload_db = true;
+	
+	/* Load Database from index file if need be */
+	private void LoadDatabase() {
 		int nr_rows = 0;
-		Properties propP;
+		Properties prop;
 		
-		createLoadPersistentResourceDir(prop);
-		/* Persistent properties */
-		propP = AAConfig.getLetterPropsPersistent();
+		prop = AAConfig.getLetterProps();
 		
-		/* This is a hack to detect if database should be reloaded or not */
+		/* Don't reload database if it has been initialized once */
 		nr_rows = m_db.getNumberRowsWordTable();
 		log.info("Number of rows in Word Table=" + nr_rows);
 		if (nr_rows > 0)
-			reload_db = false;
+			return;
 		
 		/* Parse letter.properties and populate database */
 		for (char c = 'a'; c <= 'z'; c++) {
-			Letter letter = m_letters[GetLetterIndex(c)];
-
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
-					String wordText = propP.getProperty(propName + "word");
+					String wordText = prop.getProperty(propName + "word");
 					
 					if (wordText == null)
 						break;
 					
 					String imageName = wordText + ".jpg";
 					String soundName = wordText + ".wav";
-					String themeName = propP.getProperty(propName + "theme");
+					String themeName = prop.getProperty(propName + "theme");
 					
 					if(themeName == null) {
 						themeName = Theme.DEFAULT_THEME_NAME;
 					}
 						
-					if(reload_db && !m_themeMgr.addTheme(themeName))
+					if(!m_themeMgr.addTheme(themeName))
 						throw new Exception("Error adding theme.");
 				
 					
-					if (reload_db && !m_db.addWord(wordText, imageName, soundName, c, themeName))
+					if (!m_db.addWord(wordText, imageName, soundName, c, themeName))
 						throw new Exception("Error adding word to database.");
-					letter.addResource(imageName, soundName, wordText, 
-								m_themeMgr.getTheme(themeName));
 				} catch (Exception e) {
 					log.error("An exception occurred while loading properties for leter "+c);
 					log.error(e.getMessage());
 					e.printStackTrace();
 				}
 			}
-			
-			log.info("Add Letter Sound");
-			try {
-				//String propName = "letter." + c + ".lettersound";
-				//String letterSoundName = prop.getProperty(propName);
-				String letterSoundName = c + ".wav";
-				if (letterSoundName != null)
-					letter.addLetterSoundResource(letterSoundName);
-			} catch (Exception e) {
-				log.error("An exception occurred while getting the letter sound for letter " + c);
-				log.error(e.getMessage());
-				e.printStackTrace();
-			}
-			// log.info("Add Phonic Sound");
-			try {
-				String phonicSoundName = c + "phonics.wav";
-				if (phonicSoundName != null)
-					letter.addPhonicSoundResource(phonicSoundName);
-			} catch (Exception e) {
-				log.error("An exception occurred while getting the phonice sound for letter " + c);
-				log.error(e.getMessage());
-				e.printStackTrace();
-			}
 		}
-		
-		// log.info("Load alphabet song");
+	}
+	
+	private void loadLetterSound(char letter_c)
+	{
+		Letter letter = m_letters[GetLetterIndex(letter_c)];
+		//log.info("Add Letter Sound");
 		try {
-			String soundName = propP.getProperty("alphabetsong");
+			String letterSoundName = letter_c + ".wav";
+			if (letterSoundName != null)
+				letter.addLetterSoundResource(letterSoundName);
+		} catch (Exception e) {
+			log.error("An exception occurred while getting the letter sound for letter " + letter_c);
+			log.error(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	private void loadLetterPhonicSound(char letter_c)
+	{
+		Letter letter = m_letters[GetLetterIndex(letter_c)];
+		
+		try {
+			String phonicSoundName = letter_c + "phonics.wav";
+			if (phonicSoundName != null)
+				letter.addPhonicSoundResource(phonicSoundName);
+		} catch (Exception e) {
+			log.error("An exception occurred while getting the phonice sound for letter " + letter_c);
+			log.error(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	private void loadAlphabetSong(Properties prop)
+	{
+		try {
+			String soundName = prop.getProperty("alphabetsong");
 			if (soundName != null) {
 				m_alphabetsong = new GameSound(soundName);
 			}
@@ -392,6 +387,47 @@ public class Alphabet extends Observable {
 			log.error("An exception occurred while loading the alphabet song ");
 			log.error(e.getMessage());
 			e.printStackTrace();
+		}
+	}
+	
+	private void loadLettersFromDatabase(char letter_c)
+	{
+		Iterator<Database.WordData> itr = m_db.getWordData(letter_c);
+		Letter letter = m_letters[GetLetterIndex(letter_c)];
+		
+		if (itr == null) {
+			log.error("Iterator Database.WordData is null");
+			return;
+		}
+		
+		while(itr.hasNext()) {
+			Database.WordData wd = itr.next();
+			
+			/* Theme manager can load themes at its own. But if there is no database to begin with then we need this
+			 * as database is populated after theme manager has been instanciated.
+			 */
+			if(!m_themeMgr.loadTheme(wd.theme))
+				log.error("Error adding theme.");
+			
+			letter.addResource(wd.picturePath, wd.soundPath, wd.word, m_themeMgr.getTheme(wd.theme));
+		}
+	}
+	/**
+	 * Loads word, picture, and sound resources into Letter objects.
+	 * 
+	 * @param prop   The property list containing resource information.
+	 */
+	public void LoadResources(Properties prop) {
+		
+		createLoadPersistentResourceDir(prop);
+		LoadDatabase();
+		loadAlphabetSong(prop);
+		
+		/* Parse letter.properties and populate database */
+		for (char c = 'a'; c <= 'z'; c++) {
+			loadLettersFromDatabase(c);
+			loadLetterSound(c);
+			loadLetterPhonicSound(c);
 		}
 	}
 	
@@ -448,7 +484,7 @@ public class Alphabet extends Observable {
 				
 		log.info("Add word word=" + wordText + " letter=" + associatedLetter + " image=" + wordText + ".jpg" + " sound=" + wordText + ".wav" + " theme=" + themeName);
 		m_db.addWord(wordText, wordText + ".jpg", wordText + ".wav", associatedLetter, themeName);
-		AAConfig.addWordToIndex(associatedLetter, wordText, themeName);
+		//AAConfig.addWordToIndex(associatedLetter, wordText, themeName);
 		
 		letter.addResource(wordText + ".jpg", wordText + ".wav", wordText, m_themeMgr.getTheme(themeName));
 		return 0;
@@ -479,7 +515,7 @@ public class Alphabet extends Observable {
 		AAConfig.removeSoundResource(wordText + ".wav");
 		AAConfig.removeImageResource(wordText + ".jpg");
 		m_db.deleteWord(wordText);
-		AAConfig.removeWordFromIndex(letter_c, wordText);
+		//AAConfig.removeWordFromIndex(letter_c, wordText);
 		
 		letter.removeResource(wps);
 		return 0;
