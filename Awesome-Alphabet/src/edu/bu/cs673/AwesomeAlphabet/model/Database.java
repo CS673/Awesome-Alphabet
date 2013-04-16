@@ -630,14 +630,15 @@ public class Database {
 	 */
 	public Iterator<WordData> getWordData(char letter)
 	{
-		if(m_con == null)
+		if(m_con == null) {
+			log.info("m_con is null. returning null");
 			return null;
-		
+		}	
 		try
 		{
 			LinkedList<WordData> list = new LinkedList<WordData>();
 			PreparedStatement prep = m_con.prepareStatement(
-					"SELECT name, ThemeId, SoundPath, PicturePath, letter FROM Words Where letter=?;");
+					"SELECT name, ThemeId, SoundPath, PicturePath, letter FROM Word WHERE letter = ?;");
 			prep.setString(1, Character.toString(letter));
 			ResultSet rs = prep.executeQuery();
 			String themeName;
@@ -645,11 +646,12 @@ public class Database {
 			while(rs.next())
 			{
 				themeName = getThemeName(rs.getInt(2));
+				
 				if(themeName != null)
 				{
 					list.add(new WordData(rs.getString(1),
-							              rs.getString(3),
 							              rs.getString(4),
+							              rs.getString(3),
 							              rs.getString(5).charAt(0),
 							              themeName));
 				}
@@ -658,6 +660,7 @@ public class Database {
 		}
 		catch(Exception ex)
 		{
+			ex.printStackTrace();
 			return null;
 		}
 	}

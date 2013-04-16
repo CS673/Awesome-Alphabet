@@ -346,9 +346,10 @@ public class Alphabet extends Observable {
 		}
 	}
 	
-	private void loadLetterSound(Letter letter, char letter_c)
+	private void loadLetterSound(char letter_c)
 	{
-		log.info("Add Letter Sound");
+		Letter letter = m_letters[GetLetterIndex(letter_c)];
+		//log.info("Add Letter Sound");
 		try {
 			String letterSoundName = letter_c + ".wav";
 			if (letterSoundName != null)
@@ -360,8 +361,10 @@ public class Alphabet extends Observable {
 		}
 	}
 	
-	private void loadLetterPhonicSound(Letter letter, char letter_c)
+	private void loadLetterPhonicSound(char letter_c)
 	{
+		Letter letter = m_letters[GetLetterIndex(letter_c)];
+		
 		try {
 			String phonicSoundName = letter_c + "phonics.wav";
 			if (phonicSoundName != null)
@@ -387,6 +390,28 @@ public class Alphabet extends Observable {
 		}
 	}
 	
+	private void loadLettersFromDatabase(char letter_c)
+	{
+		Iterator<Database.WordData> itr = m_db.getWordData(letter_c);
+		Letter letter = m_letters[GetLetterIndex(letter_c)];
+		
+		if (itr == null) {
+			log.error("Iterator Database.WordData is null");
+			return;
+		}
+		
+		while(itr.hasNext()) {
+			Database.WordData wd = itr.next();
+			
+			/* Theme manager can load themes at its own. But if there is no database to begin with then we need this
+			 * as database is populated after theme manager has been instanciated.
+			 */
+			if(!m_themeMgr.loadTheme(wd.theme))
+				log.error("Error adding theme.");
+			
+			letter.addResource(wd.picturePath, wd.soundPath, wd.word, m_themeMgr.getTheme(wd.theme));
+		}
+	}
 	/**
 	 * Loads word, picture, and sound resources into Letter objects.
 	 * 
@@ -400,45 +425,15 @@ public class Alphabet extends Observable {
 		
 		/* Persistent properties */
 		propP = AAConfig.getLetterPropsPersistent();
+		loadAlphabetSong(propP);
 		
 		/* Parse letter.properties and populate database */
 		for (char c = 'a'; c <= 'z'; c++) {
 			Letter letter = m_letters[GetLetterIndex(c)];
-			
-			for (int i = 1; i <= 10; i++) {
-				String propName = "letter." + c + "." + i + ".";
-				try {
-					String wordText = propP.getProperty(propName + "word");
-					
-					if (wordText == null)
-						break;
-					
-					String imageName = wordText + ".jpg";
-					String soundName = wordText + ".wav";
-					String themeName = propP.getProperty(propName + "theme");
-					
-					if(themeName == null) {
-						themeName = Theme.DEFAULT_THEME_NAME;
-					}
-						
-					if(!m_themeMgr.loadTheme(themeName))
-						throw new Exception("Error adding theme.");
-				
-					letter.addResource(imageName, soundName, wordText, 
-								m_themeMgr.getTheme(themeName));
-				} catch (Exception e) {
-					log.error("An exception occurred while loading properties for leter "+c);
-					log.error(e.getMessage());
-					e.printStackTrace();
-				}
-			}
-			
-
-			loadLetterSound(letter, c);
-			loadLetterPhonicSound(letter, c);
+			loadLettersFromDatabase(c);
+			loadLetterSound(c);
+			loadLetterPhonicSound(c);
 		}
-		
-		loadAlphabetSong(propP);
 	}
 	
 	public void PlayAlphabetSong() {
