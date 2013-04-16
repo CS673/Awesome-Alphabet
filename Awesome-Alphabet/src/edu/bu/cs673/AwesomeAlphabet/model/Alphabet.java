@@ -303,9 +303,9 @@ public class Alphabet extends Observable {
 	/* Load Database from index file if need be */
 	private void LoadDatabase() {
 		int nr_rows = 0;
-		Properties propP;
+		Properties prop;
 		
-		propP = AAConfig.getLetterPropsPersistent();
+		prop = AAConfig.getLetterProps();
 		
 		/* Don't reload database if it has been initialized once */
 		nr_rows = m_db.getNumberRowsWordTable();
@@ -318,14 +318,14 @@ public class Alphabet extends Observable {
 			for (int i = 1; i <= 10; i++) {
 				String propName = "letter." + c + "." + i + ".";
 				try {
-					String wordText = propP.getProperty(propName + "word");
+					String wordText = prop.getProperty(propName + "word");
 					
 					if (wordText == null)
 						break;
 					
 					String imageName = wordText + ".jpg";
 					String soundName = wordText + ".wav";
-					String themeName = propP.getProperty(propName + "theme");
+					String themeName = prop.getProperty(propName + "theme");
 					
 					if(themeName == null) {
 						themeName = Theme.DEFAULT_THEME_NAME;
@@ -376,10 +376,10 @@ public class Alphabet extends Observable {
 		}
 	}
 	
-	private void loadAlphabetSong(Properties propP)
+	private void loadAlphabetSong(Properties prop)
 	{
 		try {
-			String soundName = propP.getProperty("alphabetsong");
+			String soundName = prop.getProperty("alphabetsong");
 			if (soundName != null) {
 				m_alphabetsong = new GameSound(soundName);
 			}
@@ -418,18 +418,13 @@ public class Alphabet extends Observable {
 	 * @param prop   The property list containing resource information.
 	 */
 	public void LoadResources(Properties prop) {
-		Properties propP;
 		
 		createLoadPersistentResourceDir(prop);
 		LoadDatabase();
-		
-		/* Persistent properties */
-		propP = AAConfig.getLetterPropsPersistent();
-		loadAlphabetSong(propP);
+		loadAlphabetSong(prop);
 		
 		/* Parse letter.properties and populate database */
 		for (char c = 'a'; c <= 'z'; c++) {
-			Letter letter = m_letters[GetLetterIndex(c)];
 			loadLettersFromDatabase(c);
 			loadLetterSound(c);
 			loadLetterPhonicSound(c);
@@ -489,7 +484,7 @@ public class Alphabet extends Observable {
 				
 		log.info("Add word word=" + wordText + " letter=" + associatedLetter + " image=" + wordText + ".jpg" + " sound=" + wordText + ".wav" + " theme=" + themeName);
 		m_db.addWord(wordText, wordText + ".jpg", wordText + ".wav", associatedLetter, themeName);
-		AAConfig.addWordToIndex(associatedLetter, wordText, themeName);
+		//AAConfig.addWordToIndex(associatedLetter, wordText, themeName);
 		
 		letter.addResource(wordText + ".jpg", wordText + ".wav", wordText, m_themeMgr.getTheme(themeName));
 		return 0;
@@ -520,7 +515,7 @@ public class Alphabet extends Observable {
 		AAConfig.removeSoundResource(wordText + ".wav");
 		AAConfig.removeImageResource(wordText + ".jpg");
 		m_db.deleteWord(wordText);
-		AAConfig.removeWordFromIndex(letter_c, wordText);
+		//AAConfig.removeWordFromIndex(letter_c, wordText);
 		
 		letter.removeResource(wps);
 		return 0;
