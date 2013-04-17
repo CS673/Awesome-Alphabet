@@ -59,4 +59,8 @@ public class WPSTableModel extends AbstractTableModel {
 		m_words.add(wpsViewData);
 	}
 
+	public String getSelectedWord(int selectedRow) {
+		return m_words.get(selectedRow).m_word;
+	}
+
 }

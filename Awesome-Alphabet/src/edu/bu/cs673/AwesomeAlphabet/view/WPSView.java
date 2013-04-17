@@ -179,18 +179,18 @@ public class WPSView extends PageView {
 	}
 	
 	public void OnWordEditClicked() {
-//		String word = (String) m_wordTable.getSelectedRow();
-//		if (m_controller != null && word != null) {
-//			m_controller.EditWord(word);
-//		}
+		String word = m_wordModel.getSelectedWord(m_wordTable.getSelectedRow());
+		if (m_controller != null && word != null) {
+			m_controller.EditWord(word);
+		}
 	}
 	
 	public void OnWordDeleteClicked() {
-//		String word = (String) m_wordTable.getSelectedRow();
-//		if (m_controller != null && word != null) {
-//			m_controller.DeleteWord(word);
-//			refreshWordList();
-//		}
+		String word = m_wordModel.getSelectedWord(m_wordTable.getSelectedRow());
+		if (m_controller != null && word != null) {
+			m_controller.DeleteWord(word);
+			refreshWordList();
+		}
 	}
 	
 	public void OnReturnHomeClicked() {
