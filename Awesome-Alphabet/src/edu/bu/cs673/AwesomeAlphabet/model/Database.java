@@ -40,16 +40,6 @@ public class Database {
 		return m_db;
 	}
 	
-	public void closeConnection()
-	{
-		try {
-		
-			m_con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	/**
 	 * Constructor.
 	 */
@@ -83,6 +73,7 @@ public class Database {
 		
 		createTables();
 		createDefaultTheme();
+		EnableForeignKeySupport();
 	}
 	
 	
@@ -143,6 +134,24 @@ public class Database {
 	
 	
 	
+	/**
+	 * Enables database foreign key support
+	 */
+	private void EnableForeignKeySupport()
+	{
+		try
+		{
+			//Enable Foreign Key Support
+			PreparedStatement prep = m_con.prepareStatement(
+					"PRAGMA foreign_keys = true;");
+			prep.executeUpdate();
+		}
+		catch(Exception ex)
+		{}	
+	}
+	
+	
+	
 	// ***** Theme Table Functions *****
 	
 	
@@ -196,19 +205,7 @@ public class Database {
 					"DELETE FROM Theme WHERE id = ?;");
 			prep.setInt(1, iThemeId);
          
-			if(prep.executeUpdate() <= 0)
-				return false;
-         
-			//Update foreign key references in Word table.
-			//This is a temporary fix until we find out how
-			//to enable automatic foreign key / referential 
-			//integrity enformcement by the database.
-			prep = m_con.prepareStatement(
-					"UPDATE Word SET ThemeId = ? WHERE ThemeId = ?;");
-			prep.setInt(1, m_iDefThemeId);
-			prep.setInt(2, iThemeId);
-			prep.executeUpdate();
-			return true;
+			return prep.executeUpdate() > 0;
 		}
 		catch(Exception ex)
 		{
