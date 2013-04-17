@@ -1,5 +1,6 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,6 +11,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
+import edu.bu.cs673.AwesomeAlphabet.value.WPSViewData;
 
 
 /**
@@ -93,6 +95,29 @@ public class Alphabet extends Observable {
 		return Arrays.asList(m_letters).iterator();
 	}
 	
+	public Iterator<WPSViewData> getWords(String prefix)
+	{
+		ArrayList<WPSViewData> list = new ArrayList<WPSViewData>();
+		Iterator<Letter> letter_iter = GetIterator();
+		boolean allWords = ((prefix == null) || (prefix.isEmpty()));
+		
+		while (letter_iter.hasNext()) {
+			Letter letter = letter_iter.next();
+			Iterator<WordPictureSound> wps_iter = letter.GetIterator();
+			while (wps_iter.hasNext()) {
+				WordPictureSound wps = wps_iter.next();
+				if (allWords || wps.GetWordString().startsWith(prefix))
+					list.add(new WPSViewData(wps.GetWordString(), "" + wps.getWordLetter(), wps.getTheme().getThemeName()));
+			}
+		}
+		
+		return list.listIterator();
+	}
+	
+	public Iterator<WPSViewData> getWords() {
+		return getWords(null);
+	}
+
 	/**
 	 * Gets an iterator to the list of String objects.
 	 * 
@@ -589,4 +614,6 @@ public class Alphabet extends Observable {
 	{
 		return AAConfig.getSoundResourceDirPersistentAbs() + wordText + ".wav";
 	}
+
+
 }

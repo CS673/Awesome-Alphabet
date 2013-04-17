@@ -1,19 +1,23 @@
 package edu.bu.cs673.AwesomeAlphabet.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.Iterator;
 import java.util.Observable;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -21,11 +25,14 @@ import org.apache.log4j.Logger;
 
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.WPSController;
+import edu.bu.cs673.AwesomeAlphabet.value.WPSViewData;
 
 public class WPSView extends PageView {
 	
-	private JList m_wordList = new JList();
-	private DefaultListModel m_wordModel = new DefaultListModel();
+//	private JList m_wordList = new JList();
+//	private DefaultListModel m_wordModel = new DefaultListModel();
+	private JTable m_wordTable = new JTable();
+	private WPSTableModel m_wordModel = new WPSTableModel();
 	private JTextField m_textField = new JTextField();
 	
 	private WPSController m_controller;
@@ -56,38 +63,58 @@ public class WPSView extends PageView {
 		centerPanel.setBackground(backgroundColor);
 		centerPanel.setLayout(new GridBagLayout());
 		
-		GridBagConstraints c = new GridBagConstraints();
+		JLabel l = new JLabel("Word Editor");
+		l.setFont(headingFont);
+		l.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+		p.setBackground(headingBackground);
+		p.add(l);
+		p.add(new JSeparator(SwingConstants.HORIZONTAL));
+		m_panel.add(p, BorderLayout.NORTH);
 		
+		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		p = new JPanel(new GridBagLayout());
+		p.setBackground(backgroundColor);
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridheight = 1;
-		centerPanel.add(new JLabel("Search:"));
+		c.insets = new Insets(0, 20, 0, 0);
+		p.add(new JLabel("Search:"), c);
 		
 		c.gridx = 1;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		centerPanel.add(m_textField, c);
+		c.weightx = 0.9;
+		c.insets = new Insets(0, 0, 0, 20);
+		p.add(m_textField, c);
 		
-		m_wordList.setModel(m_wordModel);
-		m_wordList.setVisibleRowCount(10);
-		JScrollPane scroll = new JScrollPane();
-		scroll.setSize(200, 300);
-		scroll.setViewportView(m_wordList);
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 2;
-		centerPanel.add(scroll, c);
-
+		c.gridy = 0;
+		c.weightx = 0.5;
+		c.insets = new Insets(0, 0, 0, 0);
+		centerPanel.add(p, c);
+		
+		p = new JPanel(new GridBagLayout());
+		p.setBackground(backgroundColor);
+		
+		m_wordTable.setModel(m_wordModel);
+		m_wordTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scroll = new JScrollPane();
+		scroll.setViewportView(m_wordTable);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 0.9;
+		c.weighty = 0.9;
+		p.add(scroll);
+		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(backgroundColor);
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
-		c.gridx = 2;
-		c.gridy = 2;
-		c.gridheight = 2;
-		c.gridwidth = 1;
-		centerPanel.add(buttonPanel, c);
+		c.gridx = 1;
+		c.gridy = 0;
+		c.weightx = 0.0;
+		c.weighty = 0.0;
+		p.add(buttonPanel, c);
 		
 		JButton b = new JButton("Add");
 		b.addActionListener(new ButtonHandler(this, "OnWordAddClicked"));
@@ -101,6 +128,13 @@ public class WPSView extends PageView {
 		b.addActionListener(new ButtonHandler(this, "OnWordEditClicked"));
 		buttonPanel.add(b);
 		
+		c.gridx = 0;
+		c.gridy = 1;
+		c.weighty = 0.5;
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.NORTH;
+		centerPanel.add(p, c);
+
 		m_panel.add(centerPanel, BorderLayout.CENTER);
 		
 		b = getButtonImage(AA_NAV_BUTTON_RETURN_HOME, "Return to Options Menu");
@@ -111,18 +145,20 @@ public class WPSView extends PageView {
 	}
 	
 	private void refreshWordList() {
-		Iterator<String> words = m_controller.getWords();
+		Iterator<WPSViewData> words = m_controller.getWords();
 		
 		updateWordList(words);
 	}
 
-	public void updateWordList(Iterator<String> words) {
+	public void updateWordList(Iterator<WPSViewData> words) {
 		if (words != null) {
 			m_wordModel.removeAllElements();
 			while (words.hasNext()) {
 				m_wordModel.addElement(words.next());
 			}
 		}
+		m_wordModel.sort();
+		m_wordModel.fireTableDataChanged();
 	}
 	
 	@Override
@@ -143,18 +179,18 @@ public class WPSView extends PageView {
 	}
 	
 	public void OnWordEditClicked() {
-		String word = (String) m_wordList.getSelectedValue();
-		if (m_controller != null && word != null) {
-			m_controller.EditWord(word);
-		}
+//		String word = (String) m_wordTable.getSelectedRow();
+//		if (m_controller != null && word != null) {
+//			m_controller.EditWord(word);
+//		}
 	}
 	
 	public void OnWordDeleteClicked() {
-		String word = (String) m_wordList.getSelectedValue();
-		if (m_controller != null && word != null) {
-			m_controller.DeleteWord(word);
-			refreshWordList();
-		}
+//		String word = (String) m_wordTable.getSelectedRow();
+//		if (m_controller != null && word != null) {
+//			m_controller.DeleteWord(word);
+//			refreshWordList();
+//		}
 	}
 	
 	public void OnReturnHomeClicked() {
