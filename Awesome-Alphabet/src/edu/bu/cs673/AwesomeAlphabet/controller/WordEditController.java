@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.model.Theme;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
+import edu.bu.cs673.AwesomeAlphabet.value.WPSViewData;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.WordEditView;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
@@ -75,5 +76,21 @@ public class WordEditController extends PageController {
 	public int getLetterIndex(char wordLetter) {
 		return m_model.GetLetterIndex(wordLetter);
 	}
-
+	
+	/**
+	 * Returns true if word exists in the current model.
+	 * 
+	 * @param sWord  The name of the word.
+	 * @return       True if the word exists in the current model.
+	 */
+	public boolean wordExists(String sWord)
+	{
+		Iterator<WPSViewData> words = m_model.getWords();
+		
+		while(words.hasNext())
+			if(words.next().m_word.compareToIgnoreCase(sWord) == 0)
+				return true;
+		
+		return false;
+	}
 }

@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
 
@@ -48,6 +49,8 @@ public class WordEditView extends PageView {
 		JButton selectImage = new JButton("Select");
 		selectImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				chooser.removeChoosableFileFilter(chooser.getFileFilter());
+				chooser.setFileFilter(new FileNameExtensionFilter("JPEG Files (*.jpg)", "jpg"));
 				int result = chooser.showOpenDialog(WordEditView.this.m_panel);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File f = chooser.getSelectedFile();
@@ -59,6 +62,8 @@ public class WordEditView extends PageView {
 		JButton selectSound = new JButton("Select");
 		selectSound.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				chooser.removeChoosableFileFilter(chooser.getFileFilter());
+				chooser.setFileFilter(new FileNameExtensionFilter("WAV Files (*.wav)", "wav"));
 				int result = chooser.showOpenDialog(WordEditView.this.m_panel);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File f = chooser.getSelectedFile();
@@ -153,6 +158,39 @@ public class WordEditView extends PageView {
 	
 	public void OnSaveClicked() {
 		
+		WordPictureSound wps = m_controller.getCurrentWordEditing();
+		String sWord = m_wordField.getText().trim();
+		String sCharacter = (String) m_letterChoice.getSelectedItem();
+		char letter_c = sCharacter.charAt(0);
+		String sAbsImageFilePath = m_imageFileField.getText();
+		String sAbsSoundFilePath = m_soundFileField.getText();
+		
+		if(m_controller == null)
+			return;
+		
+		//Verify Word
+		if(m_wordField.getText().compareTo("") == 0)
+		{
+			JOptionPane.showMessageDialog(getPagePanel(), "Please enter a word.", "Validation Error",
+                    JOptionPane.PLAIN_MESSAGE);
+			return;
+		}
+		else if(    m_controller.wordExists(sWord)
+				&& (wps == null || wps.GetWordString().compareToIgnoreCase(sWord) != 0))
+		{
+			JOptionPane.showMessageDialog(getPagePanel(), "The specified word already exists.\n" +
+		                                                  "Please enter another word or edit the existing word.", 
+		                                                  "Validation Error", JOptionPane.PLAIN_MESSAGE);
+			return;
+		}
+		else if(!sWord.matches("([a-zA-Z]+([- ][a-zA-Z]+)*)"))
+		{
+			JOptionPane.showMessageDialog(getPagePanel(), "The specified word contains invalid characters.\n" +
+                    									  "Please enter a valid word.", 
+                    									  "Validation Error", JOptionPane.PLAIN_MESSAGE);
+			return;
+		}
+		
 		//Verify Theme Selection
 		if(m_themeChoice.getSelectedItem().toString().compareTo(m_sUnselectedThemeName) == 0)
 		{
@@ -161,19 +199,31 @@ public class WordEditView extends PageView {
 			return;
 		}
 		
+		//Verify that image file exists
+		if( !(new File(sAbsImageFilePath)).isFile() || !sAbsImageFilePath.toLowerCase().endsWith(".jpg"))
+		{
+			JOptionPane.showMessageDialog(getPagePanel(), "Please select a valid \".jpg\" image file.", 
+					                      "Validation Error", JOptionPane.PLAIN_MESSAGE);
+			return;		
+		}
+		
+		//Verify that sound file exists
+		if( !(new File(sAbsSoundFilePath)).isFile() || !sAbsSoundFilePath.toLowerCase().endsWith(".wav"))
+		{
+			JOptionPane.showMessageDialog(getPagePanel(), "Please select a valid \".wav\" sound file.", 
+					                      "Validation Error", JOptionPane.PLAIN_MESSAGE);
+			return;		
+		}
+		
+		
 		//Save Values
-		if (m_controller != null) {
-			WordPictureSound wps = m_controller.getCurrentWordEditing();
-			String character = (String) m_letterChoice.getSelectedItem();
-			char letter_c = character.charAt(0);
-			if (wps == null) {
-				/* It is new word being added */
-				m_controller.SaveNewWord(m_wordField.getText(), letter_c, m_imageFileField.getText(),
-					m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
-			} else {
-				m_controller.SaveEditWord(m_wordField.getText(), letter_c, m_imageFileField.getText(),
-						m_soundFileField.getText(), m_themeChoice.getSelectedItem().toString());
-			}
+		if (wps == null) {
+			/* It is new word being added */
+			m_controller.SaveNewWord(sWord, letter_c, sAbsImageFilePath,
+					sAbsSoundFilePath, m_themeChoice.getSelectedItem().toString());
+		} else {
+			m_controller.SaveEditWord(sWord, letter_c, sAbsImageFilePath,
+					sAbsSoundFilePath, m_themeChoice.getSelectedItem().toString());
 		}
 	}
 
