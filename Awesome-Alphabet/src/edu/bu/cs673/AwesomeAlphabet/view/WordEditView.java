@@ -10,7 +10,6 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Observable;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -29,7 +28,7 @@ public class WordEditView extends PageView {
 	
 	private WordEditController m_controller = null;
 	private JTextField m_wordField = new JTextField();
-	private JComboBox m_themeChoice = new JComboBox(new DefaultComboBoxModel());
+	private JComboBox<String> m_themeChoice = new JComboBox<String>();
 	private JTextField m_imageFileField = new JTextField();
 	private JTextField m_soundFileField = new JTextField();
 	private static final JFileChooser chooser = new JFileChooser();
@@ -37,7 +36,7 @@ public class WordEditView extends PageView {
 			"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 	};
 	private String m_sUnselectedThemeName = "--none--";
-	private JComboBox m_letterChoice = new JComboBox(letters);
+	private JComboBox<String> m_letterChoice = new JComboBox<String>(letters);
 	protected static Logger log = Logger.getLogger(WordEditView.class);
 	
 	public WordEditView(String pageName) {
@@ -191,7 +190,6 @@ public class WordEditView extends PageView {
 		if (m_controller != null) {
 			Iterator<String> themes = m_controller.getThemeNamesIterator();
 			WordPictureSound wps = m_controller.getCurrentWordEditing();
-			String absSoundFilePath, absImageFilePath;
 			
 			m_themeChoice.removeAllItems();
 			m_themeChoice.addItem(m_sUnselectedThemeName);
@@ -200,22 +198,36 @@ public class WordEditView extends PageView {
 				m_themeChoice.addItem(s);
 			}
 			
-			if (wps != null) {
+			if (wps == null) //If "Add" mode: Initialize controls
+			{
+				m_wordField.setText("");
+				
+				if(m_themeChoice.getItemCount() > 0)
+					m_themeChoice.setSelectedIndex(0);  //Select "--none--"
+				
+				if(m_letterChoice.getItemCount() > 0)
+					m_letterChoice.setSelectedIndex(0); //Select "a"
+				
+				m_imageFileField.setText("");
+				m_soundFileField.setText("");
+				
+			}
+			else //"Edit" mode: Populate controls
+			{
 				m_wordField.setText(wps.GetWordString());
 				log.info("word theme is:" + wps.getTheme().getThemeName());
 				
 				for (i = 0; i < m_themeChoice.getItemCount(); i++) {
 					if (m_themeChoice.getItemAt(i).toString().equals(wps.getTheme().getThemeName())) {
 						m_themeChoice.setSelectedIndex(i);
+						break;
 					}
 				}
+				
 				m_letterChoice.setSelectedIndex(m_controller.getLetterIndex(wps.getWordLetter()));
-				absImageFilePath = m_controller.getAbsImageFilePath(wps.GetWordString());
-				absSoundFilePath = m_controller.getAbsSoundFilePath(wps.GetWordString());
-				m_imageFileField.setText(absImageFilePath);
-				m_soundFileField.setText(absSoundFilePath);
+				m_imageFileField.setText(m_controller.getAbsImageFilePath(wps.GetWordString()));
+				m_soundFileField.setText(m_controller.getAbsSoundFilePath(wps.GetWordString()));
 			}
-			
 		}
 	}
 

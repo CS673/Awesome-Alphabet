@@ -169,6 +169,7 @@ public class WPSView extends PageView {
 
 	@Override
 	public void activated() {
+		m_textField.setText("");
 		refreshWordList();
 	}
 	
