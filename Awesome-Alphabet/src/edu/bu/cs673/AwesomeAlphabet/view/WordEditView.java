@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -35,6 +36,7 @@ public class WordEditView extends PageView {
 	private String[] letters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
 			"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 	};
+	private String m_sUnselectedThemeName = "--none--";
 	private JComboBox m_letterChoice = new JComboBox(letters);
 	protected static Logger log = Logger.getLogger(WordEditView.class);
 	
@@ -66,7 +68,7 @@ public class WordEditView extends PageView {
 			}
 		});
 
-		m_themeChoice.addItem("--none--");
+		m_themeChoice.addItem(m_sUnselectedThemeName);
 		
 		m_panel.setLayout(new BorderLayout());
 		
@@ -151,6 +153,16 @@ public class WordEditView extends PageView {
 	}
 	
 	public void OnSaveClicked() {
+		
+		//Verify Theme Selection
+		if(m_themeChoice.getSelectedItem().toString().compareTo(m_sUnselectedThemeName) == 0)
+		{
+			JOptionPane.showMessageDialog(getPagePanel(), "Please select a valid theme.", "Validation Error",
+					                      JOptionPane.PLAIN_MESSAGE);
+			return;
+		}
+		
+		//Save Values
 		if (m_controller != null) {
 			WordPictureSound wps = m_controller.getCurrentWordEditing();
 			String character = (String) m_letterChoice.getSelectedItem();
@@ -182,7 +194,7 @@ public class WordEditView extends PageView {
 			String absSoundFilePath, absImageFilePath;
 			
 			m_themeChoice.removeAllItems();
-			m_themeChoice.addItem("--none--");
+			m_themeChoice.addItem(m_sUnselectedThemeName);
 			while (themes.hasNext()) {
 				String s = themes.next();
 				m_themeChoice.addItem(s);
