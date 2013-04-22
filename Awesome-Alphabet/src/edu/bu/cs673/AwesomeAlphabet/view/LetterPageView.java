@@ -160,20 +160,6 @@ public class LetterPageView extends PageView {
 			m_controller.PictureClicked();
 	}
 	
-	
-	/**
-	 * Called when the word is clicked and causes
-	 * the controller to play the word's sound.
-	 */
-	public void OnWordClick()
-	{
-		log.info("The word is clicked for sound..");
-		
-		if(m_controller != null)
-			m_controller.WordClicked();
-	}
-	
-	
 	/**
 	 * Called when the Next Letter button is clicked
 	 * and causes the next letter to be displayed

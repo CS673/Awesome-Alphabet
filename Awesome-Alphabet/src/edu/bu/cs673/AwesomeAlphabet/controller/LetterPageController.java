@@ -1,13 +1,9 @@
 package edu.bu.cs673.AwesomeAlphabet.controller;
-import java.awt.image.BufferedImage;
-
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
@@ -77,11 +73,11 @@ public class LetterPageController extends PageController {
 	 * word was clicked.  This will cause the word sound to be
 	 * played.
 	 */
-	public void WordClicked()
-	{
-		//Play picture/word sound
-		throw new NotImplementedException();
-	}
+//	public void WordClicked()
+//	{
+//		//Play picture/word sound
+//		throw new NotImplementedException();
+//	}
 	
 	
 	/**
@@ -183,10 +179,10 @@ public class LetterPageController extends PageController {
 	 * 
 	 * @return    Word picture as a BufferedImage.
 	 */
-	public BufferedImage GetPicture()
-	{
-		throw new NotImplementedException();
-	}
+//	public BufferedImage GetPicture()
+//	{
+//		throw new NotImplementedException();
+//	}
 	
 	
 	/**
@@ -195,10 +191,10 @@ public class LetterPageController extends PageController {
 	 * 
 	 * @return    Letter word as a String.
 	 */
-	public String GetWord()
-	{
-		throw new NotImplementedException();	
-	}
+//	public String GetWord()
+//	{
+//		throw new NotImplementedException();	
+//	}
 
 
 	public void ObserveCurrentLetter() {
