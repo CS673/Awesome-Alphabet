@@ -69,18 +69,6 @@ public class LetterPageController extends PageController {
 	
 	
 	/**
-	 * This method is used to notify the controller that the
-	 * word was clicked.  This will cause the word sound to be
-	 * played.
-	 */
-//	public void WordClicked()
-//	{
-//		//Play picture/word sound
-//		throw new NotImplementedException();
-//	}
-	
-	
-	/**
 	 * This method causes the controller to update the Alphabet
 	 * model so that the next letter is displayed.
 	 * 
@@ -171,30 +159,6 @@ public class LetterPageController extends PageController {
 	{
 		return m_alphabet.GetCurrentLetter().GetLetterAsChar();
 	}
-	
-	
-	/**
-	 * This method gets the current word picture from the 
-	 * Letter model.
-	 * 
-	 * @return    Word picture as a BufferedImage.
-	 */
-//	public BufferedImage GetPicture()
-//	{
-//		throw new NotImplementedException();
-//	}
-	
-	
-	/**
-	 * This method gets the current word from the 
-	 * Letter model.
-	 * 
-	 * @return    Letter word as a String.
-	 */
-//	public String GetWord()
-//	{
-//		throw new NotImplementedException();	
-//	}
 
 
 	public void ObserveCurrentLetter() {
