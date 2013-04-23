@@ -1,5 +1,6 @@
 package edu.bu.cs673.AwesomeAlphabet.view;
 
+import java.awt.EventQueue;
 import java.util.Observable;
 
 import javax.swing.Box;
@@ -165,6 +166,11 @@ public class OptionsPageView extends PageView {
 			m_unlockInstructionsLbl.setText(GetUnlockQuestion());
 			for(int i=0; i<m_iUnlockResponseCount; i++)
 				m_unlockAnswerTextField[i].setText("");
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					m_unlockAnswerTextField[0].requestFocus();
+				}
+			});
 		}	
 		
 		for(int i=0; i<m_iUnlockResponseCount; i++)
