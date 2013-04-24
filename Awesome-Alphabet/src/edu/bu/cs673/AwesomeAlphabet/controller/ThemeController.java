@@ -36,7 +36,7 @@ public class ThemeController extends PageController {
 		m_view = view;
 		m_themeMgr = themeMgr;
 		
-		themeMgr.addObserver(m_view);
+		themeMgr.notifyWhenUpdatesComplete(m_view);
 	}
 
 
