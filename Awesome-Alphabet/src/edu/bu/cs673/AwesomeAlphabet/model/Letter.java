@@ -88,7 +88,6 @@ public class Letter extends Observable implements Observer {
 	 * @param theme        The theme.
 	 */
 	public void addResource(String imageName, String soundName, String wordText, Theme theme) {
-		log.info("Vivek: addResource(): word=" + wordText + " image=" + imageName + " sound="+ soundName + " theme=" + theme.getThemeName());
 		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme));
 		if(m_index < 0)
 			nextExample();
@@ -141,7 +140,6 @@ public class Letter extends Observable implements Observer {
 		WordPictureSound wps = getWPSData(m_index);
 		if (wps == null)
 			return null;
-		//log.info("Vivek: getIcon(): word=" + wps.GetWordString());
 		return wps.GetWordImage(width, height);
 	}
 
@@ -156,7 +154,6 @@ public class Letter extends Observable implements Observer {
 		Theme curTheme = (m_themeMgr == null) ? null : m_themeMgr.getCurrentTheme();
 		Theme theme;
 		
-		//log.info("Vivek: nextExample(): iWpsSize=" + iWpsSize + " m_index=" + m_index + " curTheme=" + curTheme);
 		setChanged();
 		
 		//If there are no words for the current letter
@@ -198,7 +195,6 @@ public class Letter extends Observable implements Observer {
 			}
 		} while(theme != curTheme); //While the word is not part of the current theme
 		
-		//log.info("Vivek: nextExample() end: m_index=" + m_index);
 		notifyObservers(this);
 	}
 
@@ -300,11 +296,11 @@ public class Letter extends Observable implements Observer {
 		boolean reset_index = false;
 		
 		/* If current word is being deleted, reset the index */
-		log.info("remove word=" + wps.GetWordString() + " current word=" + getWord());
 		if (wps.GetWordString().equals(getWord())) {
 			reset_index = true;
 		}
 		
+		wps.getTheme().decRefCount();
 		m_wps.remove(wps);
 		
 		if (reset_index == true) {

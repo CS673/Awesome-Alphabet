@@ -408,8 +408,6 @@ public class Database {
 	{
 		int ret;
 		
-		log.info("addWord Called for:"+wordName);	
-		
 		if(m_con == null || wordName == "" || hasWord(wordName) == 1 || themeName == "" ||
 		    letter < 'a' || letter > 'z')
 		{
