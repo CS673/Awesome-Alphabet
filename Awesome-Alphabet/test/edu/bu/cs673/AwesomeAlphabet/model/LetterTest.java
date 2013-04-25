@@ -7,7 +7,6 @@ import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
 import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 
-import org.easymock.EasyMock;
 import org.junit.*;
 import static org.junit.Assert.*;
 

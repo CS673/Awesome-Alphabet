@@ -1,13 +1,7 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
 
 import java.awt.Image;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-
 import org.junit.*;
-
-import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
 import edu.bu.cs673.AwesomeAlphabet.model.GameImage;
 import static org.junit.Assert.*;
 

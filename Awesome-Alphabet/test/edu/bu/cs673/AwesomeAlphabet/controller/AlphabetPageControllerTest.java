@@ -2,7 +2,6 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
@@ -13,8 +12,6 @@ import org.junit.Test;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
-import edu.bu.cs673.AwesomeAlphabet.model.ThemeManager;
-import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 
@@ -55,11 +52,12 @@ public class AlphabetPageControllerTest {
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:54 AM
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetLetterIterator()	throws Exception {
 		MainWindow mainWindow = EasyMock.createMock(MainWindow.class);
 		Alphabet alphabet = EasyMock.createMock(Alphabet.class);
-		Iterator testIterator = EasyMock.createMock(Iterator.class);
+		Iterator<Letter> testIterator = EasyMock.createMock(Iterator.class);
 		
 		EasyMock.expect(alphabet.GetIterator()).andReturn(testIterator);
 		EasyMock.replay(alphabet);

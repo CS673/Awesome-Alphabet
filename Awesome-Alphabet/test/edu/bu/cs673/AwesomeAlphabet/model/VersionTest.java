@@ -25,7 +25,7 @@ public class VersionTest {
 		Version result = new Version();
 		assertNotNull(result);
 		
-		assertEquals("0.1.0.0", result.getVersion());
+		assertTrue(!result.getVersion().isEmpty());
 	}
 
 	/**

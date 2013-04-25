@@ -3,8 +3,6 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.awt.image.BufferedImage;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,28 +39,48 @@ public class LetterPageControllerTest {
 
 		// add additional test code here
 		assertNotNull(result);
-		assertEquals('a', result.GetLetterAsChar());
+		assertEquals('a', result.GetLowercaseLetterAsChar());
+		assertEquals('A', result.GetUppercaseLetterAsChar());
 		assertEquals(true, result.GetNextLetter());
 		assertEquals(true, result.GetPreviousLetter());
 	}
 
 	/**
-	 * Run the char GetLetterAsChar() method test.
+	 * Run the char GetLowercaseLetterAsChar() method test.
 	 *
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetLetterAsChar_1()
+	public void testGetLowercaseLetterAsChar_1()
 		throws Exception {
 		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
 				                                                new Alphabet(new ThemeManager()));
 
-		char result = fixture.GetLetterAsChar();
+		char result = fixture.GetLowercaseLetterAsChar();
 
 		// add additional test code here
 		assertEquals('a', result);
+	}
+	
+	/**
+	 * Run the char GetUppercaseLetterAsChar() method test.
+	 *
+	 * @throws Exception
+	 *
+	 * @generatedBy CodePro at 2/22/13 1:46 AM
+	 */
+	@Test
+	public void testGetUppercaseLetterAsChar_1()
+		throws Exception {
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
+
+		char result = fixture.GetUppercaseLetterAsChar();
+
+		// add additional test code here
+		assertEquals('A', result);
 	}
 
 	/**

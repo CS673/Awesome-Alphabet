@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import edu.bu.cs673.AwesomeAlphabet.controller.ButtonHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.LabelClickHandler;
 import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
-import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 
 
 /**
@@ -34,7 +33,6 @@ public class LetterPageView extends PageView {
 	JButton m_image = new JButton("");
 	JLabel m_word = new JLabel("-", JLabel.CENTER);
 	
-	Letter m_currentLetter;
 	
 	static Logger log = Logger.getLogger(LetterPageView.class);
 	/**
@@ -125,12 +123,11 @@ public class LetterPageView extends PageView {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		Letter letter = (Letter) arg;
-		
-		m_uppercase.setText("" + letter.GetUppercaseLetter());
-		m_lowercase.setText("" + letter.GetLetterAsChar());
-		m_image.setIcon(letter.getIcon(m_image.getWidth(), m_image.getHeight()));
-		m_word.setText(letter.getWord());
+
+		m_uppercase.setText("" + m_controller.GetUppercaseLetterAsChar());
+		m_lowercase.setText("" + m_controller.GetLowercaseLetterAsChar());
+		m_image.setIcon(m_controller.GetIcon(m_image.getWidth(), m_image.getHeight()));
+		m_word.setText(m_controller.GetWord());
 	}
 
 	

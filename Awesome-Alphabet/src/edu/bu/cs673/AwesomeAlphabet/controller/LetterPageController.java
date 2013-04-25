@@ -1,4 +1,6 @@
 package edu.bu.cs673.AwesomeAlphabet.controller;
+import javax.swing.Icon;
+
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
@@ -151,14 +153,54 @@ public class LetterPageController extends PageController {
 	
 	
 	/**
-	 * This method gets the current letter from the model.
+	 * This method gets the current letter from the model
+	 * in lower-case.
 	 * 
 	 * @return    Current letter as a lower-case char.
 	 */
-	public char GetLetterAsChar()
+	public char GetLowercaseLetterAsChar()
 	{
 		return m_alphabet.GetCurrentLetter().GetLetterAsChar();
 	}
+	
+	
+	
+	/**
+	 * This method gets the current letter from the model
+	 * in upper-case.
+	 * 
+	 * @return    Current letter as an upper-case char.
+	 */
+	public char GetUppercaseLetterAsChar()
+	{
+		return m_alphabet.GetCurrentLetter().GetUppercaseLetter();
+	}
+	
+	
+	
+	/**
+	* This method gets the current word picture from the
+	* Letter model.
+	*
+	* @return Word picture as an Icon.
+	*/
+	public Icon GetIcon(int width, int height)
+	{
+		return m_alphabet.GetCurrentLetter().getIcon(width, height);
+	}
+	
+	
+	/**
+	* This method gets the current word from the
+	* Letter model.
+	*
+	* @return Letter word as a String.
+	*/
+	public String GetWord()
+	{
+		return m_alphabet.GetCurrentLetter().getWord();	
+	}
+
 
 
 	public void ObserveCurrentLetter() {
