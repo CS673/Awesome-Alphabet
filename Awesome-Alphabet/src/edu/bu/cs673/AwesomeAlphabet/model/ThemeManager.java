@@ -198,6 +198,7 @@ public class ThemeManager extends Observable {
 			m_currentTheme = null;
 			
 			notifyObservers();
+			gui_update.forceUpdate();
 			return true;
 		}
 			
@@ -211,6 +212,7 @@ public class ThemeManager extends Observable {
 		m_currentTheme = theme;
 		
 		notifyObservers();
+		gui_update.forceUpdate();
 		return true;
 	}
 	
