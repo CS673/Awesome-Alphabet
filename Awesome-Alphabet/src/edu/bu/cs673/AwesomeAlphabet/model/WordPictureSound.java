@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 
 
-public class WordPictureSound {
+public class WordPictureSound implements Comparable{
 	private String m_word;
 	private GameSound m_sound;
 	private Image m_image;
@@ -79,4 +79,16 @@ public class WordPictureSound {
 	{
 		return m_cLetter;
 	}
+	
+	/**
+	 * Compare two objects of type  WordPictureSound
+	 * @param anotherWordPictureSoundObject
+	 * @return
+	 */
+	@Override
+	public int compareTo(Object o) {
+		WordPictureSound anotherWordPictureSoundObject = (WordPictureSound) o;
+		return m_word.compareTo(anotherWordPictureSoundObject.m_word);
+	}
+
 }

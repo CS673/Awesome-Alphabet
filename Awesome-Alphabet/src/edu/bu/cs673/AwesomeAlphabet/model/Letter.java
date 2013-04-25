@@ -1,4 +1,5 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +31,8 @@ public class Letter extends Observable implements Observer {
 	private Sound_Type curr_sound = Sound_Type.NONE;
 	private ThemeManager m_themeMgr;
 	protected static Logger log = Logger.getLogger(Letter.class);
+	public static String displayOder = "Default";
+	public static int maxExamples = Integer.MAX_VALUE;
 	
 	
 	/**
@@ -75,6 +78,8 @@ public class Letter extends Observable implements Observer {
 	 */
 	public ListIterator<WordPictureSound> GetIterator()
 	{
+
+		log.info("return the iterator");
 		return m_wps.listIterator();
 	}
 
@@ -91,6 +96,7 @@ public class Letter extends Observable implements Observer {
 		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme));
 		if(m_index < 0)
 			nextExample();
+
 	}
 	
 	public void addLetterSoundResource(String soundName) {
@@ -176,7 +182,7 @@ public class Letter extends Observable implements Observer {
 		{
 			//Advance Index
 			m_index++;
-			if (m_index >= iWpsSize)
+			if (m_index >= iWpsSize || m_index >= Letter.maxExamples)
 				m_index = 0;
 			
 			//Break out of the loop if there is no current theme
@@ -309,4 +315,23 @@ public class Letter extends Observable implements Observer {
 		}
 		return 0;
 	}
+
+
+	/**
+	 * Shuffle the list of words/examples
+	 */
+	public void shuffleList() {
+		log.info("Shuffle the list");
+		Collections.shuffle(m_wps);
+		
+	}
+	
+	/**
+	 * Sort the list of words/examples
+	 */
+	public void sortList(){
+		log.info("sort the list");
+		Collections.sort(m_wps);
+	}
+
 }

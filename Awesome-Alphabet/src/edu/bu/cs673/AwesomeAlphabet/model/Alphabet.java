@@ -2,6 +2,7 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class Alphabet extends Observable {
 	private ThemeManager m_themeMgr;
 	private Database m_db;
 	private String m_currentWordEditing;
+	//private String displayOrder = "DISPLAY_ORDER";
 	
 	/* 
 	 * A cache of all word strings. This will not be in sync with any changes to model.
@@ -64,6 +66,7 @@ public class Alphabet extends Observable {
 				m_letters[i].removeAllEntries();
 			m_letters[i] = new Letter((char)((int)'a' + i), m_themeMgr);
 		}
+		
 	}
 	
 	
@@ -180,6 +183,7 @@ public class Alphabet extends Observable {
 	 */
 	public Letter SetCurrentLetter(Letter letter)
 	{
+		log.info("setting current letter: "+letter.GetUppercaseLetter());
 		int iIndex;
 		
 		if(letter == null)
@@ -436,6 +440,14 @@ public class Alphabet extends Observable {
 			
 			letter.addResource(wd.picturePath, wd.soundPath, wd.word, m_themeMgr.getTheme(wd.theme));
 		}
+		
+		
+		if(Letter.displayOder.equalsIgnoreCase("Sorted")){
+			sortLetterExamples();;
+		}else if(Letter.displayOder.equalsIgnoreCase("Shuffle")){
+			shuffleExamples();
+		}
+		
 	}
 	/**
 	 * Loads word, picture, and sound resources into Letter objects.
@@ -512,7 +524,35 @@ public class Alphabet extends Observable {
 		//AAConfig.addWordToIndex(associatedLetter, wordText, themeName);
 		
 		letter.addResource(wordText + ".jpg", wordText + ".wav", wordText, m_themeMgr.getTheme(themeName));
+		
+		if(Letter.displayOder.equalsIgnoreCase("Sorted")){
+			sortLetterExamples();
+		}else if(Letter.displayOder.equalsIgnoreCase("Shuffle")){
+			shuffleExamples();
+		}
+		
 		return 0;
+	}
+
+	/**
+	 * Shuffle the examples for each letter
+	 */
+	public void shuffleExamples() {
+		for(int i = 0; i<m_letters.length; i++){
+			Letter letter = m_letters[i];
+			letter.shuffleList();
+		}
+		
+	}
+
+	/**
+	 * Sort the examples for each letter
+	 */
+	public void sortLetterExamples() {
+		for(int i = 0; i<m_letters.length; i++){
+			Letter letter = m_letters[i];
+			letter.sortList();
+		}
 	}
 	
 	/**
