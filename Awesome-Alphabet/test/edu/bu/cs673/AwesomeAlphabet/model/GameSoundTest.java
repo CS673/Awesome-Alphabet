@@ -49,9 +49,7 @@ public class GameSoundTest {
 		
 		//exception.expect(UnsupportedAudioFileException.class);  
 		
-		
 		fixture.PlaySound();
-
 	}
 
 	/**
@@ -69,7 +67,6 @@ public class GameSoundTest {
 		//exception.expect(NullPointerException.class);
 		
 		fixture.PlaySound();
-
 	}
 
 	/**
@@ -80,7 +77,7 @@ public class GameSoundTest {
 	 * @generatedBy CodePro at 2/22/13 1:38 AM
 	 */
 	@Test
-	public void testPlaySound_3()
+	public void testPlaySound_1()
 		throws Exception {
 		GameSound fixture = new GameSound("");
 

@@ -33,9 +33,7 @@ public class TitlePageControllerTest {
 
 		TitlePageController result = new TitlePageController(pageObserver, view);
 		
-		
 		assertNotNull(result);
-
 	}
 
 	/**

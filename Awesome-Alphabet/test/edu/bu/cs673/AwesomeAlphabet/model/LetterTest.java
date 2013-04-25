@@ -33,11 +33,6 @@ public class LetterTest {
 
 		// add additional test code here
 		assertNotNull(result);
-		/*assertEquals(null, result.getWord());
-		assertEquals('', result.GetUppercaseLetter());
-		assertEquals('', result.GetLetterAsChar());
-		assertEquals(false, result.hasChanged());
-		assertEquals(0, result.countObservers());*/
 	}
 
 	/**
