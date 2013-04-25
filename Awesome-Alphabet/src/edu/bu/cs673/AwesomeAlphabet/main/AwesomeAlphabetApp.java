@@ -1,6 +1,10 @@
 
 package edu.bu.cs673.AwesomeAlphabet.main;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -10,6 +14,7 @@ import org.apache.log4j.Logger;
 import edu.bu.cs673.AwesomeAlphabet.controller.AlphabetPageController;
 import edu.bu.cs673.AwesomeAlphabet.controller.LetterPageController;
 import edu.bu.cs673.AwesomeAlphabet.controller.OptionsPageController;
+import edu.bu.cs673.AwesomeAlphabet.controller.SettingController;
 import edu.bu.cs673.AwesomeAlphabet.controller.ThemeController;
 import edu.bu.cs673.AwesomeAlphabet.controller.TitlePageController;
 import edu.bu.cs673.AwesomeAlphabet.controller.WPSController;
@@ -21,6 +26,7 @@ import edu.bu.cs673.AwesomeAlphabet.view.AlphabetPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.MainWindow;
 import edu.bu.cs673.AwesomeAlphabet.view.OptionsPageView;
+import edu.bu.cs673.AwesomeAlphabet.view.SettingPageView;
 import edu.bu.cs673.AwesomeAlphabet.view.ThemePageView;
 import edu.bu.cs673.AwesomeAlphabet.view.TitlePageView;
 import edu.bu.cs673.AwesomeAlphabet.view.WPSView;
@@ -70,6 +76,7 @@ public class AwesomeAlphabetApp {
 		LetterPageView letterPageView = new LetterPageView(PageName.LetterPage.toString());
 		OptionsPageView optionsPageView = new OptionsPageView(PageName.OptionsPage.toString());
 		ThemePageView themePageView = new ThemePageView(PageName.ThemePage.toString());
+		SettingPageView settingPageView = new SettingPageView(PageName.SettingPage.toString());
 		WPSView wpsView = new WPSView(PageName.WPSPage.toString());
 		WordEditView wordEditView = new WordEditView(PageName.WordEditPage.toString());
 		
@@ -81,6 +88,7 @@ public class AwesomeAlphabetApp {
 		themePageView.SetController(new ThemeController(mainWindow, themePageView, themeMgr));
 		wpsView.SetController(new WPSController(mainWindow, wpsView, alphabet));
 		wordEditView.SetController(new WordEditController(mainWindow, wordEditView, themeMgr, alphabet));
+		settingPageView.SetController(new SettingController(alphabet, mainWindow));
 		
 		log.info("Registering views with the main controlling window"); 
 		mainWindow.registerPage(titlePageView);
@@ -90,6 +98,7 @@ public class AwesomeAlphabetApp {
 		mainWindow.registerPage(themePageView);
 		mainWindow.registerPage(wpsView);
 		mainWindow.registerPage(wordEditView);
+		mainWindow.registerPage(settingPageView);
 		
 		log.info("Processing the resource file");
 		alphabet.LoadResources(AAConfig.getLetterProps());

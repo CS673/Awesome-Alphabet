@@ -12,6 +12,7 @@ public enum PageName {
 	OptionsPage	 ("OptionsPage"),
 	ThemePage	 ("ThemePage"),
 	WPSPage		 ("WPSPage"),
+	SettingPage	 ("SettingPage"),
 	WordEditPage ("WordEditPage");
 	
 	private final String stringValue;
