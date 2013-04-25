@@ -53,11 +53,9 @@ public class MainWindowTest {
 		MainWindow fixture = new MainWindow();
 		String sPageName = "LetterPage";
 
-		exception.expect(NullPointerException.class);
-		
 		boolean result = fixture.GoToPage(sPageName);
 
-		assertEquals(true, result);
+		assertEquals(false, result);
 	}
 
 	/**

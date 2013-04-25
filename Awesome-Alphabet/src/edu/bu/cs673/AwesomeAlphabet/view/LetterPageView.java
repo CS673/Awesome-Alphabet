@@ -124,10 +124,13 @@ public class LetterPageView extends PageView {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		m_uppercase.setText("" + m_controller.GetUppercaseLetterAsChar());
-		m_lowercase.setText("" + m_controller.GetLowercaseLetterAsChar());
-		m_image.setIcon(m_controller.GetIcon(m_image.getWidth(), m_image.getHeight()));
-		m_word.setText(m_controller.GetWord());
+		if(m_controller != null)
+		{
+			m_uppercase.setText("" + m_controller.GetUppercaseLetterAsChar());
+			m_lowercase.setText("" + m_controller.GetLowercaseLetterAsChar());
+			m_image.setIcon(m_controller.GetIcon(m_image.getWidth(), m_image.getHeight()));
+			m_word.setText(m_controller.GetWord());
+		}
 	}
 
 	

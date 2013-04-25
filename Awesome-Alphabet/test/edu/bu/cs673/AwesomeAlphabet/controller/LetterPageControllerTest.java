@@ -156,7 +156,7 @@ public class LetterPageControllerTest {
 		boolean result = fixture.GetPreviousLetter();
 
 		// add additional test code here
-		assertEquals(false, result);
+		assertEquals(true, result);
 	}
 
 	/**
