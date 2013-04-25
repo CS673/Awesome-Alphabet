@@ -55,6 +55,7 @@ public class OptionsPageView extends PageView {
 		m_panel.add(Box.createVerticalStrut(10));
 		
 		m_manageSettingsBtn = getButtonImage(AA_NAV_BUTTON_MANAGE_SETTINGS, "Manage Settings");
+		m_manageSettingsBtn.addActionListener(new ButtonHandler(this, "OnManageSettingsClick"));
 		m_panel.add(m_manageSettingsBtn);
 		
 		m_panel.add(Box.createVerticalStrut(10));
@@ -124,6 +125,16 @@ public class OptionsPageView extends PageView {
 	public void OnManageWordsClick() {
 		if (m_controller != null)
 			m_controller.GoToWordEditPage();
+	}
+	
+	public void OnManageSettingsClick() {
+		log.info("OnManageSettingsClick starts..");
+		if (m_controller != null){
+			m_controller.GoToManageSettingsPage();
+		}
+		else{
+			log.info("m_controller is null..");
+		}
 	}
 	
 	public void OnLockUnlockBtnClick() {
