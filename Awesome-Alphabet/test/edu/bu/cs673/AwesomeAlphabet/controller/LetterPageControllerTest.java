@@ -121,24 +121,6 @@ public class LetterPageControllerTest {
 		assertEquals(true, result);
 	}
 
-	/**
-	 * Run the BufferedImage GetPicture() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
-	public void testGetPicture_1()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		BufferedImage result = fixture.GetPicture();
-
-		// add additional test code here
-		assertNotNull(result);
-	}
 
 	/**
 	 * Run the boolean GetPreviousLetter() method test.
@@ -178,24 +160,6 @@ public class LetterPageControllerTest {
 		assertEquals(false, result);
 	}
 
-	/**
-	 * Run the String GetWord() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
-	public void testGetWord_1()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		String result = fixture.GetWord();
-
-		// add additional test code here
-		assertNotNull(result);
-	}
 
 	/**
 	 * Run the void GoToAlphabetPage() method test.
@@ -276,7 +240,7 @@ public class LetterPageControllerTest {
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
+	@Test
 	public void testLetterClicked_1()
 		throws Exception {
 		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
@@ -305,23 +269,6 @@ public class LetterPageControllerTest {
 		// add additional test code here
 	}
 
-	/**
-	 * Run the void WordClicked() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
-	public void testWordClicked_1()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		fixture.WordClicked();
-
-		// add additional test code here
-	}
 
 	/**
 	 * Perform pre-test initialization.

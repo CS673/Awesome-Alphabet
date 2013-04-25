@@ -1,13 +1,9 @@
 package edu.bu.cs673.AwesomeAlphabet.controller;
-import java.awt.image.BufferedImage;
-
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
@@ -69,18 +65,6 @@ public class LetterPageController extends PageController {
 		Letter letter = m_alphabet.GetCurrentLetter();
 		StopSound(letter);
 		letter.playSound();
-	}
-	
-	
-	/**
-	 * This method is used to notify the controller that the
-	 * word was clicked.  This will cause the word sound to be
-	 * played.
-	 */
-	public void WordClicked()
-	{
-		//Play picture/word sound
-		throw new NotImplementedException();
 	}
 	
 	
@@ -174,30 +158,6 @@ public class LetterPageController extends PageController {
 	public char GetLetterAsChar()
 	{
 		return m_alphabet.GetCurrentLetter().GetLetterAsChar();
-	}
-	
-	
-	/**
-	 * This method gets the current word picture from the 
-	 * Letter model.
-	 * 
-	 * @return    Word picture as a BufferedImage.
-	 */
-	public BufferedImage GetPicture()
-	{
-		throw new NotImplementedException();
-	}
-	
-	
-	/**
-	 * This method gets the current word from the 
-	 * Letter model.
-	 * 
-	 * @return    Letter word as a String.
-	 */
-	public String GetWord()
-	{
-		throw new NotImplementedException();	
 	}
 
 

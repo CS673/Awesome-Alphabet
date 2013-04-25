@@ -236,23 +236,6 @@ public class AlphabetPageControllerTest {
 		assertEquals(false, result);
 	}
 
-	/**
-	 * Run the boolean PlayAlphabetSong() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:54 AM
-	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
-	public void testPlayAlphabetSong_1()
-		throws Exception {
-		AlphabetPageController fixture = new AlphabetPageController(new MainWindow(), new Alphabet(new ThemeManager()));
-
-		boolean result = fixture.PlayAlphabetSong();
-
-		// add additional test code here
-		assertTrue(result);
-	}
 
 	/**
 	 * Perform pre-test initialization.
