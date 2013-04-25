@@ -225,8 +225,8 @@ public class ThemeManager extends Observable {
 		return m_currentTheme;
 	}
 
-	public void notifyWhenUpdatesComplete(Observer m_view) {
-		gui_update.addObserver(m_view);
+	public void notifyWhenUpdatesComplete(Observer observer) {
+		gui_update.addObserver(observer);
 	}
 
 }
