@@ -160,26 +160,6 @@ public class LetterPageControllerTest {
 	}
 
 	/**
-	 * Run the boolean GetPreviousLetter() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testGetPreviousLetter_2()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		boolean result = fixture.GetPreviousLetter();
-
-		// add additional test code here
-		assertEquals(false, result);
-	}
-
-
-	/**
 	 * Run the void GoToAlphabetPage() method test.
 	 *
 	 * @throws Exception
@@ -198,24 +178,6 @@ public class LetterPageControllerTest {
 	}
 
 	/**
-	 * Run the void GoToAlphabetPage() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testGoToAlphabetPage_2()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		fixture.GoToAlphabetPage();
-
-		// add additional test code here
-	}
-
-	/**
 	 * Run the void GoToTitlePage() method test.
 	 *
 	 * @throws Exception
@@ -224,24 +186,6 @@ public class LetterPageControllerTest {
 	 */
 	@Test
 	public void testGoToTitlePage_1()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		fixture.GoToTitlePage();
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void GoToTitlePage() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testGoToTitlePage_2()
 		throws Exception {
 		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
 				                                                new Alphabet(new ThemeManager()));
