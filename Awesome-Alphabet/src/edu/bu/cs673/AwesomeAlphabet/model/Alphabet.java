@@ -2,7 +2,6 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
+import edu.bu.cs673.AwesomeAlphabet.main.Settings;
 import edu.bu.cs673.AwesomeAlphabet.value.WPSViewData;
 
 
@@ -34,7 +34,6 @@ public class Alphabet extends Observable {
 	private ThemeManager m_themeMgr;
 	private Database m_db;
 	private String m_currentWordEditing;
-	//private String displayOrder = "DISPLAY_ORDER";
 	
 	/* 
 	 * A cache of all word strings. This will not be in sync with any changes to model.
@@ -442,9 +441,9 @@ public class Alphabet extends Observable {
 		}
 		
 		
-		if(Letter.displayOder.equalsIgnoreCase("Sorted")){
+		if(Settings.getDisplayOrder().equalsIgnoreCase("Sorted")){
 			sortLetterExamples();;
-		}else if(Letter.displayOder.equalsIgnoreCase("Shuffle")){
+		}else if(Settings.getDisplayOrder().equalsIgnoreCase("Shuffle")){
 			shuffleExamples();
 		}
 		
@@ -527,9 +526,9 @@ public class Alphabet extends Observable {
 		
 		letter.addResource(wordText + ".jpg", wordText + ".wav", wordText, m_themeMgr.getTheme(themeName));
 		
-		if(Letter.displayOder.equalsIgnoreCase("Sorted")){
+		if(Settings.getDisplayOrder().equalsIgnoreCase("Sorted")){
 			sortLetterExamples();
-		}else if(Letter.displayOder.equalsIgnoreCase("Shuffle")){
+		}else if(Settings.getDisplayOrder().equalsIgnoreCase("Shuffle")){
 			shuffleExamples();
 		}
 		
@@ -548,7 +547,7 @@ public class Alphabet extends Observable {
 	}
 
 	/**
-	 * Sort the examples for each letter
+	 * Sort the examples for each letter by word
 	 */
 	public void sortLetterExamples() {
 		for(int i = 0; i<m_letters.length; i++){
@@ -557,6 +556,15 @@ public class Alphabet extends Observable {
 		}
 	}
 	
+	/**
+	 * Sort the examples for each letter by id
+	 */
+	public void resetListOrder() {
+		for(int i = 0; i<m_letters.length; i++){
+			Letter letter = m_letters[i];
+			letter.resetDeafultOrder();
+		}	
+	}
 	/**
 	 * delete a word
 	 * @return 0 on success. Failure otherwise. 

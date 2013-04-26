@@ -2,6 +2,7 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 
 import org.apache.log4j.Logger;
 
+import edu.bu.cs673.AwesomeAlphabet.main.Settings;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
@@ -23,13 +24,16 @@ public class SettingController extends PageController {
 
 	public void updateDisplayOrder(String displayOder) {
 		log.info("updating the display order");
-		Letter.displayOder = displayOder;
-		if(Letter.displayOder.equalsIgnoreCase("Sorted")){
+		Settings.props.setProperty(Settings.DISPLAY_ORDER, displayOder);
+		if(Settings.getDisplayOrder().equalsIgnoreCase("Sorted")){
 			alphabet.sortLetterExamples();
-		}else if(Letter.displayOder.equalsIgnoreCase("Shuffle")){
+		}else if(Settings.getDisplayOrder().equalsIgnoreCase("Shuffle")){
 			alphabet.shuffleExamples();
+		}else{
+			alphabet.resetListOrder();
 		}
 		
+		Settings.saveSettingProperties();
 	}
 
 	public void updateMaxExamples(int limit) {
@@ -38,7 +42,10 @@ public class SettingController extends PageController {
 		if(limit == 0){
 			limit = Integer.MAX_VALUE;
 		}
-		Letter.maxExamples = limit;
 		
+		String limitStringValue = String.valueOf(limit);
+		Settings.props.setProperty(Settings.MAXIMUM_EXAMPLES, limitStringValue);
+		
+		Settings.saveSettingProperties();
 	}
 }
