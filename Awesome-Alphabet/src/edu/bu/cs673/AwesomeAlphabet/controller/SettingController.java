@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import edu.bu.cs673.AwesomeAlphabet.main.Settings;
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
-import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 
