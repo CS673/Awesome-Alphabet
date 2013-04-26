@@ -3,7 +3,14 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.Observer;
 
+class GuiUpdate extends Observable {
+	public void forceUpdate() {
+		setChanged();
+		notifyObservers();
+	}
+}
 
 /**
  * This class manages all themes used by the application.
@@ -13,8 +20,7 @@ public class ThemeManager extends Observable {
 	private ArrayList<Theme> m_themes;
 	private Theme m_currentTheme;
 	private Database m_db;
-	
-	//public static Theme DEFAULT_THEME = new Theme(DEFAULT_THEME_NAME);
+	private GuiUpdate gui_update = new GuiUpdate();
 	
 	/**
 	 * Constructor.
@@ -108,6 +114,7 @@ public class ThemeManager extends Observable {
 		m_themes.add(new Theme(themeName));
 		setChanged();
 		notifyObservers();
+		gui_update.forceUpdate();
 		return true;
 	}
 	
@@ -119,6 +126,7 @@ public class ThemeManager extends Observable {
 		m_themes.add(new Theme(themeName));
 		setChanged();
 		notifyObservers();
+		gui_update.forceUpdate();
 		return true;
 	}
 	
@@ -141,6 +149,7 @@ public class ThemeManager extends Observable {
 		m_themes.remove(theme);
 		setChanged();
 		notifyObservers();
+		gui_update.forceUpdate();
 		return true;
 	}
 	
@@ -164,6 +173,7 @@ public class ThemeManager extends Observable {
 		{
 			setChanged();
 			notifyObservers();
+			gui_update.forceUpdate();
 			return true;
 		}
 		else
@@ -188,6 +198,7 @@ public class ThemeManager extends Observable {
 			m_currentTheme = null;
 			
 			notifyObservers();
+			gui_update.forceUpdate();
 			return true;
 		}
 			
@@ -201,6 +212,7 @@ public class ThemeManager extends Observable {
 		m_currentTheme = theme;
 		
 		notifyObservers();
+		gui_update.forceUpdate();
 		return true;
 	}
 	
@@ -214,4 +226,9 @@ public class ThemeManager extends Observable {
 	{
 		return m_currentTheme;
 	}
+
+	public void notifyWhenUpdatesComplete(Observer observer) {
+		gui_update.addObserver(observer);
+	}
+
 }
