@@ -11,6 +11,8 @@ import javax.swing.Icon;
 
 import org.apache.log4j.Logger;
 
+import edu.bu.cs673.AwesomeAlphabet.main.Settings;
+
 
 /**
  * This class defines the Letter model.  It represents a
@@ -31,8 +33,7 @@ public class Letter extends Observable implements Observer {
 	private Sound_Type curr_sound = Sound_Type.NONE;
 	private ThemeManager m_themeMgr;
 	protected static Logger log = Logger.getLogger(Letter.class);
-	public static String displayOder = "Default";
-	public static int maxExamples = Integer.MAX_VALUE;
+
 	
 	
 	/**
@@ -93,8 +94,9 @@ public class Letter extends Observable implements Observer {
 	 * @param theme        The theme.
 	 */
 	public void addResource(String imageName, String soundName, String wordText, Theme theme) {
-		log.info("Vivek: addResource(): word=" + wordText + " image=" + imageName + " sound="+ soundName + " theme=" + theme.getThemeName());
-		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme));
+		int id = m_wps.size()+1;
+		log.info("Vivek: addResource(): word=" + wordText + " image=" + imageName + " sound="+ soundName + " theme=" + theme.getThemeName()+" id="+id);
+		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme, id));
 		if(m_index < 0)
 			nextExample();
 
@@ -185,7 +187,7 @@ public class Letter extends Observable implements Observer {
 		{
 			//Advance Index
 			m_index++;
-			if (m_index >= iWpsSize || m_index >= Letter.maxExamples)
+			if (m_index >= iWpsSize || m_index >= Settings.getMaxExamples());
 				m_index = 0;
 			
 			//Break out of the loop if there is no current theme
@@ -337,5 +339,12 @@ public class Letter extends Observable implements Observer {
 		log.info("sort the list");
 		Collections.sort(m_wps);
 	}
-
+	
+	/**
+	 * Reset default order of the examples as they were initially loaded/added to the list
+	 */
+	public void resetDeafultOrder(){
+		log.info("reset order of the list");
+		Collections.sort(m_wps, WordPictureSound.compareById);
+	}
 }

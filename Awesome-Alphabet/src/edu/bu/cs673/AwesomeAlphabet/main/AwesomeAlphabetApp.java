@@ -1,10 +1,6 @@
 
 package edu.bu.cs673.AwesomeAlphabet.main;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -65,6 +61,11 @@ public class AwesomeAlphabetApp {
 		log.info("CWD is:" + workingDir);
 		
 		MainWindow mainWindow = new MainWindow();
+		
+		log.info("Load Setting properties");
+		Settings setting = new Settings();
+		setting.loadSettingProperties();
+
 		
 		log.info("Creating the Models");
 		ThemeManager themeMgr = new ThemeManager();
