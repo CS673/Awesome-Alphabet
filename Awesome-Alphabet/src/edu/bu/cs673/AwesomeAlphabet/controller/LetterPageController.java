@@ -1,13 +1,11 @@
 package edu.bu.cs673.AwesomeAlphabet.controller;
-import java.awt.image.BufferedImage;
+import javax.swing.Icon;
 
 import edu.bu.cs673.AwesomeAlphabet.model.Alphabet;
 import edu.bu.cs673.AwesomeAlphabet.model.Letter;
 import edu.bu.cs673.AwesomeAlphabet.model.PageName;
 import edu.bu.cs673.AwesomeAlphabet.view.IPageObserver;
 import edu.bu.cs673.AwesomeAlphabet.view.LetterPageView;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
@@ -69,18 +67,6 @@ public class LetterPageController extends PageController {
 		Letter letter = m_alphabet.GetCurrentLetter();
 		StopSound(letter);
 		letter.playSound();
-	}
-	
-	
-	/**
-	 * This method is used to notify the controller that the
-	 * word was clicked.  This will cause the word sound to be
-	 * played.
-	 */
-	public void WordClicked()
-	{
-		//Play picture/word sound
-		throw new NotImplementedException();
 	}
 	
 	
@@ -167,38 +153,54 @@ public class LetterPageController extends PageController {
 	
 	
 	/**
-	 * This method gets the current letter from the model.
+	 * This method gets the current letter from the model
+	 * in lower-case.
 	 * 
 	 * @return    Current letter as a lower-case char.
 	 */
-	public char GetLetterAsChar()
+	public char GetLowercaseLetterAsChar()
 	{
 		return m_alphabet.GetCurrentLetter().GetLetterAsChar();
 	}
 	
 	
+	
 	/**
-	 * This method gets the current word picture from the 
-	 * Letter model.
+	 * This method gets the current letter from the model
+	 * in upper-case.
 	 * 
-	 * @return    Word picture as a BufferedImage.
+	 * @return    Current letter as an upper-case char.
 	 */
-	public BufferedImage GetPicture()
+	public char GetUppercaseLetterAsChar()
 	{
-		throw new NotImplementedException();
+		return m_alphabet.GetCurrentLetter().GetUppercaseLetter();
+	}
+	
+	
+	
+	/**
+	* This method gets the current word picture from the
+	* Letter model.
+	*
+	* @return Word picture as an Icon.
+	*/
+	public Icon GetIcon(int width, int height)
+	{
+		return m_alphabet.GetCurrentLetter().getIcon(width, height);
 	}
 	
 	
 	/**
-	 * This method gets the current word from the 
-	 * Letter model.
-	 * 
-	 * @return    Letter word as a String.
-	 */
+	* This method gets the current word from the
+	* Letter model.
+	*
+	* @return Letter word as a String.
+	*/
 	public String GetWord()
 	{
-		throw new NotImplementedException();	
+		return m_alphabet.GetCurrentLetter().getWord();	
 	}
+
 
 
 	public void ObserveCurrentLetter() {

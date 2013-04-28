@@ -36,44 +36,6 @@ public class ButtonHandlerTest {
 	}
 
 	/**
-	 * Run the ButtonHandler(PageView,String) constructor test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:54 AM
-	 */
-	@Test
-	public void testButtonHandler_2()
-		throws Exception {
-		PageView pv = new AlphabetPageView("");
-		String method = "";
-
-		ButtonHandler result = new ButtonHandler(pv, method);
-
-		// add additional test code here
-		assertNotNull(result);
-	}
-
-	/**
-	 * Run the ButtonHandler(PageView,String) constructor test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:54 AM
-	 */
-	@Test
-	public void testButtonHandler_3()
-		throws Exception {
-		PageView pv = new AlphabetPageView("");
-		String method = "";
-
-		ButtonHandler result = new ButtonHandler(pv, method);
-
-		// add additional test code here
-		assertNotNull(result);
-	}
-
-	/**
 	 * Run the void actionPerformed(ActionEvent) method test.
 	 *
 	 * @throws Exception
@@ -82,78 +44,6 @@ public class ButtonHandlerTest {
 	 */
 	@Test
 	public void testActionPerformed_1()
-		throws Exception {
-		ButtonHandler fixture = new ButtonHandler(new AlphabetPageView(""), "");
-		ActionEvent ae = new ActionEvent(new Object(), 1, "");
-
-		fixture.actionPerformed(ae);
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void actionPerformed(ActionEvent) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:54 AM
-	 */
-	@Test
-	public void testActionPerformed_2()
-		throws Exception {
-		ButtonHandler fixture = new ButtonHandler(new AlphabetPageView(""), "");
-		ActionEvent ae = new ActionEvent(new Object(), 1, "");
-
-		fixture.actionPerformed(ae);
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void actionPerformed(ActionEvent) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:54 AM
-	 */
-	@Test
-	public void testActionPerformed_3()
-		throws Exception {
-		ButtonHandler fixture = new ButtonHandler(new AlphabetPageView(""), "");
-		ActionEvent ae = new ActionEvent(new Object(), 1, "");
-
-		fixture.actionPerformed(ae);
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void actionPerformed(ActionEvent) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:54 AM
-	 */
-	@Test
-	public void testActionPerformed_4()
-		throws Exception {
-		ButtonHandler fixture = new ButtonHandler(new AlphabetPageView(""), "");
-		ActionEvent ae = new ActionEvent(new Object(), 1, "");
-
-		fixture.actionPerformed(ae);
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void actionPerformed(ActionEvent) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:54 AM
-	 */
-	@Test
-	public void testActionPerformed_5()
 		throws Exception {
 		ButtonHandler fixture = new ButtonHandler(new AlphabetPageView(""), "");
 		ActionEvent ae = new ActionEvent(new Object(), 1, "");
