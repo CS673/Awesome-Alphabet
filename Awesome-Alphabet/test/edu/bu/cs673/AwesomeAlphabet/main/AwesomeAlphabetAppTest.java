@@ -42,22 +42,6 @@ public class AwesomeAlphabetAppTest {
 	}
 
 	/**
-	 * Run the void main(String[]) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:54 AM
-	 */
-	@Test
-	public void testMain_2() throws Exception {
-		String[] args = new String[] {};
-
-		AwesomeAlphabetApp.main(args);
-
-		// add additional test code here
-	}
-
-	/**
 	 * Perform pre-test initialization.
 	 *
 	 * @throws Exception

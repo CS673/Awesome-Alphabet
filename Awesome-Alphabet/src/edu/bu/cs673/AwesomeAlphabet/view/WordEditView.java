@@ -29,7 +29,7 @@ public class WordEditView extends PageView {
 	
 	private WordEditController m_controller = null;
 	private JTextField m_wordField = new JTextField();
-	private JComboBox<String> m_themeChoice = new JComboBox<String>();
+	private JComboBox m_themeChoice = new JComboBox();
 	private JTextField m_imageFileField = new JTextField();
 	private JTextField m_soundFileField = new JTextField();
 	private static final JFileChooser chooser = new JFileChooser();
@@ -37,7 +37,7 @@ public class WordEditView extends PageView {
 			"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 	};
 	private String m_sUnselectedThemeName = "--none--";
-	private JComboBox<String> m_letterChoice = new JComboBox<String>(letters);
+	private JComboBox m_letterChoice = new JComboBox(letters);
 	protected static Logger log = Logger.getLogger(WordEditView.class);
 	
 	public WordEditView(String pageName) {
