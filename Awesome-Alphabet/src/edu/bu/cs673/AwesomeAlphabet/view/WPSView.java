@@ -176,6 +176,7 @@ public class WPSView extends PageView {
 	public void OnWordAddClicked() {
 		if (m_controller != null) {
 			m_controller.CreateNewWord();
+			refreshWordList();
 		}
 	}
 	
@@ -183,6 +184,7 @@ public class WPSView extends PageView {
 		String word = m_wordModel.getSelectedWord(m_wordTable.getSelectedRow());
 		if (m_controller != null && word != null) {
 			m_controller.EditWord(word);
+			refreshWordList();
 		}
 	}
 	
