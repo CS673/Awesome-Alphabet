@@ -166,6 +166,7 @@ public class Letter extends Observable implements Observer {
 		
 		setChanged();
 		
+		log.info("index = "+m_index);
 		//If there are no words for the current letter
 		if(iWpsSize <= 0)
 		{
@@ -185,10 +186,12 @@ public class Letter extends Observable implements Observer {
 		do
 		{
 			//Advance Index
+			log.info("index = "+m_index);
+			log.info("iWpsSize = "+iWpsSize);
 			m_index++;
-			if (m_index >= iWpsSize || m_index >= Settings.getMaxExamples());
+			if (m_index >= iWpsSize || m_index >= Settings.getMaxExamples()){ //Settings.getMaxExamples()
 				m_index = 0;
-			
+			}
 			//Break out of the loop if there is no current theme
 			if(curTheme == null)
 				break;

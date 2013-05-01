@@ -28,7 +28,7 @@ public class Settings {
 		props = new Properties();
 		InputStream inputStream = null;
 	
-		inputStream = loadFileFromCurrentDirectory();
+		inputStream = loadFileFromPersitentDirectory();
 
 		if(inputStream == null){
 			inputStream = loadFileFromClassPath();
@@ -38,7 +38,6 @@ public class Settings {
 		try {
 			props.load(inputStream);
 			
-			log.info("String value of max_int = "+Integer.MAX_VALUE);
 			log.info("display order: "+props.getProperty(DISPLAY_ORDER));
 			log.info("max examples: "+props.getProperty(MAXIMUM_EXAMPLES));
 		} catch (IOException e) {
@@ -64,9 +63,9 @@ public class Settings {
 	 * Read the user setting properties from the current directory
 	 * @return
 	 */
-	private InputStream loadFileFromCurrentDirectory() {
+	private InputStream loadFileFromPersitentDirectory() {
 		InputStream inputStream;
-		File file = new File(SettingPropertiesFile);
+		File file = new File(AAConfig.getResourceDirPersistentAbs()+SettingPropertiesFile);
 		try {
 			inputStream = new FileInputStream(file);
 		} catch (FileNotFoundException e1) {
@@ -89,7 +88,7 @@ public class Settings {
 		props.setProperty(DISPLAY_ORDER, props.getProperty(DISPLAY_ORDER));
 		
 		try {
-			props.store(new FileOutputStream(SettingPropertiesFile), "Setting properties updated");
+			props.store(new FileOutputStream(AAConfig.getResourceDirPersistentAbs()+SettingPropertiesFile), "Setting properties updated");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,6 +110,7 @@ public class Settings {
 	 */
 	public static int getMaxExamples(){
 		
-		return Integer.parseInt(props.getProperty(MAXIMUM_EXAMPLES));
+		int limit = Integer.parseInt(props.getProperty(MAXIMUM_EXAMPLES));
+		return limit;
 	}
 }
