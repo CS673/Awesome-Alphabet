@@ -33,7 +33,6 @@ public class Letter extends Observable implements Observer {
 	private Sound_Type curr_sound = Sound_Type.NONE;
 	private ThemeManager m_themeMgr;
 	protected static Logger log = Logger.getLogger(Letter.class);
-
 	
 	
 	/**
@@ -79,8 +78,6 @@ public class Letter extends Observable implements Observer {
 	 */
 	public ListIterator<WordPictureSound> GetIterator()
 	{
-
-		log.info("return the iterator");
 		return m_wps.listIterator();
 	}
 

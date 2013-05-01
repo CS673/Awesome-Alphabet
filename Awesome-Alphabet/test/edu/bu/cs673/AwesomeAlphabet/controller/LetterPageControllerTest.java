@@ -139,7 +139,6 @@ public class LetterPageControllerTest {
 		assertEquals(true, result);
 	}
 
-
 	/**
 	 * Run the boolean GetPreviousLetter() method test.
 	 *
