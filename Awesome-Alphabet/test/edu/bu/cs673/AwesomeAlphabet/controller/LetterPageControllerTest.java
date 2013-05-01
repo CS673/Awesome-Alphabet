@@ -3,8 +3,6 @@ package edu.bu.cs673.AwesomeAlphabet.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.awt.image.BufferedImage;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,28 +39,49 @@ public class LetterPageControllerTest {
 
 		// add additional test code here
 		assertNotNull(result);
-		assertEquals('a', result.GetLetterAsChar());
+		assertEquals('a', result.GetLowercaseLetterAsChar());
+		assertEquals('A', result.GetUppercaseLetterAsChar());
 		assertEquals(true, result.GetNextLetter());
 		assertEquals(true, result.GetPreviousLetter());
 	}
 
 	/**
-	 * Run the char GetLetterAsChar() method test.
+	 * Run the char GetLowercaseLetterAsChar() method test.
 	 *
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
 	@Test
-	public void testGetLetterAsChar_1()
+	public void testGetLowercaseLetterAsChar_1()
 		throws Exception {
 		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
 				                                                new Alphabet(new ThemeManager()));
 
-		char result = fixture.GetLetterAsChar();
+		char result = fixture.GetLowercaseLetterAsChar();
 
 		// add additional test code here
 		assertEquals('a', result);
+	}
+	
+	/**
+	 * Run the char GetUppercaseLetterAsChar() method test.
+	 *
+	 * @throws Exception
+	 *
+	 * @generatedBy CodePro at 2/22/13 1:46 AM
+	 */
+	@Test
+	public void testGetUppercaseLetterAsChar_1()
+		throws Exception {
+		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
+				                                                new Alphabet(new ThemeManager()));
+
+		char result = fixture.GetUppercaseLetterAsChar();
+
+		// add additional test code here
+		assertEquals('A', result);
+		assertEquals('A', result);
 	}
 
 	/**
@@ -121,24 +140,8 @@ public class LetterPageControllerTest {
 		assertEquals(true, result);
 	}
 
-	/**
-	 * Run the BufferedImage GetPicture() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
-	public void testGetPicture_1()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
 
-		BufferedImage result = fixture.GetPicture();
 
-		// add additional test code here
-		assertNotNull(result);
-	}
 
 	/**
 	 * Run the boolean GetPreviousLetter() method test.
@@ -156,45 +159,7 @@ public class LetterPageControllerTest {
 		boolean result = fixture.GetPreviousLetter();
 
 		// add additional test code here
-		assertEquals(false, result);
-	}
-
-	/**
-	 * Run the boolean GetPreviousLetter() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testGetPreviousLetter_2()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		boolean result = fixture.GetPreviousLetter();
-
-		// add additional test code here
-		assertEquals(false, result);
-	}
-
-	/**
-	 * Run the String GetWord() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
-	public void testGetWord_1()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		String result = fixture.GetWord();
-
-		// add additional test code here
-		assertNotNull(result);
+		assertEquals(true, result);
 	}
 
 	/**
@@ -206,24 +171,6 @@ public class LetterPageControllerTest {
 	 */
 	@Test
 	public void testGoToAlphabetPage_1()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		fixture.GoToAlphabetPage();
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void GoToAlphabetPage() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testGoToAlphabetPage_2()
 		throws Exception {
 		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
 				                                                new Alphabet(new ThemeManager()));
@@ -252,31 +199,13 @@ public class LetterPageControllerTest {
 	}
 
 	/**
-	 * Run the void GoToTitlePage() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testGoToTitlePage_2()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		fixture.GoToTitlePage();
-
-		// add additional test code here
-	}
-
-	/**
 	 * Run the void LetterClicked() method test.
 	 *
 	 * @throws Exception
 	 *
 	 * @generatedBy CodePro at 2/22/13 1:46 AM
 	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
+	@Test
 	public void testLetterClicked_1()
 		throws Exception {
 		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
@@ -305,23 +234,6 @@ public class LetterPageControllerTest {
 		// add additional test code here
 	}
 
-	/**
-	 * Run the void WordClicked() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test(expected = sun.reflect.generics.reflectiveObjects.NotImplementedException.class)
-	public void testWordClicked_1()
-		throws Exception {
-		LetterPageController fixture = new LetterPageController(new MainWindow(), new LetterPageView(""), 
-				                                                new Alphabet(new ThemeManager()));
-
-		fixture.WordClicked();
-
-		// add additional test code here
-	}
 
 	/**
 	 * Perform pre-test initialization.

@@ -86,7 +86,6 @@ public class AwesomeAlphabetApp {
 		alphabetPageView.SetController(new AlphabetPageController(mainWindow, alphabet));
 		letterPageView.SetController(new LetterPageController(mainWindow, letterPageView, alphabet));
 		optionsPageView.SetController(new OptionsPageController(mainWindow, optionsPageView));
-		//themePageView.SetController(new ThemeController(mainWindow, themePageView, themeMgr, alphabet, AAConfig.getLetterProps()));
 		themePageView.SetController(new ThemeController(mainWindow, themePageView, themeMgr));
 		wpsView.SetController(new WPSController(mainWindow, wpsView, alphabet));
 		wordEditView.SetController(new WordEditController(mainWindow, wordEditView, themeMgr, alphabet));

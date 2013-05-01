@@ -65,7 +65,6 @@ public class Alphabet extends Observable {
 				m_letters[i].removeAllEntries();
 			m_letters[i] = new Letter((char)((int)'a' + i), m_themeMgr);
 		}
-		
 	}
 	
 	
@@ -468,11 +467,13 @@ public class Alphabet extends Observable {
 	}
 	
 	public void PlayAlphabetSong() {
-		m_alphabetsong.PlaySound();
+		if(m_alphabetsong != null)
+			m_alphabetsong.PlaySound();
 	}
 	
 	public void StopAlphabetSound() {
-		m_alphabetsong.StopSound();
+		if(m_alphabetsong != null)
+			m_alphabetsong.StopSound();
 	}
 	
 	/**

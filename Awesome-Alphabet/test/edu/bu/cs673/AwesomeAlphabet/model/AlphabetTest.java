@@ -38,27 +38,7 @@ public class AlphabetTest {
 
 		// add additional test code here
 		assertNotNull(result);
-		assertEquals(null, result.GoToPreviousLetter());
-		assertEquals(false, result.hasChanged());
-		assertEquals(0, result.countObservers());
-	}
-
-	/**
-	 * Run the Alphabet() constructor test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testAlphabet_2()
-		throws Exception {
-
-		Alphabet result = new Alphabet(new ThemeManager());
-
-		// add additional test code here
-		assertNotNull(result);
-		assertEquals(null, result.GoToPreviousLetter());
+		assertNotNull(result.GoToPreviousLetter());
 		assertEquals(false, result.hasChanged());
 		assertEquals(0, result.countObservers());
 	}
@@ -135,31 +115,6 @@ public class AlphabetTest {
 	}
 
 	/**
-	 * Run the Letter GoToNextLetter() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testGoToNextLetter_2()
-		throws Exception {
-		Alphabet fixture = new Alphabet(new ThemeManager());
-		fixture.m_iCurLetterIndex = 1;
-		fixture.addObserver(new AlphabetPageView(""));
-
-		Letter result = fixture.GoToNextLetter();
-
-		// add additional test code here
-		assertNotNull(result);
-		assertEquals(null, result.getWord());
-		assertEquals('C', result.GetUppercaseLetter());
-		assertEquals('c', result.GetLetterAsChar());
-		assertEquals(false, result.hasChanged());
-		assertEquals(0, result.countObservers());
-	}
-
-	/**
 	 * Run the Letter GoToPreviousLetter() method test.
 	 *
 	 * @throws Exception
@@ -176,7 +131,7 @@ public class AlphabetTest {
 		Letter result = fixture.GoToPreviousLetter();
 
 		// add additional test code here
-		assertEquals(null, result);
+		assertNotNull(result);
 	}
 
 	/**
@@ -225,106 +180,6 @@ public class AlphabetTest {
 	}
 
 	/**
-	 * Run the void LoadResources(Properties) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testLoadResources_2()
-		throws Exception {
-		Alphabet fixture = new Alphabet(new ThemeManager());
-		fixture.m_iCurLetterIndex = 1;
-		fixture.addObserver(new AlphabetPageView(""));
-		Properties prop = new Properties();
-
-		fixture.LoadResources(prop);
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void LoadResources(Properties) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testLoadResources_3()
-		throws Exception {
-		Alphabet fixture = new Alphabet(new ThemeManager());
-		fixture.m_iCurLetterIndex = 1;
-		fixture.addObserver(new AlphabetPageView(""));
-		Properties prop = new Properties();
-
-		fixture.LoadResources(prop);
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void LoadResources(Properties) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testLoadResources_4()
-		throws Exception {
-		Alphabet fixture = new Alphabet(new ThemeManager());
-		fixture.m_iCurLetterIndex = 1;
-		fixture.addObserver(new AlphabetPageView(""));
-		Properties prop = new Properties();
-
-		fixture.LoadResources(prop);
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void LoadResources(Properties) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testLoadResources_5()
-		throws Exception {
-		Alphabet fixture = new Alphabet(new ThemeManager());
-		fixture.m_iCurLetterIndex = 1;
-		fixture.addObserver(new AlphabetPageView(""));
-		Properties prop = new Properties();
-
-		fixture.LoadResources(prop);
-
-		// add additional test code here
-	}
-
-	/**
-	 * Run the void LoadResources(Properties) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testLoadResources_6()
-		throws Exception {
-		Alphabet fixture = new Alphabet(new ThemeManager());
-		fixture.m_iCurLetterIndex = 1;
-		fixture.addObserver(new AlphabetPageView(""));
-		Properties prop = new Properties();
-
-		fixture.LoadResources(prop);
-
-		// add additional test code here
-	}
-
-	/**
 	 * Run the Letter SetCurrentLetter(Letter) method test.
 	 *
 	 * @throws Exception
@@ -333,50 +188,6 @@ public class AlphabetTest {
 	 */
 	@Test
 	public void testSetCurrentLetter_1()
-		throws Exception {
-		ThemeManager themeMgr = new ThemeManager();
-		Alphabet fixture = new Alphabet(themeMgr);
-		fixture.m_iCurLetterIndex = 1;
-		fixture.addObserver(new AlphabetPageView(""));
-		Letter cLetter = new Letter('', themeMgr);
-
-		Letter result = fixture.SetCurrentLetter(cLetter);
-
-		// add additional test code here
-		assertEquals(null, result);
-	}
-
-	/**
-	 * Run the Letter SetCurrentLetter(Letter) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testSetCurrentLetter_2()
-		throws Exception {
-		ThemeManager themeMgr = new ThemeManager();
-		Alphabet fixture = new Alphabet(themeMgr);
-		fixture.m_iCurLetterIndex = 1;
-		fixture.addObserver(new AlphabetPageView(""));
-		Letter cLetter = new Letter('', themeMgr);
-
-		Letter result = fixture.SetCurrentLetter(cLetter);
-
-		// add additional test code here
-		assertEquals(null, result);
-	}
-
-	/**
-	 * Run the Letter SetCurrentLetter(Letter) method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 2/22/13 1:46 AM
-	 */
-	@Test
-	public void testSetCurrentLetter_3()
 		throws Exception {
 		ThemeManager themeMgr = new ThemeManager();
 		Alphabet fixture = new Alphabet(themeMgr);

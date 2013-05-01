@@ -3,7 +3,6 @@ package edu.bu.cs673.AwesomeAlphabet.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -54,11 +53,9 @@ public class MainWindowTest {
 		MainWindow fixture = new MainWindow();
 		String sPageName = "LetterPage";
 
-		exception.expect(NullPointerException.class);
-		
 		boolean result = fixture.GoToPage(sPageName);
 
-		assertEquals(true, result);
+		assertEquals(false, result);
 	}
 
 	/**

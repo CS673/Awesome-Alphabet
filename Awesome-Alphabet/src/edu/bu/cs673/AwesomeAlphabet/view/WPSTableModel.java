@@ -60,6 +60,8 @@ public class WPSTableModel extends AbstractTableModel {
 	}
 
 	public String getSelectedWord(int selectedRow) {
+		if (selectedRow < 0)
+			return null;
 		return m_words.get(selectedRow).m_word;
 	}
 
