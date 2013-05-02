@@ -26,4 +26,7 @@ public class OptionsPageController extends PageController {
 		GoToPage(PageName.WPSPage);
 	}
 
+	public void GoToManageSettingsPage() {
+		GoToPage(PageName.SettingPage);
+	}
 }

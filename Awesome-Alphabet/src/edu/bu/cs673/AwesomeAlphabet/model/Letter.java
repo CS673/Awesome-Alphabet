@@ -1,4 +1,5 @@
 package edu.bu.cs673.AwesomeAlphabet.model;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Observer;
 import javax.swing.Icon;
 
 import org.apache.log4j.Logger;
+
+import edu.bu.cs673.AwesomeAlphabet.main.Settings;
 
 
 /**
@@ -88,9 +91,13 @@ public class Letter extends Observable implements Observer {
 	 * @param theme        The theme.
 	 */
 	public void addResource(String imageName, String soundName, String wordText, Theme theme) {
-		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme));
+
+		int id = m_wps.size()+1;
+		m_wps.add(new WordPictureSound(m_cLetter, wordText, imageName, soundName, theme, id));
+
 		if(m_index < 0)
 			nextExample();
+
 	}
 	
 	public void addLetterSoundResource(String soundName) {
@@ -156,6 +163,7 @@ public class Letter extends Observable implements Observer {
 		
 		setChanged();
 		
+		log.info("index = "+m_index);
 		//If there are no words for the current letter
 		if(iWpsSize <= 0)
 		{
@@ -175,10 +183,12 @@ public class Letter extends Observable implements Observer {
 		do
 		{
 			//Advance Index
+			log.info("index = "+m_index);
+			log.info("iWpsSize = "+iWpsSize);
 			m_index++;
-			if (m_index >= iWpsSize)
+			if (m_index >= iWpsSize || m_index >= Settings.getMaxExamples()){ //Settings.getMaxExamples()
 				m_index = 0;
-			
+			}
 			//Break out of the loop if there is no current theme
 			if(curTheme == null)
 				break;
@@ -308,5 +318,31 @@ public class Letter extends Observable implements Observer {
 			nextExample();
 		}
 		return 0;
+	}
+
+
+	/**
+	 * Shuffle the list of words/examples
+	 */
+	public void shuffleList() {
+		log.info("Shuffle the list");
+		Collections.shuffle(m_wps);
+		
+	}
+	
+	/**
+	 * Sort the list of words/examples
+	 */
+	public void sortList(){
+		log.info("sort the list");
+		Collections.sort(m_wps);
+	}
+	
+	/**
+	 * Reset default order of the examples as they were initially loaded/added to the list
+	 */
+	public void resetDeafultOrder(){
+		log.info("reset order of the list");
+		Collections.sort(m_wps, WordPictureSound.compareById);
 	}
 }
