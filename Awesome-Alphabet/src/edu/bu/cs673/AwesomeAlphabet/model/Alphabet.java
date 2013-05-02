@@ -11,6 +11,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import edu.bu.cs673.AwesomeAlphabet.main.AAConfig;
+import edu.bu.cs673.AwesomeAlphabet.main.Settings;
 import edu.bu.cs673.AwesomeAlphabet.value.WPSViewData;
 
 
@@ -180,6 +181,7 @@ public class Alphabet extends Observable {
 	 */
 	public Letter SetCurrentLetter(Letter letter)
 	{
+		log.info("setting current letter: "+letter.GetUppercaseLetter());
 		int iIndex;
 		
 		if(letter == null)
@@ -436,6 +438,14 @@ public class Alphabet extends Observable {
 			
 			letter.addResource(wd.picturePath, wd.soundPath, wd.word, m_themeMgr.getTheme(wd.theme));
 		}
+		
+		
+		if(Settings.getDisplayOrder().equalsIgnoreCase("Sorted")){
+			sortLetterExamples();;
+		}else if(Settings.getDisplayOrder().equalsIgnoreCase("Shuffle")){
+			shuffleExamples();
+		}
+		
 	}
 	/**
 	 * Loads word, picture, and sound resources into Letter objects.
@@ -514,9 +524,46 @@ public class Alphabet extends Observable {
 		//AAConfig.addWordToIndex(associatedLetter, wordText, themeName);
 		
 		letter.addResource(wordText + ".jpg", wordText + ".wav", wordText, m_themeMgr.getTheme(themeName));
+		
+		if(Settings.getDisplayOrder().equalsIgnoreCase("Sorted")){
+			sortLetterExamples();
+		}else if(Settings.getDisplayOrder().equalsIgnoreCase("Shuffle")){
+			shuffleExamples();
+		}
+		
 		return 0;
 	}
+
+	/**
+	 * Shuffle the examples for each letter
+	 */
+	public void shuffleExamples() {
+		for(int i = 0; i<m_letters.length; i++){
+			Letter letter = m_letters[i];
+			letter.shuffleList();
+		}
+		
+	}
+
+	/**
+	 * Sort the examples for each letter by word
+	 */
+	public void sortLetterExamples() {
+		for(int i = 0; i<m_letters.length; i++){
+			Letter letter = m_letters[i];
+			letter.sortList();
+		}
+	}
 	
+	/**
+	 * Sort the examples for each letter by id
+	 */
+	public void resetListOrder() {
+		for(int i = 0; i<m_letters.length; i++){
+			Letter letter = m_letters[i];
+			letter.resetDeafultOrder();
+		}	
+	}
 	/**
 	 * delete a word
 	 * @return 0 on success. Failure otherwise. 
