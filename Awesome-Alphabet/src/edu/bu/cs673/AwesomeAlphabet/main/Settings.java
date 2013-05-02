@@ -16,7 +16,7 @@ public class Settings {
 	public static final String MAXIMUM_EXAMPLES = "Maximum_Examples";
 	private static final String SettingPropertiesFile = "settings.properties";
 	private static final ClassLoader loader = Settings.class.getClassLoader();
-	public static Properties props = null;
+	public static Properties props = new Properties();
 
 	
 	/**
@@ -33,6 +33,8 @@ public class Settings {
 		if(inputStream == null){
 			inputStream = loadFileFromClassPath();
 		}
+		if(inputStream == null)
+			return;
 		
 		
 		try {
@@ -65,12 +67,13 @@ public class Settings {
 	 */
 	private InputStream loadFileFromPersitentDirectory() {
 		InputStream inputStream;
-		File file = new File(AAConfig.getResourceDirPersistentAbs()+SettingPropertiesFile);
+		File file;
 		try {
+			file = new File(AAConfig.getResourceDirPersistentAbs()+SettingPropertiesFile);
 			inputStream = new FileInputStream(file);
 		} catch (FileNotFoundException e1) {
 			inputStream = null;
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		return inputStream;
 	}
@@ -81,11 +84,11 @@ public class Settings {
 	 * @throws FileNotFoundException 
 	 */
 	public static void saveSettingProperties() {
-		log.info("display order saved: "+props.getProperty(DISPLAY_ORDER));
-		log.info("max examples saved: "+props.getProperty(MAXIMUM_EXAMPLES));
+		log.info("display order saved: "+ getDisplayOrder());
+		log.info("max examples saved: "+ getMaxExamples());
 		
-		props.setProperty(MAXIMUM_EXAMPLES, props.getProperty(MAXIMUM_EXAMPLES));
-		props.setProperty(DISPLAY_ORDER, props.getProperty(DISPLAY_ORDER));
+		props.setProperty(MAXIMUM_EXAMPLES, Integer.toString(getMaxExamples()));
+		props.setProperty(DISPLAY_ORDER, getDisplayOrder());
 		
 		try {
 			props.store(new FileOutputStream(AAConfig.getResourceDirPersistentAbs()+SettingPropertiesFile), "Setting properties updated");
@@ -101,16 +104,33 @@ public class Settings {
 	/**
 	 * Return value of display order
 	 */
-	public static String getDisplayOrder(){
-		return props.getProperty(DISPLAY_ORDER);
+	public static String getDisplayOrder()
+	{	
+		String result = props.getProperty(DISPLAY_ORDER);
+		
+		if(result == null)
+			return "Default";
+		else
+			return props.getProperty(DISPLAY_ORDER);
 	}
 	
 	/**
 	 * Return value of display order
 	 */
-	public static int getMaxExamples(){
+	public static int getMaxExamples()
+	{	
+		String limitStr = props.getProperty(MAXIMUM_EXAMPLES);
 		
-		int limit = Integer.parseInt(props.getProperty(MAXIMUM_EXAMPLES));
-		return limit;
+		if(limitStr == null)
+			return Integer.MAX_VALUE;
+		
+		try
+		{
+			return Integer.parseInt(limitStr);
+			
+		} catch (NumberFormatException e) {
+			
+			return Integer.MAX_VALUE;
+		}
 	}
 }
