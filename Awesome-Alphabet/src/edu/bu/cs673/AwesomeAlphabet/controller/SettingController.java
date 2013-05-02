@@ -38,7 +38,7 @@ public class SettingController extends PageController {
 	public void updateMaxExamples(int limit) {
 		
 		log.info("updating number of examples to display");
-		if(limit == 0){
+		if(limit <= 0){
 			limit = Integer.MAX_VALUE;
 		}
 		
@@ -46,5 +46,15 @@ public class SettingController extends PageController {
 		Settings.props.setProperty(Settings.MAXIMUM_EXAMPLES, limitStringValue);
 		
 		Settings.saveSettingProperties();
+	}
+	
+	public String getDisplayOrder() {
+		
+		return Settings.getDisplayOrder();
+	}
+	
+	public int getMaxExamples() {
+		
+		return Settings.getMaxExamples();
 	}
 }

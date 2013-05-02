@@ -163,7 +163,7 @@ public class Letter extends Observable implements Observer {
 		
 		setChanged();
 		
-		log.info("index = "+m_index);
+		//log.info("index = "+m_index);
 		//If there are no words for the current letter
 		if(iWpsSize <= 0)
 		{
@@ -183,8 +183,8 @@ public class Letter extends Observable implements Observer {
 		do
 		{
 			//Advance Index
-			log.info("index = "+m_index);
-			log.info("iWpsSize = "+iWpsSize);
+			//log.info("index = "+m_index);
+			//log.info("iWpsSize = "+iWpsSize);
 			m_index++;
 			if (m_index >= iWpsSize || m_index >= Settings.getMaxExamples()){ //Settings.getMaxExamples()
 				m_index = 0;
@@ -325,7 +325,7 @@ public class Letter extends Observable implements Observer {
 	 * Shuffle the list of words/examples
 	 */
 	public void shuffleList() {
-		log.info("Shuffle the list");
+		//log.info("Shuffle the list");
 		Collections.shuffle(m_wps);
 		
 	}
@@ -334,7 +334,7 @@ public class Letter extends Observable implements Observer {
 	 * Sort the list of words/examples
 	 */
 	public void sortList(){
-		log.info("sort the list");
+		//log.info("sort the list");
 		Collections.sort(m_wps);
 	}
 	
@@ -342,7 +342,7 @@ public class Letter extends Observable implements Observer {
 	 * Reset default order of the examples as they were initially loaded/added to the list
 	 */
 	public void resetDeafultOrder(){
-		log.info("reset order of the list");
+		//log.info("reset order of the list");
 		Collections.sort(m_wps, WordPictureSound.compareById);
 	}
 }

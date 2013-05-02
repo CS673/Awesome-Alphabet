@@ -23,7 +23,7 @@ public class SettingPageView extends PageView {
 	static Logger log = Logger.getLogger(SettingPageView.class);
 	private SettingController m_controller = null; 
 	private String[] displayOptionsArray = {"Default","Sorted","Shuffle"};
-	private JComboBox displayOderOptions = new JComboBox(displayOptionsArray);
+	private JComboBox displayOrderOptions = new JComboBox(displayOptionsArray);
 	private JTextField wordsLimitField = new JTextField();
 	
 	
@@ -57,7 +57,7 @@ public class SettingPageView extends PageView {
 		
 		constraints.gridx = 1;
 		constraints.gridy = 1;
-		inputPanel.add(displayOderOptions, constraints);
+		inputPanel.add(displayOrderOptions, constraints);
 
 	    
 	   // add group panel to the main panel
@@ -95,9 +95,28 @@ public class SettingPageView extends PageView {
 
 	@Override
 	public void activated() {
-		// TODO Auto-generated method stub
-		log.info("Activated " + super.getPageName());
 		
+		int iMaxExamples;
+
+		log.info("Activated " + super.getPageName());
+	
+		if(m_controller != null)
+		{
+			for(int i=0; i<displayOrderOptions.getItemCount(); i++)
+			{
+				if(displayOrderOptions.getItemAt(i).toString().equalsIgnoreCase(m_controller.getDisplayOrder()))
+				{
+					displayOrderOptions.setSelectedIndex(i);
+					break;
+				}
+			}
+			
+			iMaxExamples = m_controller.getMaxExamples();
+			if(iMaxExamples == Integer.MAX_VALUE)
+				iMaxExamples = 0;
+			
+			wordsLimitField.setText(Integer.toString(iMaxExamples));
+		}
 	}
 	
 	public void OnSaveClicked(){
@@ -118,9 +137,9 @@ public class SettingPageView extends PageView {
 			}
 		}
 
-		if(!Settings.getDisplayOrder().equalsIgnoreCase(displayOderOptions.getSelectedItem().toString())){
+		if(!Settings.getDisplayOrder().equalsIgnoreCase(displayOrderOptions.getSelectedItem().toString())){
 			
-			m_controller.updateDisplayOrder(displayOderOptions.getSelectedItem().toString());
+			m_controller.updateDisplayOrder(displayOrderOptions.getSelectedItem().toString());
 		}
 		
 		m_controller.GoToOptionsMenu();
